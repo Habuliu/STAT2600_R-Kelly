@@ -6,7 +6,7 @@ output: html_notebook
 RMArkdown file beginning
 
 ```{r}
-![this is a test ](Images/testPhoto.png)
+
 ```
 Team Section:
 
@@ -28,6 +28,6 @@ Photo:
 
 
 Name: Peter Bullard
-Photo:
+Photo: ![this is a test ](Images/testPhoto.png)
 
 
