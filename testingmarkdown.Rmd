@@ -28,6 +28,7 @@ Photo:
 
 
 Name: Peter Bullard
-Photo:
+Photo: ![this is a test ](Images/testPhoto.png)
+
 
 editing RMArkdown file in gitkraken
