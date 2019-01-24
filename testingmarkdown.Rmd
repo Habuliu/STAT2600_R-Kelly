@@ -8,28 +8,27 @@ RMArkdown file beginning
 ```{r}
 
 ```
-##Team Section:  
+#Team R-Kelly  
 
-##Individual Sectons:  
-#Name:   
+#About Our Members  
+###Ping Li   
 Photo:  
 
-
-#Name:   
+*****
+###Gregor Tzinov 
 Photo:  
 
-
-#Name:   
+*****
+###Sasha Maslowski   
 Photo:  
 
+*****
+###Lauren Tafoya  
+![](Images/headshot.png)
 
-#Name:  
-Photo:  
-
-
-#Name: Peter Bullard 
-Photo: ![this is a test ](Images/testPhoto.png)
-
+*****
+###Peter Bullard 
+![this is a test ](Images/testPhoto.png)
 
 
 
