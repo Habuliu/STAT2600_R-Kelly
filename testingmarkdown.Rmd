@@ -8,25 +8,28 @@ RMArkdown file beginning
 ```{r}
 
 ```
-Team Section:
+##Team Section:  
 
-Individual Sectons:
-Name: 
-Photo:
-
-
-Name: 
-Photo:
+##Individual Sectons:  
+#Name:   
+Photo:  
 
 
-Name: 
-Photo:
+#Name:   
+Photo:  
 
 
-Name: 
-Photo:
+#Name:   
+Photo:  
 
 
-Name: Peter Bullard
-Photo:
+#Name:  
+Photo:  
+
+
+#Name: Peter Bullard 
+Photo: ![this is a test ](Images/testPhoto.png)
+
+
+
 
