@@ -8,27 +8,29 @@ RMArkdown file beginning
 ```{r}
 
 ```
-Team Section:
+##Team Section:  
 
-Individual Sectons:
-Name: 
-Photo:
-
-
-Name: Gregor Tzinov
-Photo:
-About me:
-
-Name: 
-Photo:
+##Individual Sectons:  
+#Name:   
+Photo:  
 
 
-Name: 
-Photo:
+#Name:   
+Photo:  
 
 
-Name: Peter Bullard
+#Name:   
+Photo:  
+
+
+#Name:  
+Photo:  
+
+
+#Name: Peter Bullard 
 Photo: ![this is a test ](Images/testPhoto.png)
 
 
 editing RMArkdown file in gitkraken
+
+
