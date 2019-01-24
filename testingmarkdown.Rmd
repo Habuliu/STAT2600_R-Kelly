@@ -8,5 +8,26 @@ RMArkdown file beginning
 ```{r}
 
 ```
+Team Section:
+
+Individual Sectons:
+Name: 
+Photo:
+
+
+Name: 
+Photo:
+
+
+Name: 
+Photo:
+
+
+Name: 
+Photo:
+
+
+Name: 
+Photo:
 
 editing RMArkdown file in gitkraken
