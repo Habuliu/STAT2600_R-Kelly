@@ -9,3 +9,4 @@ RMArkdown file beginning
 
 ```
 
+editing RMArkdown file in gitkraken
