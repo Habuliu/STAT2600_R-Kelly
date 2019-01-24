@@ -15,9 +15,9 @@ Name:
 Photo:
 
 
-Name: 
+Name: Gregor Tzinov
 Photo:
-
+About me:
 
 Name: 
 Photo:
