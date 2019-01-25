@@ -1,7 +1,9 @@
 <<<<<<< Updated upstream
 ---
 title: "Lab Assignment 2"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 RMArkdown file beginning
