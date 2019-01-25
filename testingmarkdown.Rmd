@@ -53,7 +53,15 @@ Feedback from Gregor: I think your aspirations for the future are awesome, and i
 
 *****
 ###Peter Bullard 
-![this is a test ](Images/testPhoto.png)
+![this is a test ](Images/IMG_3221.JPG)
+
+* I am interested in the theoretical limit of prediction based on statistical features of a given problem, which I think can be roughly guess through data science.  
+
+* Six months after graduating, having a job in my preferred field would be nice. Five years from graduation, I would hope to still have gainful employment.  
+
+* My greatest career accomplishment will be working on the projects I find to be most interesting or complex, and I hope to expand my skillset for solving these probelms in this course.  
+
+* It is overwhelmingly likley that I hold the world record for most second place finishes in regional youth pipe organ competitions. 
 
 
 
