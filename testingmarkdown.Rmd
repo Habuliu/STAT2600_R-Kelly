@@ -12,6 +12,8 @@ RMArkdown file beginning
 
 ![](Images/group.png)
 
+Team Goal:  <fill in>
+
 -------
 
 #About Our Members  
@@ -22,6 +24,14 @@ Photo:
 *****
 ###Gregor Tzinov 
 Photo:  ![](Images/DSC_0792.JPG)
+**About me**
+
+
+* I'm interested in what discoveries in our universe can be made with the abundance of data we recieve from our satelites. 
+* I would love to be gaining experience in the field of Data Science, whether that's through an internship or a full-time job. 5 years after that I would love to use my data analysis skills to become an important decision maker in some start-up tech company
+* I hope my greatest career accomplishment will be finding a profession in a field that interests me, while also feeling I'm doing meaningful work. With this course, my biggest goal is to learn the techniques behind properly communicating my ideas.
+* I spent 3 weeks in Thailand with my family. It was the best and most diverse vacation I've ever had, as it gave me a perspective of the East Asian world that I hadn't had before. 
+
 
 *****
 ###Sasha Maslowski   
@@ -38,6 +48,8 @@ Photo:  ![](Images/DSC_0792.JPG)
 * I hope my greatest career accomplishment will be owning my own firm. This course can help me acheive my goal as it will teach  my important organization and collaboration skills.
 
 * I am a member of the Kappa Kappa Gamma sorority and just finished my term as President of our Chapter. It was truly the most amazing experience I could ever ask for, in which I learned many problem solving and team collaboration skills. 
+
+Feedback from Gregor: I think your aspirations for the future are awesome, and it seems like you're on a great path to achieve them. You might want to add what you learned exactly in your sorority and how it changed you exactly, I'm curious to hear.  
 
 *****
 ###Peter Bullard 
