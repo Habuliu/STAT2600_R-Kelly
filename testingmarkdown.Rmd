@@ -56,7 +56,7 @@ Feedback from Ping:  Your introduction layout is very clear. Your question is al
 ###Sasha Maslowski   
 ![](Images/sasha maslowski image.png)
 
-* I am particularly interested in sports and would love to study/ analyze data similarly to the analyzation in Moneyball. It would be so cool to see how big data will change professional sports
+* I am particularly interested in sports and would love to study/ analyze data similarly to the analyzation in Moneyball. Moneyball is a book and a movie that shows how a statistion took data from the game of baseball to improve it. It would be so cool to see how big data will change professional sports
 
 * Six months after graduation I would love to move to a city like Boston or Seattle and be working for a professional sports program as a data scientist. I'm not exactly sure in what capacity I like to work in but there are a number of areas I'm interested in. So five years after graduation I would like to be established in my career path and have a better idea of what my path is.
 
@@ -99,3 +99,4 @@ Feedback from Ping: Your introducton layout and content is very clear. It looks 
  Feedback from Lauren: The use of a hyperbole in your last statement gave an awesome snip of your personality. Additionally you could include any idea of projects that may be interesting to you.
  Feedback from Ping: Your introduction shows your amibition and passion. Motivation of fun and achievement is always a good way to keep you up to something. If you can explain more about regional youth pipe organ competitions, that would be even better.
 Feedback from Gregor: I also love the last line, that's super cool you've done such competitions before though. What sort of projects do you think you'll find interesting or complex? Do you have any initial interests?
+Feedback from Sasha: The last line is great! Do you have specific preferred field? Is it related to your previous question?
