@@ -25,15 +25,14 @@ Team Goal:  As a team works together, one of our main team goals is to feel equa
 Photo:  ![](~/Downloads/Ping Li.JPG)
 
 **About me**
-  Hi, I am Ping. This is my second semester of Statistics and Data Science major. I am interested in helping people and society with my statistics skills. I want to know what projects that EWB(Engineers without Borders) is doing help people the most internationally. I want to know the refugee flow is affecting the whole world. I am hoping that after graduation, I can use my ststistics skill to work with an NGO to improve people's health and life. Years later, maybe five years, I am thinking to go back to grad school and to learn counseling. We will see how it will go. I can never gaurantee where I will be in 5 years. But, for sure, I want to use my knowledge to help people and hopefully, I can move around and live in different countries. I hope my future career can be my passion, and can be a way for me to know more culture and the local people. I hope my work is really improving their life. 
-  I hope I can learn more about R skills and different ways/models to analyze data in this course. I hope I can learn more real skills that will be used in the future. I also expect myself to really manage those skills by practicing more. I expect myself to be more involved with the work we need to do.
-  I love travelling so much and I really want to move to another country after a few years. Through my study abroad experiences, I learnt that even though I love moving to different places, I will stay at one place for at least 2-3 years before I think about moving. Statying at one place for a while is a good way to build and maintain good friendship and get to know the culture in a deeper level.
+  Hi, I am Ping. This is my second semester of Statistics and Data Science major. I am interested in helping people and society with my statistics skills. I want to know what projects that EWB(Engineers without Borders) is doing help people the most internationally. I want to know the refugee flow is affecting the whole world. I am hoping that after graduation, I can use my ststistics skill to work with an NGO to improve people's health and life. Years later, maybe five years, I am thinking to go back to grad school and to learn counseling. We will see how it will go. I can never gaurantee where I will be in 5 years. But, for sure, I want to use my knowledge to help people and hopefully, I can move around and live in different countries. I hope my future greatest career achievemnt can be my passion, and can be a way for me to know more culture and the local people. I hope my work is really improving their life. 
+  I hope I can learn more about R skills and different ways/models to analyze data in this course. I hope I can learn more real skills that will be used in the future. I also expect myself to really manage those skills by practicing more. 
+  I love travelling so much and I really want to move to another country after a few years. Through my study abroad experiences, I learnt that even though I love moving to different places, I will stay at one place for at least 2-3 years before I think about moving. Staying at one place for a while is a good way to build and maintain good friendship and get to know the culture in a deeper level.
   
-
   Feedback from Sasha: Hi Ping! Your ambitions sound amazing! Did you mention your greatest career achievement? Also you have a typo that you may want to fix (Statying)
 *****
-Feedback to Gregor:
-Feedback to Lauren
+
+
 *****
 
 ###Gregor Tzinov 
