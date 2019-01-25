@@ -29,9 +29,8 @@ Photo:  ![](~/Downloads/Ping Li.JPG)
   
 Feedback to Gregor:
 Feedback to Lauren
-
-Feedback from Sasha: Hi Ping! Your ambitions sound amazing! Did you mention your greatest career achievement? Also you have a typo that you may want to fix (Statying)
 *****
+
 ###Gregor Tzinov 
 Photo:  ![](Images/DSC_0792.JPG)
 **About me**
@@ -42,7 +41,7 @@ Photo:  ![](Images/DSC_0792.JPG)
 * I hope my greatest career accomplishment will be finding a profession in a field that interests me, while also feeling I'm doing meaningful work. With this course, my biggest goal is to learn the techniques behind properly communicating my ideas.
 * I spent 3 weeks in Thailand with my family. It was the best and most diverse vacation I've ever had, as it gave me a perspective of the East Asian world that I hadn't had before. 
 
-Feedback from Sasha: Hi Gregor! Working for a startup sounds really cool, do you have any ideas for start ups currently?
+
 *****
 ###Sasha Maslowski   
 ![](Images/sasha maslowski image.png)
@@ -70,7 +69,6 @@ Feedback from Sasha: Hi Gregor! Working for a startup sounds really cool, do you
 
 Feedback from Gregor: I think your aspirations for the future are awesome, and it seems like you're on a great path to achieve them. You might want to add what you learned exactly in your sorority and how it changed you exactly, I'm curious to hear.  
 
-Feedback from Sasha: Hi Lauren! You sound like you have a clear plan which is amazing! Do you have a specific type of firm you'd like to own?
 *****
 ###Peter Bullard 
 ![this is a test ](Images/IMG_3221.JPG)
@@ -78,4 +76,4 @@ Feedback from Sasha: Hi Lauren! You sound like you have a clear plan which is am
 * I am interested in the theoretical limit of prediction based on statistical features of a given problem, which I think can be roughly guess through data science.  
 
 * Six months after graduating, having a job in my preferred field would be nice. Five years from graduation, I would hope to still have gainful employment.  
-
+  
