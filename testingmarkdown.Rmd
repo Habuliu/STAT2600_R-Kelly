@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ---
 title: "Lab Assignment 2"
 output: html_notebook
@@ -19,8 +20,15 @@ Team Goal:  <fill in>
 #About Our Members  
 
 ###Ping Li   
-Photo:  
+Photo:  ![](~/Downloads/Ping Li.JPG)
 
+**About me**
+  Hi, I am Ping. This is my second semester of Statistics and Data Science major. I am interested in helping people and society with my statistics skills. I want to know what projects that EWB(Engineers without Borders) is doing help people the most internationally. I want to know the refugee flow is affecting the whole world. I am hoping that after graduation, I can use my ststistics skill to work with an NGO to improve people's health and life. Years later, maybe five years, I am thinking to go back to grad school and to learn counseling. We will see how it will go. I can never gaurantee where I will be in 5 years. But, for sure, I want to use my knowledge to help people and hopefully, I can move around and live in different countries. I hope my future career can be my passion, and can be a way for me to know more culture and the local people. I hope my work is really improving their life. 
+  I hope I can learn more about R skills and different ways/models to analyze data in this course. I hope I can learn more real skills that will be used in the future. I also expect myself to really manage those skills by practicing more. I expect myself to be more involved with the work we need to do.
+  I love travelling so much and I really want to move to another country after a few years. Through my study abroad experiences, I learnt that even though I love moving to different places, I will stay at one place for at least 2-3 years before I think about moving. Statying at one place for a while is a good way to build and maintain good friendship and get to know the culture in a deeper level.
+  
+Feedback to Gregor:
+Feedback to Lauren
 *****
 ###Gregor Tzinov 
 Photo:  ![](Images/DSC_0792.JPG)
@@ -58,10 +66,4 @@ Feedback from Gregor: I think your aspirations for the future are awesome, and i
 * I am interested in the theoretical limit of prediction based on statistical features of a given problem, which I think can be roughly guess through data science.  
 
 * Six months after graduating, having a job in my preferred field would be nice. Five years from graduation, I would hope to still have gainful employment.  
-
-* My greatest career accomplishment will be working on the projects I find to be most interesting or complex, and I hope to expand my skillset for solving these probelms in this course.  
-
-* It is overwhelmingly likley that I hold the world record for most second place finishes in regional youth pipe organ competitions. 
-
-
 
