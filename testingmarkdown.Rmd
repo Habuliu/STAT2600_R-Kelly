@@ -31,6 +31,7 @@ Photo:  ![](~/Downloads/Ping Li.JPG)
   
   Feedback from Lauren: I really enjoyed reading about your interest in Engineering without Borders, I think that it helps show your passion for improving peoples health and lives. 
   Feedback from Sasha: Hi Ping! Your ambitions sound amazing! Did you mention your greatest career achievement? Also you have a typo that you may want to fix (Statying)
+  Feedback from Gregor:  I love the way you look at life, Ping. What do you mean exactly by saying you expect to "manage your skills with practicing?"
 *****
 
 
@@ -41,14 +42,16 @@ Photo:  ![](Images/DSC_0792.JPG)
 **About me**
 
 
-* I'm interested in what discoveries in our universe can be made with the abundance of data we recieve from our satelites. 
+* I'm interested in what discoveries in our universe can be made with the abundance of data we recieve from our satelites. Over the past couple of years through astronomy classes, I've learned how our universe is forever expanding, which makes me convinced that there is sophisticated life out there. I'm very curious in how data can help humans understand that.
 * I would love to be gaining experience in the field of Data Science, whether that's through an internship or a full-time job. 5 years after that I would love to use my data analysis skills to become an important decision maker in some start-up tech company
 * I hope my greatest career accomplishment will be finding a profession in a field that interests me, while also feeling I'm doing meaningful work. With this course, my biggest goal is to learn the techniques behind properly communicating my ideas.
 * I spent 3 weeks in Thailand with my family. It was the best and most diverse vacation I've ever had, as it gave me a perspective of the East Asian world that I hadn't had before. 
 
 Feedback from Lauren: The layout of your section mase it easy to comprehend which gave me a great understanding of your goals and personality. 
 Feedback from Ping:  Your introduction layout is very clear. Your question is also very interesting, but you can also try to be more specific as the word "universe" is a big word. 
+
 *****
+
 ###Sasha Maslowski   
 ![](Images/sasha maslowski image.png)
 
@@ -62,6 +65,7 @@ Feedback from Ping:  Your introduction layout is very clear. Your question is al
 
 Feedback from Lauren: By encorporating sports into all of your answers really helps the audience see your passion and dedication to sports! 
 Feedback from Ping: Applying statistics to Sports is so cool especially this is your hobby. It looks like you have a clear mind of what you want. If you can have a more specific example of the question that you want to solve, that would be even better.
+Feedback from Gregor:  I think it's awesome that you want to apply Data Science in the world of sports, I have also given that some thought. One suggestion: for those that haven't seen moneyball, they would be a little confused on what the analyzation is in that movie exactly, maybe add a brief summary?
 
 *****
 ###Lauren Tafoya  
@@ -92,3 +96,4 @@ Feedback from Ping: Your introducton layout and content is very clear. It looks 
  
  Feedback from Lauren: The use of a hyperbole in your last statement gave an awesome snip of your personality. Additionally you could include any idea of projects that may be interesting to you.
  Feedback from Ping: Your introduction shows your amibition and passion. Motivation of fun and achievement is always a good way to keep you up to something. If you can explain more about regional youth pipe organ competitions, that would be even better.
+Feedback from Gregor: I also love the last line, that's super cool you've done such competitions before though. What sort of projects do you think you'll find interesting or complex? Do you have any initial interests?
