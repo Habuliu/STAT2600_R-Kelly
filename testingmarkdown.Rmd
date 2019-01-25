@@ -13,7 +13,7 @@ RMArkdown file beginning
 
 ![](Images/group.png)
 
-Team Goal:  <fill in>
+Team Goal:  As a team works together, one of our main team goals is to feel equally comfortable and sucessful with applying out knowledge of R and Data Science. As a team, we want to accomplish this by encouraging each other, helping each other, and making sure, everyone is up to speed.
 
 -------
 
