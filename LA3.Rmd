@@ -1,11 +1,28 @@
 ---
 title: "LA3"
+author: R-Kelly
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+Individual section:
+
+Lauren:
+
+Ping:
+
+Peter:
+
+Sasha:
+
+Gregor:
+
+
+Team section:
+
 
 ## R Markdown
 
