@@ -8,13 +8,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Individual section:
+# Individual section:
 
-Lauren:
+## Lauren:
 
-Ping:
+## Ping:
 
-#Peter:
+## Peter:
 I chose to examine the correlation between smoking, holding a health plan, and general health. The plot below  
 shows how the relationship between smoking and holding a health plan changes based on general health, with the  
 general trend indicating that individuals who do not hold a health plan are more likley to smoke than others. 
@@ -24,9 +24,9 @@ general trend indicating that individuals who do not hold a health plan are more
 
 
 
-Sasha:
+## Sasha:
 
-# Gregor:
+## Gregor:
 My graph shows the impact that smoking and exercise has on your general health. The graphs inside the facet wrap show the different amounts of people 
 in each health status. With each graph, however, the data represents a different population of the dataset, with one of graphs representing either:
 1. People who don't smoke, nor exercise
@@ -42,25 +42,7 @@ health and poor health is about the same, whether the person smokes or not.
 
 
 
-Team section:
+# Team section:
 
+## Team Question: 
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
