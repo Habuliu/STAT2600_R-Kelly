@@ -40,6 +40,11 @@ who don't smoke. The fact that this ratio is still much greater in the people wh
 exercise demonstrates that exercise has a bigger impact on general health. In the two graphs that show the people that don't smoke, the ratios between good 
 health and poor health is about the same, whether the person smokes or not. 
 
+Graph: 
+
+```{r}
+ggplot(data  = cdc, mapping = aes(x  = genhlth)) + geom_bar() + facet_wrap(exerany~smoke100, labeller = label_both)
+``` 
 
 
 # Team section:
