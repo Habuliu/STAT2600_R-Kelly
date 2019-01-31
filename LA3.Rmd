@@ -26,7 +26,20 @@ general trend indicating that individuals who do not hold a health plan are more
 
 Sasha:
 
-Gregor:
+# Gregor:
+My graph shows the impact that smoking and exercise has on your general health. The graphs inside the facet wrap show the different amounts of people 
+in each health status. With each graph, however, the data represents a different population of the dataset, with one of graphs representing either:
+1. People who don't smoke, nor exercise
+2. People who do smoke, but don't exercise
+3. People who don't smoke, but do exercise
+4. People who do smoke, but do exercise
+
+The graphs show that whether one exercises has a bigger impact on one's general health. In the graphs that show the people who have exercised in the past 
+month (meaning of the 'exerany' variable), the ratio between excellent and very good status to fair and poor is much greater than the same ratio in the graphs of people
+who don't smoke. The fact that this ratio is still much greater in the people who smoke and exercise in comparison to this same ratio in the people who smoke but don't 
+exercise demonstrates that exercise has a bigger impact on general health. In the two graphs that show the people that don't smoke, the ratios between good 
+health and poor health is about the same, whether the person smokes or not. 
+
 
 
 Team section:
