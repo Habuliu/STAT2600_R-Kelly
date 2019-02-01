@@ -1,4 +1,3 @@
----
 title: "LA3"
 author: R-Kelly
 output: html_document
@@ -6,15 +5,27 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+source("http://www.openintro.org/stat/data/cdc.R")
+cdc <- as_tibble(cdc)
 ```
 
-Individual section:
+# Individual section:
 
-Lauren:
+### Lauren:
+```{r setup, include=FALSE}
+ggplot(data = cdc) +  geom_histogram(bins=20, mapping = aes(x = age, fill = genhlth)) +facet_wrap(~gender) +
+  xlab("Age") +
+  ylab("People") +
+  labs(title= "General Health by Age for both Men and Women")
 
-Ping:
+```
+I chose to investigate the relationship between general health and age, and the differences of this relationship for men and women. I found that females we're on average slightly healthier than men independed of age, and people from age 30 to 50 we're the heathiest group of people. 
 
-#Peter:
+
+### Ping:
+
+### Peter:
 I chose to examine the correlation between smoking, holding a health plan, and general health. The plot below  
 shows how the relationship between smoking and holding a health plan changes based on general health, with the  
 general trend indicating that individuals who do not hold a health plan are more likley to smoke than others. 
@@ -29,30 +40,42 @@ ggplot(cdc, aes(as.factor(hlthplan), fill=as.factor(smoke100))) +
 
 
 
-Sasha:
 
-Gregor:
-
-
-Team section:
-
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+### Sasha:
+I chose to graph how one's general health varies and how it relates to either the presence or the lack of a healthplan,
+ and how it differs showing this correlation for men and then for women. From the above graph, it is clear that of the 
+ people surveyed more had a health plan than didn't. Despite the lack of equal amounts of those with a health plan and 
+ those without, it is shown that general health increases with the presence of a healthplan. 
+```{r setup, include=FALSE}
+ggplot(data = cdc) +
+geom_jitter(mapping = aes(x = genhlth, y= hlthplan), color = "deeppink4")+ facet_wrap("gender")+
+  labs(x= "General Health")+ labs (y= "Healthplan")+ labs(title= "The Relationship between General Health and Having a Healthplan for Men and Women")
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+### Gregor:
+My graph shows the impact that smoking and exercise has on your general health. The graphs inside the facet wrap show the different amounts of people 
+in each health status. With each graph, however, the data represents a different population of the dataset, with one of graphs representing either:
+1. People who don't smoke, nor exercise
+2. People who do smoke, but don't exercise
+3. People who don't smoke, but do exercise
+4. People who do smoke, but do exercise
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+The graphs show that whether one exercises has a bigger impact on one's general health. In the graphs that show the people who have exercised in the past 
+month (meaning of the 'exerany' variable), the ratio between excellent and very good status to fair and poor is much greater than the same ratio in the graphs of people
+who don't smoke. The fact that this ratio is still much greater in the people who smoke and exercise in comparison to this same ratio in the people who smoke but don't 
+exercise demonstrates that exercise has a bigger impact on general health. In the two graphs that show the people that don't smoke, the ratios between good 
+health and poor health is about the same, whether the person smokes or not. 
+
+Graph: 
+
+```{r}
+ggplot(data  = cdc, mapping = aes(x  = genhlth)) + geom_bar() + facet_wrap(exerany~smoke100, labeller = label_both)
+``` 
+
+
+# Team section:
+
+## Team Question: 
+
