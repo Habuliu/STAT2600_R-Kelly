@@ -11,8 +11,13 @@ cdc <- as_tibble(cdc)
 ```
 # Team section
 ### Our Question
-Our team decided to investigate the relationship between smoking, weight,  and general health.  It is interesting and important to explore this relationship as it can give a better understanding to the effects of smoking. This answer will be interesting and important as it may lead to a better general health for the community. 
+Our team decided to investigate the relationship between smoking, age and general health.  It is interesting and important to explore this relationship as it can give a better understanding to the effects of smoking. This answer will be interesting and important as it may lead to a better general health for the community. 
 PLOT:
+```{r}
+> ggplot(data  = cdc) + 
+    geom_boxplot(mapping = aes(x  = genhlth, y = age)) +
+    facet_wrap(~ smoke100, nrow = 2)
+```
 ### Our Recommendation
 
 # Individual Plots
@@ -26,10 +31,33 @@ ggplot(data = cdc) +  geom_histogram(bins=20, mapping = aes(x = age, fill = genh
   ylab("People") +
   labs(title= "General Health by Age for both Men and Women")
 
+<<<<<<< Updated upstream
+```
+=======
+<<<<<<< Updated upstream
+### Ping:
+I started by examing the relationship between gender and genral health. By looking at the bar graph, we can see main population have excellent to good health. The ration between male and female is also close. 
+```{r}
+ggplot(data = cdc) + geom_bar(mapping = aes(x = genhlth, fill = gender))
 ```
 
+Then I add one more age element into the graph. By doing Facet_wrap, dividing them into different genral health category. We can see form the graph that the main age range for excellent to good health is from age 25 to 75.
 
-### Ping
+```{r}
+ ggplot(data = cdc) +
+  geom_histogram(mapping = aes(x = age, fill = gender))+
+  facet_wrap(~ genhlth, nrow = 2)
+```
+For my last graph, I added a title and did coord_polar to the graph. The coord_polar gives a clear look at the age range.
+```{r}
+ggplot(data = cdc) +
+   geom_histogram(mapping = aes(x = age, fill = gender))+
+     facet_wrap(~ genhlth, nrow = 2)+
+     ggtitle("Relationship between gender, age and genral health")+
+     coord_polar()
+```
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 ### Peter
 I chose to examine the correlation between smoking, holding a health plan, and general health. The plot below  
@@ -46,26 +74,73 @@ ggplot(cdc, aes(as.factor(hlthplan), fill=as.factor(smoke100))) +
 
 
 
+<<<<<<< Updated upstream
 ### Sasha
+=======
+<<<<<<< Updated upstream
+## Sasha:
+>>>>>>> Stashed changes
 I chose to graph how one's general health varies and how it relates to either the presence or the lack of a healthplan,
  and how it differs showing this correlation for men and then for women. From the above graph, it is clear that of the 
  people surveyed more had a health plan than didn't. Despite the lack of equal amounts of those with a health plan and 
  those without, it is shown that general health increases with the presence of a healthplan. 
+<<<<<<< Updated upstream
 ```{r setup, include=FALSE}
+=======
+=======
+
+
+Gregor:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Team section:
+>>>>>>> Stashed changes
+
+ ```{r}
+>>>>>>> Stashed changes
 ggplot(data = cdc) +
 geom_jitter(mapping = aes(x = genhlth, y= hlthplan), color = "deeppink4")+ facet_wrap("gender")+
   labs(x= "General Health")+ labs (y= "Healthplan")+ labs(title= "The Relationship between General Health and Having a Healthplan for Men and Women")
 ```
 
+<<<<<<< Updated upstream
 
 
 ### Gregor
+=======
+<<<<<<< Updated upstream
+## Gregor:
+>>>>>>> Stashed changes
 My graph shows the impact that smoking and exercise has on your general health. The graphs inside the facet wrap show the different amounts of people 
 in each health status. With each graph, however, the data represents a different population of the dataset, with one of graphs representing either:
 1. People who don't smoke, nor exercise
 2. People who do smoke, but don't exercise
 3. People who don't smoke, but do exercise
 4. People who do smoke, but do exercise
+=======
+
+
+
+
+
+
+
+
+## R Markdown
+>>>>>>> Stashed changes
 
 The graphs show that whether one exercises has a bigger impact on one's general health. In the graphs that show the people who have exercised in the past 
 month (meaning of the 'exerany' variable), the ratio between excellent and very good status to fair and poor is much greater than the same ratio in the graphs of people
