@@ -11,6 +11,7 @@ cdc <- as_tibble(cdc)
 ```
 # Team section
 ### Our Question
+Our team decided to investigate the relationship between smoking, weight,  and general health.  It is interesting and important to explore this relationship as it can give a better understanding to the effects of smoking. This answer will be interesting and important as it may lead to a better general health for the community. 
 PLOT:
 ### Our Recommendation
 
@@ -75,7 +76,9 @@ health and poor health is about the same, whether the person smokes or not.
 ```{r}
 ggplot(data  = cdc, mapping = aes(x  = genhlth)) + geom_bar() + facet_wrap(exerany~smoke100, labeller = label_both)
 ``` 
+#Who Did What!
 
+Lauren: In this team Lab, I worked on formatting the document and fixing code so all of the plots would print when the file was knit. I also worked on developing and writing the team question for our plot. 
 
 
 
