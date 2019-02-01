@@ -11,6 +11,16 @@ knitr::opts_chunk$set(echo = TRUE)
 # Individual section:
 
 ## Lauren:
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+ggplot(data = cdc) +  geom_histogram(bins=20, mapping = aes(x = age, fill = genhlth)) +facet_wrap(~gender) +
+  xlab("Age") +
+  ylab("People") +
+  labs(title= "General Health by Age for both Men and Women")
+
+```
+I chose to investigate the relationship between general health and age, and the differences of this relationship for men and women. I found that females we're on average slightly healthier than men independed of age, and people from age 37 to 50 we're the heathiest group of people. 
+
 
 ## Ping:
 
