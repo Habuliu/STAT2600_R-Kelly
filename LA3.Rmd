@@ -1,4 +1,3 @@
----
 title: "LA3"
 author: R-Kelly
 output: html_document
@@ -6,47 +5,50 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+source("http://www.openintro.org/stat/data/cdc.R")
+cdc <- as_tibble(cdc)
 ```
 
 # Individual section:
 
-## Lauren:
-```{r}
-knitr::opts_chunk$set(echo = TRUE)
+### Lauren:
+```{r setup, include=FALSE}
 ggplot(data = cdc) +  geom_histogram(bins=20, mapping = aes(x = age, fill = genhlth)) +facet_wrap(~gender) +
   xlab("Age") +
   ylab("People") +
   labs(title= "General Health by Age for both Men and Women")
 
 ```
-I chose to investigate the relationship between general health and age, and the differences of this relationship for men and women. I found that females we're on average slightly healthier than men independed of age, and people from age 37 to 50 we're the heathiest group of people. 
+I chose to investigate the relationship between general health and age, and the differences of this relationship for men and women. I found that females we're on average slightly healthier than men independed of age, and people from age 30 to 50 we're the heathiest group of people. 
 
 
-## Ping:
+### Ping:
 
-## Peter:
+### Peter:
 I chose to examine the correlation between smoking, holding a health plan, and general health. The plot below  
 shows how the relationship between smoking and holding a health plan changes based on general health, with the  
 general trend indicating that individuals who do not hold a health plan are more likley to smoke than others. 
-![Smoking Vs. Non-Smoking by General Health and Health Plan](Images/RPlot.png)
 
 
 
 
 
-## Sasha:
+
+### Sasha:
 I chose to graph how one's general health varies and how it relates to either the presence or the lack of a healthplan,
  and how it differs showing this correlation for men and then for women. From the above graph, it is clear that of the 
  people surveyed more had a health plan than didn't. Despite the lack of equal amounts of those with a health plan and 
  those without, it is shown that general health increases with the presence of a healthplan. 
-
- ```{r}
+```{r setup, include=FALSE}
 ggplot(data = cdc) +
 geom_jitter(mapping = aes(x = genhlth, y= hlthplan), color = "deeppink4")+ facet_wrap("gender")+
   labs(x= "General Health")+ labs (y= "Healthplan")+ labs(title= "The Relationship between General Health and Having a Healthplan for Men and Women")
 ```
 
-## Gregor:
+
+
+### Gregor:
 My graph shows the impact that smoking and exercise has on your general health. The graphs inside the facet wrap show the different amounts of people 
 in each health status. With each graph, however, the data represents a different population of the dataset, with one of graphs representing either:
 1. People who don't smoke, nor exercise
