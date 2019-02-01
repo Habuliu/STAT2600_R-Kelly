@@ -19,7 +19,7 @@ PLOT:
     facet_wrap(~ smoke100, nrow = 2)
 ```
 ### Our Recommendation
-
+We can see form the graph that people who smoke less have a higher chance of having a good health even in their older ages. So we think smoke does affect health in some extent. We recommend no smoking is the best.
 # Individual Plots
 
 ### Lauren
