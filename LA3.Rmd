@@ -25,6 +25,16 @@ general trend indicating that individuals who do not hold a health plan are more
 
 
 ## Sasha:
+I chose to graph how one's general health varies and how it relates to either the presence or the lack of a healthplan,
+ and how it differs showing this correlation for men and then for women. From the above graph, it is clear that of the 
+ people surveyed more had a health plan than didn't. Despite the lack of equal amounts of those with a health plan and 
+ those without, it is shown that general health increases with the presence of a healthplan. 
+
+ ```{r}
+ggplot(data = cdc) +
+geom_jitter(mapping = aes(x = genhlth, y= hlthplan), color = "deeppink4")+ facet_wrap("gender")+
+  labs(x= "General Health")+ labs (y= "Healthplan")+ labs(title= "The Relationship between General Health and Having a Healthplan for Men and Women")
+```
 
 ## Gregor:
 My graph shows the impact that smoking and exercise has on your general health. The graphs inside the facet wrap show the different amounts of people 
