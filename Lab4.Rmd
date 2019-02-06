@@ -1,28 +1,40 @@
 ---
-title: "Lab4_R Kelly"
+title: "Lab4: R Kelly"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## R Markdown
+# Does Smoking Lead to Babies Born Prematurely and with Low Birth Weight?
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+### Team RKelly (Gregor, Sasha, Lauren, Ping, Peter)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Two Main Questions:
+1. Do mothers who smoke have a greater chance of having a premature delivery?
+2. Do newborns of mothers who have smoked have smaller birth weights at each gestational age?
 
-```{r cars}
-summary(cars)
-```
+Other things to keep in mind (Potential topics to plot for individual part): 
+* There could be various factors that influence gestation length and birth weight. These variables need to be identified, and see how they'll influence the relationship between smoking and premature delivery, as well as smoking and smaller gestational age weights
+* Which variables are similar between smokers and non-smokers, which are different? 
 
-## Including Plots
+Individual Sections:
 
-You can also embed plots, for example:
+Gregor:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+Sasha:
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Lauren:
+
+Ping: 
+
+Peter:
+
+
+
+
+
+
+
+
