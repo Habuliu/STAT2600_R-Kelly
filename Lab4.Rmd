@@ -20,6 +20,10 @@ babies <- rename(babies, bwtoz = `bwt/oz`) #renaming `bwt/oz` because the "/" si
 ##Preliminary Question
 ##Individual Findings
 ####Lauren
+
+```{r}
+ggplot(babies,mapping=aes(x=bwtoz ,y=gestation))+geom_point()+geom_smooth()
+```
 ####Peter
 ####Gregor
 ####Ping
