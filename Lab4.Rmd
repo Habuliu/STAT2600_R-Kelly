@@ -17,6 +17,7 @@ babies <- rename(babies, bwtoz = `bwt/oz`) #renaming `bwt/oz` because the "/" si
 *put plot here
 
 ##Our Recommendation
+Based on our analyses, we conclude that smoking during pregnancy has a profound impact on the average weight and gestation period of babies. Although this trend is not obvious in most grpahics, the difference between the smoking and non-smoking population correlations between birth weight and gestation period shows our findings best. This correlation is higher within the smoking population, which shows that babies with smoking mothers born earlier are more likely to be lighter than babies of non - smoking mothers. These findings support those of the Attorney General.
 ##Preliminary Question
 ##Individual Findings
 ####Lauren
@@ -74,7 +75,7 @@ I created a plot that shows the differences in correlation between gestation per
 ####Sasha
 ##Who did what
 Lauren:
-Peter:
+Peter: I wrote a script to find correlation values between gestation and all other fields, and plots them by smoking classification for easy analysis
 Gregor:
 Ping:
 Sasha:
