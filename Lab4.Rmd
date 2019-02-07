@@ -23,6 +23,11 @@ Based on our analyses, we conclude that smoking during pregnancy has a profound 
 ####Lauren
 
 ```{r}
+babies <- na.omit(babies)
+ggplot(babies)+geom_boxplot(outlier.colour = "red", outlier.shape = 1, mapping=aes(x=as.factor(smoke),y=bwtoz,)) + xlab("Smokers") + ggtitle("Distribution of Birth Weight in Smokers and Non-Smokers") + ylab("Birth Weight in Ounces")+theme_minimal()
+```
+
+```{r}
 ggplot(babies,mapping=aes(x=bwtoz ,y=gestation))+geom_point()+geom_smooth()
 ```
 ####Peter
@@ -116,5 +121,7 @@ The data showed that the average gestation period for non smokers is longer than
 Lauren:
 Peter: I wrote a script to find correlation values between gestation and all other fields, and plots them by smoking classification for easy analysis
 Gregor:
+Ping: I tried to find how smoke affects mom's life and babies' health and the birth weight. I found smoke does affect babies' health and no smoking does give babies higher weight birth and longer gestation.
 Ping:
 Sasha:I used the geom function to create a density plot  and adjusted the color and fill. In addition I used a facet grod adjustment to show the difference between smokers and non-smokers.
+Sasha:
