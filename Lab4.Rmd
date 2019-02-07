@@ -26,6 +26,13 @@ ggplot(babies,mapping=aes(x=bwtoz ,y=gestation))+geom_point()+geom_smooth()
 ```
 ####Peter
 ####Gregor
+```{r}
+ ggplot(data = babies) + geom_bar(mapping = aes(x = mage, fill = as.factor(Premature) ), bins = 30) + labs(x = "Mother's Age", y = "Number of Women", fill = "Premature Birth or Not") + facet_wrap(~smoke)
+
+ I, Gregor Tzinov, created a plot that shows how mother's age and whether she smokes or not affects whether the birth would be premature. The graphs demonstrate that as the mother grows in age, smoking will increase the chance that the 
+ birth will be premature. There is more blue prominent (displaying premature births) from ages 30 - 40 in the graph that shows mothers that smoke in comparison to the graph that shows mothers who do not smoke. 
+
+```
 ####Ping
 ####Sasha
 ##Who did what
