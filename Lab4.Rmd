@@ -25,6 +25,46 @@ babies <- rename(babies, bwtoz = `bwt/oz`) #renaming `bwt/oz` because the "/" si
 ggplot(babies,mapping=aes(x=bwtoz ,y=gestation))+geom_point()+geom_smooth()
 ```
 ####Peter
+```{r, echo = FALSE}
+library(tidyverse)
+babies <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/babies2a.dat")
+babies <- rename(babies, bwtoz = `bwt/oz`)
+B <- split(babies, babies$smoke)
+#c <- ggplot(babies, aes(as.factor(smoke), bwtoz)) 
+
+
+vars <- colnames(babies)
+Nsmoke <- B[[1]]
+Smoke <- B[[2]]
+
+x <- vector(mode = 'numeric', length(vars))
+y <- vector(mode = 'numeric', length(vars))
+for (i in 1:length(vars)){
+  
+  nsm <- cor(Nsmoke$gestation, Nsmoke[i], use = "complete.obs")
+  sm <- cor(Smoke$gestation, Smoke[i], use = "complete.obs")
+  
+  x[[i]] <- nsm
+  y[[i]] <- sm
+  
+  
+  
+}
+c <- ggplot()
+c <- c + geom_point(aes(x, as.factor(vars) ), color = 'red')
+c <- c + geom_point(aes(y, as.factor(vars)), color = 'blue')
+c <- c + xlab("Correlation")
+c <- c + ylab("Field")
+c <- c + ggtitle("Correlation with Gestation Period", subtitle = "Red = Non-Smoking, Blue = Smoking")
+print(c)
+
+```
+I created a plot that shows the differences in correlation between gestation period and all other fields for smokers and non-smokers. The figure facilitates analysis of factors other than smoking,   
+showing their influence on the variables we are studying. The large difference in correlation between birth weight and gestation period indicates that smoking lowers birth weight at all gestation lengths,  
+because a high correlation means that both values grow together. 
+
+
+
 ####Gregor
 ```{r}
  ggplot(data = babies) + geom_bar(mapping = aes(x = mage, fill = as.factor(Premature) ), bins = 30) + labs(x = "Mother's Age", y = "Number of Women", fill = "Premature Birth or Not") + facet_wrap(~smoke)
