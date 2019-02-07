@@ -23,6 +23,11 @@ Based on our analyses, we conclude that smoking during pregnancy has a profound 
 ####Lauren
 
 ```{r}
+babies <- na.omit(babies)
+ggplot(babies)+geom_boxplot(outlier.colour = "red", outlier.shape = 1, mapping=aes(x=as.factor(smoke),y=bwtoz,)) + xlab("Smokers") + ggtitle("Distribution of Birth Weight in Smokers and Non-Smokers") + ylab("Birth Weight in Ounces")+theme_minimal()
+```
+
+```{r}
 ggplot(babies,mapping=aes(x=bwtoz ,y=gestation))+geom_point()+geom_smooth()
 ```
 ####Peter
