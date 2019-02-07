@@ -29,13 +29,21 @@ ggplot(data = babies, aes(x = bwtoz, y = gestation)) + facet_wrap(~smoke)+geom_p
 
 
 ##Our Recommendation
-Based on our analyses, we conclude that smoking during pregnancy has a profound impact on the average weight and gestation period of babies. Although this trend is not obvious in most grpahics, the difference between the smoking and non-smoking population correlations between birth weight and gestation period shows our findings best. This correlation is higher within the smoking population, which shows that babies with smoking mothers born earlier are more likely to be lighter than babies of non - smoking mothers. These findings support those of the Attorney General.
-##Preliminary Question
-##Individual Findings
-####Lauren
+Based on our analyses, we conclude that smoking during pregnancy has a profound impact on the average weight and gestation period of babies. Although this trend is not obvious in most grpahics, the difference between the smoking and non-smoking population correlations between birth weight and gestation period shows our findings best. This correlation is higher within the smoking population, which shows that babies with smoking mothers born earlier are more likely to be lighter than babies of non - smoking mothers. These findings support those of the Attorney General.  
+
+## Preliminary Question
+
+Based on Peter’s individual graph, we were able to conclude that most of the variables did not have much differentiation between smokers and non smokers. However, the correlation between birth weight and gestation period did differ between Smokers and Non-Smokers. We chose to investigate and graph this relationship further in our team graph. Other variables that differed between smokers and non smokers include parity and mother pregnancy weight.
+
+
+
+## Individual Findings
+
+#### Lauren
 
 ```{r}
-ggplot(babies,mapping=aes(x=bwtoz ,y=gestation))+geom_point()+geom_smooth()
+babies <- na.omit(babies)
+ggplot(babies)+geom_boxplot(outlier.colour = "red", outlier.shape = 1, mapping=aes(x=as.factor(smoke),y=bwtoz,)) + xlab("Smokers") + ggtitle("Distribution of Birth Weight in Smokers and Non-Smokers") + ylab("Birth Weight in Ounces")+theme_minimal()
 ```
 
 This plot shows a higher median weight in babies whose mothers have never smoked, vs mothers who do smoke. It is also interesting to note that there is smaller distribution in Birth Weight for Non-Smoker mothers, but more outliers. Generally, one can conclude Non-Smoking mothers have babies with higher birth rates. The general health of the mothers could be a confounding factor, and it would be interesting to note the correlation between general health and smoking vs. non smoking mothers.
@@ -80,6 +88,7 @@ I created a plot that shows the differences in correlation between gestation per
 
 ####Gregor
 ```{r}
+babies <- na.omit(babies)
  ggplot(data = babies) + geom_bar(mapping = aes(x = mage, fill = as.factor(Premature) ), bins = 30) + labs(x = "Mother's Age", y = "Number of Women", fill = "Premature Birth or Not") + facet_wrap(~smoke)
 
 ```
@@ -92,7 +101,7 @@ I created a plot that shows the differences in correlation between gestation per
 ####Ping
 ```{r}
 babies <- na.omit(babies)
-ggplot(data = babies) +  geom_bar(mapping = aes(x = as.factor(babies$smoke), fill = as.factor(babies$med)), position = "dodge") + labs(x = "Smoke")
+ggplot(data = babies) +  geom_bar(mapping = aes(x = as.factor(babies$smoke), fill = as.factor(babies$med)), position = "dodge") + labs(x = "Smoke", fill = "Mother Education")
 ```
 
 I started by analyzing what variables are different between women who smoke or not. From the graph, we can see, women who never smoked, generally have higher education. Women who smoked have higher counts of pre-high school education. Women who didn’t smoke have higher counts of high school education, some colleges education, and college graduate.
@@ -100,7 +109,7 @@ I started by analyzing what variables are different between women who smoke or n
 ```{r}
 babies <- na.omit(babies) 
 ggplot(data = babies) +
-  geom_bar(mapping = aes(x = as.factor(babies$smoke), fill = as.factor(babies$Premature)), position = "dodge") + labs(x = "Smoke") 
+  geom_bar(mapping = aes(x = as.factor(babies$smoke), fill = as.factor(babies$Premature)), position = "dodge") + labs(x = "Smoke", fill = "Babies Premature state") 
 ```
 
 From the graph, we can see the counts of mom who smoke and have premature babies are slightly higher than the babies’ mom who don’t smoke. So the Surgeon General’s first assertion is right.
@@ -128,12 +137,12 @@ p <- ggplot(babies, aes(x=gestation)) +
            color="deeppink4", linetype="solid", size=1)
 ```
 
-“I, Sasha Maslowski, created a plot showing showing the average gestation period for smokers for smokers and non-smokers. The data showed that the average gestation period for non smokers is longer than the smokers gestation period. I used the geom function to create a density plot  and adjusted the color and fill. In addition I used a facet grod adjustment to show the difference between smokers and non-smokers. and changed the default labels to make the plot easier to read.
+I, Sasha Maslowski, created a plot showing showing the average gestation period for smokers for smokers and non-smokers. The data showed that the average gestation period for non smokers is longer than the smokers gestation period. I used the geom function to create a density plot and adjusted the color and fill. In addition I used a facet grod adjustment to show the difference between smokers and non-smokers. and changed the default labels to make the plot easier to read.
 
 ##Who did what
-Lauren: I created a box plot to show the distribution in Birth Weight between Smokers and Non-Smokers. I also changed the color of the outliers in the graph to make them easier to see. Additionally, it is important to note there was no data for "Mothers who smoked until their pregnancy" and "Mothers who once smoked but not now".
-Peter: I wrote a script to find correlation values between gestation and all other fields, and plots them by smoking classification for easy analysis
-Gregor:
-Ping: I tried to find how smoke affects mom's life and babies' health and the birth weight. I found smoke does affect babies' health and no smoking does give babies higher weight birth and longer gestation.
+Lauren: I created a box plot to show the distribution in Birth Weight between Smokers and Non-Smokers. I also changed the color of the outliers in the graph to make them easier to see. Additionally, it is important to note there was no data for "Mothers who smoked until their pregnancy" and "Mothers who once smoked but not now".  
+Peter: I wrote a script to find correlation values between gestation and all other fields, and plots them by smoking classification for easy analysis  
+Gregor: I created a plot that showed how age influenced the rate of premature babies of smokers and non smokers, at different ages, demonstrating that age can affect whether the birth is premature or not, depending whether the mother smoked or not. I also helped format the document, and pieced together the conclusions that were made. 
+Ping: I tried to find how smoke affects mom's life and babies' health and the birth weight. I found smoke does affect babies' health and no smoking does give babies higher weight birth and longer gestation.  
 Sasha:I used the geom function to create a density plot  and adjusted the color and fill. In addition I used a facet grod adjustment to show the difference between smokers and non-smokers.
 
