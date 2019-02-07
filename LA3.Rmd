@@ -14,7 +14,7 @@ cdc <- as_tibble(cdc)
 Our team decided to investigate the relationship between smoking, age and general health.  It is interesting and important to explore this relationship as it can give a better understanding to the effects of smoking. This answer will be interesting and important as it may lead to a better general health for the community. 
 PLOT:
 ```{r}
-> ggplot(data  = cdc) + 
+ggplot(data  = cdc) + 
     geom_boxplot(mapping = aes(x  = genhlth, y = age)) +
     facet_wrap(~ smoke100, nrow = 2)
 ```
@@ -89,10 +89,7 @@ I chose to graph how one's general health varies and how it relates to either th
 =======
 =======
 
->>>>>>> Stashed changes
-
- ```{r}
->>>>>>> Stashed changes
+```{r}
 ggplot(data = cdc) +
 geom_jitter(mapping = aes(x = genhlth, y= hlthplan), color = "deeppink4")+ facet_wrap("gender")+
   labs(x= "General Health")+ labs (y= "Healthplan")+ labs(title= "The Relationship between General Health and Having a Healthplan for Men and Women")

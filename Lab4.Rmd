@@ -70,7 +70,32 @@ I created a plot that shows the differences in correlation between gestation per
  birth will be premature. There is more blue prominent (displaying premature births) from ages 30 - 40 in the graph that shows mothers that smoke in comparison to the graph that shows mothers who do not smoke. 
 
 ```
+
+
 ####Ping
+```{r}
+babies <- na.omit(babies)
+ggplot(data = babies) +  geom_bar(mapping = aes(x = as.factor(babies$smoke), fill = as.factor(babies$med)), position = "dodge") + labs(x = "Smoke")
+
+I started by analyzing what variables are different between women who smoke or not. From the graph, we can see, women who never smoked, generally have higher education. Women who smoked have higher counts of pre-high school education. Women who didn’t smoke have higher counts of high school education, some colleges education, and college graduate.
+```
+```{r}
+babies <- na.omit(babies) 
+ggplot(data = babies) +
+  geom_bar(mapping = aes(x = as.factor(babies$smoke), fill = as.factor(babies$Premature)), position = "dodge") + labs(x = "Smoke") 
+
+From the graph, we can see the counts of mom who smoke and have premature babies are slightly higher than the babies’ mom who don’t smoke. So the Surgeon General’s first assertion is right.
+```
+```{r}
+ggplot(data = babies) +
+  geom_point(mapping = aes(x = babies$gestation, y = babies$bwtoz))+
+  facet_wrap(~babies$smoke, nrow = 2) + labs(x = "Gestation", y = "Birth Weight") + ggtitle("How smoke affects Birth weight and Gestation")
+
+From the graph below, we can see that mom who don't smoke, it is denser for babies to have higher birth weight and longer gestation.
+```
+
+
+
 ####Sasha
 ##Who did what
 Lauren:
