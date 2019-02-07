@@ -1,40 +1,36 @@
 ---
-title: "Lab4: R Kelly"
+title: "Lab 4: Smoking and Low Birth Weight?"
+author: "R-Kelly: Lauren Tafoya, Peter Bullard, Gregor Tzinov, Ping Li, and Sasha Maslowski"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+babies <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/babies2a.dat")
+babies <- rename(babies, bwtoz = `bwt/oz`) #renaming `bwt/oz` because the "/" sign requires special care
 ```
 
-# Does Smoking Lead to Babies Born Prematurely and with Low Birth Weight?
+##Overall Questions
+##Conclusions
 
-### Team RKelly (Gregor, Sasha, Lauren, Ping, Peter)
+*put plot here
 
-Two Main Questions:
-1. Do mothers who smoke have a greater chance of having a premature delivery?
-2. Do newborns of mothers who have smoked have smaller birth weights at each gestational age?
+##Our Recommendation
+##Preliminary Question
+##Individual Findings
+####Lauren
 
-Other things to keep in mind (Potential topics to plot for individual part): 
-* There could be various factors that influence gestation length and birth weight. These variables need to be identified, and see how they'll influence the relationship between smoking and premature delivery, as well as smoking and smaller gestational age weights
-* Which variables are similar between smokers and non-smokers, which are different? 
-
-Individual Sections:
-
-Gregor:
-
-Sasha:
-
+```{r}
+ggplot(babies,mapping=aes(x=bwtoz ,y=gestation))+geom_point()+geom_smooth()
+```
+####Peter
+####Gregor
+####Ping
+####Sasha
+##Who did what
 Lauren:
-
-Ping: 
-
 Peter:
-
-
-
-
-
-
-
-
+Gregor:
+Ping:
+Sasha:
