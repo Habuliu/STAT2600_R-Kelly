@@ -73,6 +73,19 @@ I created a plot that shows the differences in correlation between gestation per
 ```
 ####Ping
 ####Sasha
+
+```{r}
+p <- ggplot(babies, aes(x=gestation)) + 
+   geom_density(color = "deeppink4", fill= "lightpink")+ 
+   facet_grid(~smoke)
+ 
+ 
+ p+ geom_vline(aes(xintercept=mean(gestation)),
+           color="deeppink4", linetype="solid", size=1)
+```
+
+“I, Sasha Maslowski, created a plot showing showing the average gestation period for smokers for smokers and non-smokers. The data showed that the average gestation period for non smokers is longer than the smokers gestation period. I used the geom function to create a density plot  and adjusted the color and fill. In addition I used a facet grod adjustment to show the difference between smokers and non-smokers. and changed the default labels to make the plot easier to read.
+
 ##Who did what
 Lauren:
 Peter: I wrote a script to find correlation values between gestation and all other fields, and plots them by smoking classification for easy analysis
