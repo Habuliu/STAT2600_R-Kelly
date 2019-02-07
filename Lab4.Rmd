@@ -25,7 +25,7 @@ babies <- rename(babies, bwtoz = `bwt/oz`) #renaming `bwt/oz` because the "/" si
 ggplot(babies,mapping=aes(x=bwtoz ,y=gestation))+geom_point()+geom_smooth()
 ```
 ####Peter
-```{r, echo = FALSE, message = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse)
 babies <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/babies2a.dat")
 babies <- rename(babies, bwtoz = `bwt/oz`)
@@ -59,6 +59,7 @@ c <- c + ggtitle("Correlation with Gestation Period", subtitle = "Red = Non-Smok
 print(c)
 
 ```
+  
 I created a plot that shows the differences in correlation between gestation period and all other fields for smokers and non-smokers. The figure facilitates analysis of factors other than smoking,  showing their influence on the variables we are studying. The large difference in correlation between birth weight and gestation period indicates that smoking lowers birth weight at all gestation lengths,  because a high correlation means that both values grow together. 
 
 ####Gregor
