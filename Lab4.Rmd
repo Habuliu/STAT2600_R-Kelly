@@ -115,5 +115,5 @@ p <- ggplot(babies, aes(x=gestation)) +
 Lauren:
 Peter: I wrote a script to find correlation values between gestation and all other fields, and plots them by smoking classification for easy analysis
 Gregor:
-Ping:
+Ping: I tried to find how smoke affects mom's life and babies' health and the birth weight. I found smoke does affect babies' health and no smoking does give babies higher weight birth and longer gestation.
 Sasha:
