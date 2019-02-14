@@ -109,7 +109,7 @@ milk <- milk %>%
 milk_sasha <- milk %>% filter(year==2000)
 
 ggplot(data = milk_sasha, aes(x = milk_million)) +
-  geom_density() + 
+  geom_density(fill= 'lightpink', color= 'thistle1') + 
   ggtitle('Distribution estimate of milk produced in 2000 by state') +
   labs(x="Milk Produced in Millions",y="Density" )
 
