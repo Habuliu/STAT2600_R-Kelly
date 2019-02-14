@@ -1,6 +1,132 @@
+---
+title: "Lab5"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(tidyverse)
+```
+
+```{r, include=FALSE}
+milk <- read.csv('state_milk_production.csv')
+head(milk)
+```
+
+
+##Individual
+
+####Lauren: 1998
+
+```{r}
+milk <- milk %>%
+  mutate(milk_million = milk_produced/1000000)
+milk_lauren <- milk %>% filter(year==1998)
+
+ggplot(data = milk_lauren, aes(x = milk_million)) +
+  geom_density() + 
+  ggtitle('Distribution estimate of milk produced in 1998 by state') +
+  labs(x="Milk Produced in Millions",y="Density" )
+
+lauren_stats <- milk_lauren %>% summarise(average = mean(milk_million), median = median(milk_million))
+
+most_milk_lauren <- milk_lauren %>% filter(year==1998) %>% arrange(desc(milk_produced)) 
+```
+
+Mean (Millions) | Median (Millions) | Maximum | Minimum
+---- | ------ | ------- | -------
+3145 | 1412   | California | Alaska 
+
+####Ping: 1996
+
+```{r}
+milk <- milk %>%
+  mutate(milk_million = milk_produced/1000000)
+milk_ping <- milk %>% filter(year==1996)
+
+ggplot(data = milk_ping, aes(x = milk_million)) +
+  geom_density() + 
+  ggtitle('Distribution estimate of milk produced in 1996 by state') +
+  labs(x="Milk Produced in Millions",y="Density" )
+
+ping_stats <- milk_ping %>% summarise(average = mean(milk_million), median = median(milk_million))
+
+most_milk_ping <- milk_ping %>% filter(year==1996) %>% arrange(desc(milk_produced)) 
+```
+
+Mean (Millions) | Median (Millions) | Maximum | Minimum
+---- | ------ | ------- | -------
+3080 | 1480   | California | Alaska 
+
+####Gregor: 1999
+
+```{r}
+milk <- milk %>%
+  mutate(milk_million = milk_produced/1000000)
+milk_gregor <- milk %>% filter(year==1999)
+
+ggplot(data = milk_gregor, aes(x = milk_million)) +
+  geom_histogram(bins=20) + 
+  ggtitle('Distribution estimate of milk produced in 1999 by state') +
+  labs(x="Milk Produced in Millions",y="Density" )
+
+gregor_stats <- milk_gregor %>% summarise(average = mean(milk_million), median = median(milk_million))
+
+most_milk_gregor <- milk_gregor %>% filter(year==1999) %>% arrange(desc(milk_produced)) 
+```
+
+Mean (Millions) | Median (Millions) | Maximum | Minimum
+---- | ------ | ------- | -------
+3252 | 1418   | California | Alaska 
+
+####Peter: 1999
+
+```{r}
+milk <- milk %>%
+  mutate(milk_million = milk_produced/1000000)
+milk_peter <- milk %>% filter(year==1999)
+
+ggplot(data = milk_peter, aes(x = milk_million)) +
+  geom_density() + 
+  ggtitle('Distribution estimate of milk produced in 1999 by state') +
+  labs(x="Milk Produced in Millions",y="Density" )
+
+peter_stats <- milk_peter %>% summarise(average = mean(milk_million), median = median(milk_million))
+
+most_milk_peter <- milk_peter %>% filter(year==1999) %>% arrange(desc(milk_produced)) 
+```
+
+Mean (Millions) | Median (Millions) | Maximum | Minimum
+---- | ------ | ------- | -------
+3252 | 1418   | California | Alaska 
+
+####Sasha: 2000
+```{r}
+milk <- milk %>%
+  mutate(milk_million = milk_produced/1000000)
+milk_sasha <- milk %>% filter(year==2000)
+
+ggplot(data = milk_sasha, aes(x = milk_million)) +
+  geom_density() + 
+  ggtitle('Distribution estimate of milk produced in 2000 by state') +
+  labs(x="Milk Produced in Millions",y="Density" )
+
+sasha_stats <- milk_sasha %>% summarise(average = mean(milk_million), median = median(milk_million))
+
+most_milk_sasha <- milk_sasha %>% filter(year==2000) %>% arrange(desc(milk_produced)) 
+```
+
+Mean (Millions) | Median (Millions) | Maximum | Minimum
+---- | ------ | ------- | -------
+3348 | 1454   | California | Alaska 
+
+##Team Section
+
+```{r, include=FALSE}
 library(tidyverse)
 library(dplyr)
-milk <- read.csv('milk_data.txt')
 milk <- milk %>%
   mutate(milk_million = milk_produced/1000000)
 
@@ -31,3 +157,5 @@ c <- ggplot(data = milksub, aes(x = year, y = milk_million, color = state)) +
 
 
 print(c)
+```
+
