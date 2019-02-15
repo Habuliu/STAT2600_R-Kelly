@@ -176,5 +176,6 @@ Mean (Millions) | Median (Millions) | Maximum | Minimum
 ---- | ------ | ------- | -------
 3348 | 1454   | California | Alaska 
 
-
+###Team Conclusion
+Ping: I think plotting the graph with time series and with the states that we want to compare is a very good way to learn about this data set. We can clearly see how different states have different amount of milk produced. Also, we can see how the production of milk changed every year. In this lab hw, I did the questions that ask for the most and least amount of milk produced throughout the years and in 2017 for the team section.
 
