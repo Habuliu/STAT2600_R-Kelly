@@ -15,6 +15,50 @@ milk <- read.csv('state_milk_production.csv')
 head(milk)
 ```
 
+##Team Section
+
+```{r, include=FALSE}
+library(tidyverse)
+library(dplyr)
+milk <- milk %>%
+  mutate(milk_million = milk_produced/1000000)
+
+milksub <- milk %>%
+  filter(state %in% c('New York','California','Oregon','Colorado','Texas')) %>%
+  select(state, year, milk_million)
+avgline <- milk %>%
+  group_by(year) %>%
+  summarise(
+    n = n(),
+    mean = mean(milk_million, na.rm = TRUE)
+  ) 
+milkperyear <- milk %>% 
+  group_by(year) %>%
+  summarise(
+    n = n(),
+    sum = sum(milk_million, na.rm = TRUE)
+  ) 
+
+c <- ggplot(data = milksub, aes(x = year, y = milk_million, color = state)) +
+  geom_point() + 
+  geom_point(data = avgline, aes(avgline$year, avgline$mean), color = 'black')+
+
+  ggtitle('Pounds of milk over time by state') +
+  xlab('Year') +
+  ylab('Milk Produced (Million lb)')
+
+
+print(c)
+```
+
+
+
+
+
+
+
+
+
 
 ##Individual
 
@@ -42,18 +86,24 @@ Mean (Millions) | Median (Millions) | Maximum | Minimum
 ####Ping: 1996
 
 ```{r}
-milk <- milk %>%
-  mutate(milk_million = milk_produced/1000000)
-milk_ping <- milk %>% filter(year==1996)
+milk1996 <- milk %>% filter(year == 1996)
 
-ggplot(data = milk_ping, aes(x = milk_million)) +
+ggplot(data = milk1996, aes(x = milk_million)) +
   geom_density() + 
-  ggtitle('Distribution estimate of milk produced in 1996 by state') +
-  labs(x="Milk Produced in Millions",y="Density" )
+  ggtitle('Distribution estimate of milk produced in 1996 by state')
 
-ping_stats <- milk_ping %>% summarise(average = mean(milk_million), median = median(milk_million))
+mean <- milk1996 %>% summarise(Mean = mean(milk_million))
+mean
 
-most_milk_ping <- milk_ping %>% filter(year==1996) %>% arrange(desc(milk_produced)) 
+median <- milk1996 %>% summarise(median = median(milk_million))
+median
+
+milk_most <- milk1996 %>% arrange(desc(milk_million)) 
+milk_most 
+
+milk_least <- milk1996 %>% arrange(milk_million)
+milk_least 
+ 
 ```
 
 Mean (Millions) | Median (Millions) | Maximum | Minimum
@@ -122,40 +172,5 @@ Mean (Millions) | Median (Millions) | Maximum | Minimum
 ---- | ------ | ------- | -------
 3348 | 1454   | California | Alaska 
 
-##Team Section
 
-```{r, include=FALSE}
-library(tidyverse)
-library(dplyr)
-milk <- milk %>%
-  mutate(milk_million = milk_produced/1000000)
-
-milksub <- milk %>%
-  filter(state %in% c('New York','California','Oregon','Colorado','Texas')) %>%
-  select(state, year, milk_million)
-avgline <- milk %>%
-  group_by(year) %>%
-  summarise(
-    n = n(),
-    mean = mean(milk_million, na.rm = TRUE)
-  ) 
-milkperyear <- milk %>% 
-  group_by(year) %>%
-  summarise(
-    n = n(),
-    sum = sum(milk_million, na.rm = TRUE)
-  ) 
-
-c <- ggplot(data = milksub, aes(x = year, y = milk_million, color = state)) +
-  geom_point() + 
-  geom_point(data = avgline, aes(avgline$year, avgline$mean), color = 'black')+
-
-  ggtitle('Pounds of milk over time by state') +
-  xlab('Year') +
-  ylab('Milk Produced (Million lb)')
-
-
-
-print(c)
-```
 
