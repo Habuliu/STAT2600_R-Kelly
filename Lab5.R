@@ -1,9 +1,9 @@
 ---
-title: "Lab5"
+  title: "Lab5"
 output: html_document
 ---
-
-```{r setup, include=FALSE}
+  
+  ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ```{r}
@@ -42,7 +42,7 @@ milkperyear <- milk %>%
 c <- ggplot(data = milksub, aes(x = year, y = milk_million, color = state)) +
   geom_point() + 
   geom_point(data = avgline, aes(avgline$year, avgline$mean), color = 'black')+
-
+  
   ggtitle('Pounds of milk over time by state') +
   xlab('Year') +
   ylab('Milk Produced (Million lb)')
@@ -85,7 +85,7 @@ most_milk_lauren <- milk_lauren %>% filter(year==1998) %>% arrange(desc(milk_pro
 
 Mean (Millions) | Median (Millions) | Maximum | Minimum
 ---- | ------ | ------- | -------
-3145 | 1412   | California | Alaska 
+  3145 | 1412   | California | Alaska 
 
 ####Ping: 1996
 
@@ -107,33 +107,40 @@ milk_most
 
 milk_least <- milk1996 %>% arrange(milk_million)
 milk_least 
- 
+
 ```
 
 Mean (Millions) | Median (Millions) | Maximum | Minimum
 ---- | ------ | ------- | -------
-3080 | 1480   | California | Alaska 
+  3080 | 1480   | California | Alaska 
 
 ####Gregor: 1999
 
-```{r}
-milk <- milk %>%
-  mutate(milk_million = milk_produced/1000000)
-milk_gregor <- milk %>% filter(year==1999)
 
-ggplot(data = milk_gregor, aes(x = milk_million)) +
-  geom_histogram(bins=20) + 
-  ggtitle('Distribution estimate of milk produced in 1999 by state') +
-  labs(x="Milk Produced in Millions",y="Density" )
+my_milk <- milk %>%
+  filter(year == "1999") 
 
-gregor_stats <- milk_gregor %>% summarise(average = mean(milk_million), median = median(milk_million))
+ggplot(my_milk, aes(x = milk_million)) + geom_histogram(bins = 30) + 
+  ggtitle("Distribution of milk production in the year of 1999") + 
+  xlab("Production of milk in millions") + ylab("Number of states that have produced x milk amount")
 
-most_milk_gregor <- milk_gregor %>% filter(year==1999) %>% arrange(desc(milk_produced)) 
-```
 
-Mean (Millions) | Median (Millions) | Maximum | Minimum
----- | ------ | ------- | -------
-3252 | 1418   | California | Alaska 
+my_milk_summary <- my_milk %>%
+  group_by(year) %>%
+  summarise(Average_Milk_Produced = sum(milk_million) / 50, Median_Milk_Produced = median(milk_million))
+
+
+top_state <- my_milk %>%
+  arrange(desc(milk_million)) %>%
+  as.tibble() %>%
+  top_n(1) %>%
+  select(state, milk_million)
+
+bottom_state <- my_milk %>%
+  arrange(desc(milk_million)) %>%
+  as.tibble() %>%
+  top_n(-1) %>%
+  select(state, milk_million)
 
 ####Peter: 1999
 
@@ -154,7 +161,7 @@ most_milk_peter <- milk_peter %>% filter(year==1999) %>% arrange(desc(milk_produ
 
 Mean (Millions) | Median (Millions) | Maximum | Minimum
 ---- | ------ | ------- | -------
-3252 | 1418   | California | Alaska 
+  3252 | 1418   | California | Alaska 
 
 ####Sasha: 2000
 ```{r}
@@ -174,8 +181,15 @@ most_milk_sasha <- milk_sasha %>% filter(year==2000) %>% arrange(desc(milk_produ
 
 Mean (Millions) | Median (Millions) | Maximum | Minimum
 ---- | ------ | ------- | -------
-3348 | 1454   | California | Alaska 
+  3348 | 1454   | California | Alaska 
 
 ###Team Conclusion
-Ping: I think plotting the graph with time series and with the states that we want to compare is a very good way to learn about this data set. We can clearly see how different states have different amount of milk produced. Also, we can see how the production of milk changed every year. In this lab hw, I did the questions that ask for the most and least amount of milk produced throughout the years and in 2017 for the team section.
+I think plotting the graph with time series and with the states that we want to compare is a very good way
+to learn about this data set. We can clearly see how different states have different amount of milk produced. 
+Also, we can see how the production of milk changed every year. With the graphing of milk production versus time,
+one could start making predictions about how a state's economy is changing over time. If a certain state is
+known for it's milk production, and it plummits during a certain year, then that may lead to more insights on what
+is going on in that state. 
+
+
 
