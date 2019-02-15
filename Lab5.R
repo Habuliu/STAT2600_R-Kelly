@@ -50,11 +50,11 @@ c <- ggplot(data = milksub, aes(x = year, y = milk_million, color = state)) +
 
 print(c)
 ```
-
-
-
-
-
+```{r}
+the_most <- milk %>% group_by(year, milk_million) %>% arrange(desc(milk_million))
+the_least <- milk %>% group_by(year, milk_million) %>% arrange(milk_million)
+```
+So, we can see the year when the most milk was produced in the United States was in 2014. And the year when the least milk was produced in the United States was 2013 and 2017.
 
 
 
