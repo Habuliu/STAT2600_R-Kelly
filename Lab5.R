@@ -56,8 +56,12 @@ the_least <- milk %>% group_by(year, milk_million) %>% arrange(milk_million)
 ```
 So, we can see the year when the most milk was produced in the United States was in 2014. And the year when the least milk was produced in the United States was 2013 and 2017.
 
-
-
+```{r}
+mostIn2017 <- milk %>% filter(year == 2017) %>% arrange(desc(milk_million))
+leastIn2017 <- milk %>% filter(year == 2017) %>% arrange(milk_million)
+```
+So, we can see that in 2017, the 5 states that produced the most milk are California, Wisconsin, New York, Idaho and Texas. 
+So, we can see that in 2017, the 5 states that produced the least milk are Alaska, Rhode Island, Hawaii, Arkansas, Alabama.
 
 
 ##Individual
