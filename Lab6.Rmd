@@ -13,12 +13,31 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/osfstorage/5a8ca28f57103100104584db")
 ```
-##Peter
-This plot shows the relative distribution of flights delay times, and their average air speed. This graph shows that there is almost no correlation between arrival delay and airspeed of the flight. 
-```{r}
-Cflights <- mutate(COflights, distAir = DISTANCE/AIR_TIME)
-c <- ggplot(data = COflights, mapping = aes(x = ARR_DELAY, y = distAir)) +
-   geom_point() +
-   geom_smooth()
-print(c)
-```
+
+###Personal Section
+####Peter
+
+
+
+####Lauren
+
+
+
+####Gregor
+
+
+
+####Sasha
+
+
+
+
+####Ping
+
+
+
+
+
+
+
+###Team Section
