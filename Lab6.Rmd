@@ -23,6 +23,8 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 ##Findings:
 #Peter:  
 I found that flight speed has almost no effect of the arrival delay of flights, as the disrtibution of late flights matches that of flight speed. 
+#Ping:
+I found the year does not have a huge effect on the delay of flights.
 ##Recomendation:  
 
 
