@@ -32,7 +32,7 @@ I found that flight speed has almost no effect of the arrival delay of flights, 
 This plot shows the relative distribution of flights delay times, and their average air speed. This graph shows that there is almost no correlation between arrival delay and airspeed of the flight. 
 ```{r}
 Cflights <- mutate(COflights, distAir = DISTANCE/AIR_TIME)
-c <- ggplot(data = COflights, mapping = aes(x = ARR_DELAY, y = distAir)) +
+c <- ggplot(data = Cflights, mapping = aes(x = ARR_DELAY, y = distAir)) +
    geom_hex() +
    geom_smooth()
 print(c)
@@ -60,17 +60,17 @@ ggplot(data = delayDenFlights) + geom_bar(mapping = aes(x = MONTH, fill = CARRIE
 
 ```
 
-#What we did:  
-#Peter:  
+##What we did:  
+###Peter:  
 I examined the relationship between average airspeed and arrival delay, as well as helped with the formatting of the report and formulation of our research questions. 
 
-#Lauren
+###Lauren
 
-#Gregor
+###Gregor
 
-#Sasha
+###Sasha
 
-#Ping
+###Ping
 
 
 
