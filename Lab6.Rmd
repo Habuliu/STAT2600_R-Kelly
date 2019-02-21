@@ -33,7 +33,7 @@ This plot shows the relative distribution of flights delay times, and their aver
 ```{r}
 Cflights <- mutate(COflights, distAir = DISTANCE/AIR_TIME)
 c <- ggplot(data = COflights, mapping = aes(x = ARR_DELAY, y = distAir)) +
-   geom_point() +
+   geom_hex() +
    geom_smooth()
 print(c)
 ```
