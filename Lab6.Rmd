@@ -62,7 +62,7 @@ ggplot(data = delayDenFlights) + geom_bar(mapping = aes(x = MONTH, fill = CARRIE
 
 #What we did:  
 #Peter:  
-I examined the relationship between average airspeed and arrival delay, as well as helped with the formatting and formulation of our research questions. 
+I examined the relationship between average airspeed and arrival delay, as well as helped with the formatting of the report and formulation of our research questions. 
 
 #Lauren
 
