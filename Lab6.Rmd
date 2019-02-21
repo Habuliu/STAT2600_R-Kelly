@@ -24,8 +24,10 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 #Peter:  
 I found that flight speed has almost no effect of the arrival delay of flights, as the disrtibution of late flights matches that of flight speed. 
 #Ping:
-I found the year does not have a huge effect on the delay of flights.
+According to the plot I showed below, we can see that the month of the year and different brands of the carriers do affect the delay of the flights a little bit. We can see that January, and May through August are the months having the highest probability of a delayed flight. WN, UA, OO carriers have the highest probability of having a delayed flight. So, all in all, there is a higher chance of taking a delayed flight by WN, UA, and OO carriers in Jan, and May through August.  
 ##Recomendation:  
+#Ping:
+When it comes to travelling, choose the months that are not that busy, for example, months from Feb to April and From Sep to Dec. Also, especially try to avoid choosing WN, UA, OO carriers in busy months, because they have a higher chance of being delayed.
 
 
 ###Personal Section
@@ -72,7 +74,8 @@ I examined the relationship between average airspeed and arrival delay, as well 
 
 ###Sasha
 
-###Ping
+###Ping:  
+I explored the relationship between month, carriers and the delayed flights. I also helped with the conclusion of the Team Findings. 
 
 
 
