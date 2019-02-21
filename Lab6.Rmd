@@ -49,6 +49,47 @@ print(c)
 
 ####Gregor
 
+```{r, echo = FALSE}
+late_taxi_out <- filter(COflights, TAXI_OUT>= 15)
+late_taxi_in <- filter(COflights, TAXI_IN >= 15)
+num_late_taxi_out_delayed <- count(filter(late_taxi_out, ARR_DELAY >= 15))
+num_late_taxi_in_delayed <- count(filter(late_taxi_in, ARR_DELAY >= 15))
+```
+
+Probability of flight that has delayed taxi out is delayed with arrival is:
+```{r, echo=FALSE}
+ num_late_taxi_out_delayed[1][1] / count(COflights) * 100
+```
+
+Probability of flight that has delayed taxi in is delayed with arrival is:
+```{r, echo=FALSE}
+num_late_taxi_in_delayed[1][1] / count(COflights) * 100
+```
+
+Creating vectors to contain names and values
+```{r}
+x = c("Probability of flights that had late taxi times on arrival being delayed", "Probability of flights that had late taxi times on departure being delayed")
+
+y = c(num_late_taxi_in_delayed[1][1] / count(COflights) * 100, num_late_taxi_out_delayed[1][1] / count(COflights)*100)
+```
+
+Creating Tibble
+
+```{r}
+GraphData <- tibble(x, y)
+```
+
+
+```{r}
+ggplot(data = GraphData, aes(x = x, y = y)) + geom_bar(stat = "identity") + coord_flip() + ylab("Percentage") + xlab("Type of taxi delay")
+```
+
+
+
+With these results, it is clear that taxing on DENs side doesn't affect whether the flight is delayed. However, it is unknown whether the arrival time is recorded before or after taxing. If it is recorded after taxing, then this information is significant as it shows that DEN airport is efficient in taxing, since there's a low chance that flights that are delayed is due to late taxing. However, if the arrival time is recorded before taxing, then this information is insignificant in relation to identifying what DEN airport can do to adjust for preventing delayed flights. 
+
+When flights that have a delayed taxi time leaving the origin airport to DEN, there's about a 10% chance that they will be delayed coming into DEN. The airport could perhaps use this information as if they see a flight has a taxi time of more than 15 minutes, than they can expect that 10% of the time it will be a delayed flight, which can be used to inform people that are awaiting passsengers of that flight. 
+
 
 
 ####Sasha
@@ -71,6 +112,8 @@ I examined the relationship between average airspeed and arrival delay, as well 
 ###Lauren
 
 ###Gregor
+Examined the probability of flights that have delayed taxi times delaying the actual arrival time of the flight
+
 
 ###Sasha
 
