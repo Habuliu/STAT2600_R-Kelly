@@ -46,7 +46,12 @@ print(c)
 
 
 ####Ping
+I try to explore how can the month of the year and the brands of the carriers affect the delay of the flight to Denver.
+```{r}
+DenDelayed_Month_Carrier <- COflights %>% filter(DEST == "DEN", ARR_DELAY >= 15) %>% select(YEAR, MONTH, CARRIER, ARR_DELAY)
+ggplot(data = delayDenFlights) + geom_bar(mapping = aes(x = MONTH, fill = CARRIER)) + xlim(0,13)
 
+```
 
 
 
