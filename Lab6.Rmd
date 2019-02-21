@@ -18,6 +18,13 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 ##Main Questions:  
 #What are the most likely factors to delay flights arriving in Denver?   
 #What variables, if any, have no predictable effect on arrival delays?
+##Team Plot:
+
+##Findings:
+#Peter:  
+I found that flight speed has almost no effect of the arrival delay of flights, as the disrtibution of late flights matches that of flight speed. 
+##Recomendation:  
+
 
 ###Personal Section
 ####Peter
@@ -48,7 +55,17 @@ print(c)
 ####Ping
 
 
+#What we did:  
+#Peter:  
+I examined the relationship between average airspeed and arrival delay, as well as helped with the formatting and formulation of our research questions. 
 
+#Lauren
+
+#Gregor
+
+#Sasha
+
+#Ping
 
 
 
