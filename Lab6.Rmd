@@ -20,7 +20,21 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 #What variables, if any, have no predictable effect on arrival delays?
 ##Team Plot:
 
+```{r}
+
+landed<- COflights %>% filter(ORIGIN == "DEN", CANCELLED==0)
+
+late<-landed %>% filter(ARR_DELAY>=15) %>% mutate(DELAY= ifelse(WEATHER_DELAY != 0,1,0) + ifelse(NAS_DELAY != 0,1,0) + ifelse(SECURITY_DELAY != 0,1,0) + ifelse(CARRIER_DELAY != 0,1,0) + ifelse(LATE_AIRCRAFT_DELAY != 0,1,0))
+
+delaytype <- c("Carrier Delay", "Weather Delay", "NAS Delay", "Security Delay", "Late Aircraft Delay")
+
+total_time_delayed <- c(summarise(late, sum(CARRIER_DELAY)),summarise(late, sum(WEATHER_DELAY)),summarise(late, sum(NAS_DELAY)),summarise(late, sum(SECURITY_DELAY)),summarise(late, sum(LATE_AIRCRAFT_DELAY)) )
+delay_data <- data.frame(delaytype, total_time_delayed)
+ggplot(delay_data)+geom_col(mapping = aes(x=delaytype, y=total_time_delayed))
+```
+
 ##Findings:
+
 #Peter:  
 I found that flight speed has almost no effect of the arrival delay of flights, as the disrtibution of late flights matches that of flight speed. 
 #Ping:
@@ -31,6 +45,7 @@ When it comes to travelling, choose the months that are not that busy, for examp
 
 
 ###Personal Section
+
 ####Peter
 
 This plot shows the relative distribution of flights delay times, and their average air speed. This graph shows that there is almost no correlation between arrival delay and airspeed of the flight. 
@@ -45,6 +60,31 @@ print(c)
 
 ####Lauren
 
+```{r echo=TRUE}
+nlate<- summarise(late, sum(DELAY))
+
+nweather<-landed %>% filter(ARR_DELAY>=15 & WEATHER_DELAY>0) %>% count()
+pweather<-nweather/nlate
+
+ncarrier<-landed %>% filter(ARR_DELAY>=15 & CARRIER_DELAY>0) %>% count()
+pcarrier<-ncarrier/nlate
+
+nnas<-landed %>% filter(ARR_DELAY>=15 & NAS_DELAY>0) %>% count()
+pnas<-nnas/nlate
+
+nsecurity<-landed %>% filter(ARR_DELAY>=15 & SECURITY_DELAY>0) %>% count()
+psecurity<-nsecurity/nlate
+
+nlateaircraft<-landed %>% filter(ARR_DELAY>=15 & LATE_AIRCRAFT_DELAY>0) %>% count()
+plateaircraft<-nlateaircraft/nlate
+```
+
+```{r}
+delaytype <- c("Carrier Delay", "Weather Delay", "NAS Delay", "Security Delay", "Late Aircraft Delay")
+amount_of_delays <- c(20997,1667,23199,38,21087 )
+delay_data <- data.frame(delaytype, amount_of_delays)
+ggplot(delay_data)+geom_col(mapping = aes(x=delaytype, y=amount_of_delays))
+```
 
 
 ####Gregor
@@ -117,7 +157,9 @@ ggplot(data = secondHalf) +
 
 ####Ping
 I try to explore how can the month of the year and the brands of the carriers affect the delay of the flight to Denver.
-```{r}
+
+```{r eval=FALSE, include=FALSE}
+
 DenDelayed_Month_Carrier <- COflights %>% filter(DEST == "DEN", ARR_DELAY >= 15) %>% select(YEAR, MONTH, CARRIER, ARR_DELAY)
 ggplot(data = delayDenFlights) + geom_bar(mapping = aes(x = MONTH, fill = CARRIER)) + xlim(0,13)
 
@@ -128,6 +170,7 @@ ggplot(data = delayDenFlights) + geom_bar(mapping = aes(x = MONTH, fill = CARRIE
 I examined the relationship between average airspeed and arrival delay, as well as helped with the formatting of the report and formulation of our research questions. 
 
 ###Lauren
+I examined the probability of different delay types given that a flight was delayed. 
 
 ###Gregor
 Examined the probability of flights that have delayed taxi times delaying the actual arrival time of the flight
