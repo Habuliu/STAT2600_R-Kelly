@@ -177,6 +177,11 @@ ggplot(data = secondHalf) +
   geom_bar(mapping = aes(x = ARR_DELAY))+ xlim(0,60) + xlab( "Arrival Delay")
 ```
 
+According to the data, it is more probable that a flight will have an arrival delay
+ earlier in the month as opposed to later. That being said, the difference in arrival 
+ delay is minimal so I wouldn't make a suggestion based on day of the week.
+
+
 
 
 
@@ -204,7 +209,6 @@ Examined the probability of flights that have delayed taxi times delaying the ac
 
 ###Sasha:
 I explored the probablity of arrival delay for flights that occur in the first half of the month (until the 15th day) and then also the second half of the month. 
-According to the data, it is more probable that a flight will have an arrival delay earlier in the month as opposed to later.
 
 ###Ping:  
 I explored the relationship between month, carriers and the delayed flights. I also helped with the conclusion of the Team Findings. 
