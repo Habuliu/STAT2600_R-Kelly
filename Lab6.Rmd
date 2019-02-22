@@ -94,6 +94,24 @@ When flights that have a delayed taxi time leaving the origin airport to DEN, th
 
 ####Sasha
 
+```{r}
+ firstHalf <- filter(COflights, DAY_OF_MONTH <= 15)
+firstHalfDelayed <- count(filter(firstHalf, ARR_DELAY >= 15))
+firstHalfDelayed[1][1] / count(COflights) * 100
+```
+```{r}
+secondHalf <- filter(COflights, DAY_OF_MONTH >15)
+secondHalfDelayed <- count(filter(secondHalf, ARR_DELAY >= 15))
+secondHalfDelayed[1][1] / count(COflights) * 100
+
+ggplot(data = firstHalf) + 
+  geom_bar(mapping = aes(x = ARR_DELAY))+ xlim(0,60) + xlab( "Arrival Delay")
+
+ggplot(data = secondHalf) + 
+  geom_bar(mapping = aes(x = ARR_DELAY))+ xlim(0,60) + xlab( "Arrival Delay")
+```
+
+
 
 
 
@@ -115,7 +133,9 @@ I examined the relationship between average airspeed and arrival delay, as well 
 Examined the probability of flights that have delayed taxi times delaying the actual arrival time of the flight
 
 
-###Sasha
+###Sasha:
+I explored the probablity of arrival delay for flights that occur in the first half of the month (until the 15th day) and then also the second half of the month. 
+According to the data, it is more probable that a flight will have an arrival delay earlier in the month as opposed to later.
 
 ###Ping:  
 I explored the relationship between month, carriers and the delayed flights. I also helped with the conclusion of the Team Findings. 
