@@ -15,9 +15,10 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 ```
 
 ###Team Section 
-##Main Questions:  
+#Main Questions:  
 #What are the most likely factors to delay flights arriving in Denver?   
-#What variables, if any, have no predictable effect on arrival delays?
+#What variables, if any, have no predictable effect on arrival delays?   
+
 ##Team Plot:
 
 ```{r}
@@ -34,7 +35,6 @@ ggplot(delay_data)+geom_col(mapping = aes(x=delaytype, y=total_time_delayed))
 ```
 
 ##Findings:
-
 #Peter:  
 I found that flight speed has almost no effect of the arrival delay of flights, as the disrtibution of late flights matches that of flight speed. 
 #Ping:
@@ -161,7 +161,7 @@ I try to explore how can the month of the year and the brands of the carriers af
 ```{r eval=FALSE, include=FALSE}
 
 DenDelayed_Month_Carrier <- COflights %>% filter(DEST == "DEN", ARR_DELAY >= 15) %>% select(YEAR, MONTH, CARRIER, ARR_DELAY)
-ggplot(data = delayDenFlights) + geom_bar(mapping = aes(x = MONTH, fill = CARRIER)) + xlim(0,13)
+ggplot(data = DenDelayed_Month_Carrier) + geom_bar(mapping = aes(x = MONTH, fill = CARRIER)) + xlim(0,13)
 
 ```
 
