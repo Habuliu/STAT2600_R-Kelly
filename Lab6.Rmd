@@ -1,8 +1,10 @@
 ---
-title: "Lab 6: Airport Data Science"
-author: R-Kelly
-date: 2019-02-19
-output: html_document
+title: 'Lab 6: Airport Data Science'
+author: "R-Kelly"
+date: '2019-02-19'
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -15,9 +17,16 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 ```
 
 #Team Section 
+
 ##Main Questions:  
-####What are the most likely factors to delay flights arriving in Denver?   
+
+####What are the most likely factors to delay flights arriving in Denver?  
+
+It is interesting to note that the probability of a Late Aircraft Delay occuring given that there is a arrival delay, is higher when looking at the number of minutes produced by each delay versus the number of actual delays. With that being said, Late Aircraft Delays, Carrier Delays, and NAS Delays are still the most likely factor to delay flights arriving to Denver. 
+
 ####What variables, if any, have no predictable effect on arrival delays?   
+
+As seen in Peter's individual plot, we can conclude that the average air speed does not have a predictable effect on arrival delays. It is also intereseting to note that weather delays and security delays are the least likely to be a factor for a delayed flight arriving to Denver. 
 
 ##Team Plot:
 
@@ -25,24 +34,34 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 
 landed<- COflights %>% filter(ORIGIN == "DEN", CANCELLED==0)
 
-late<-landed %>% filter(ARR_DELAY>=15) %>% mutate(DELAY= ifelse(WEATHER_DELAY != 0,1,0) + ifelse(NAS_DELAY != 0,1,0) + ifelse(SECURITY_DELAY != 0,1,0) + ifelse(CARRIER_DELAY != 0,1,0) + ifelse(LATE_AIRCRAFT_DELAY != 0,1,0))
+late<-landed %>% filter(ARR_DELAY>=15) %>% mutate(DELAY= ifelse(WEATHER_DELAY != 0,1,0) + ifelse(NAS_DELAY != 0,1,0) + ifelse(SECURITY_DELAY != 0,1,0) + ifelse(CARRIER_DELAY != 0,1,0) + ifelse(LATE_AIRCRAFT_DELAY != 0,1,0)) 
 
 delaytype <- c("Carrier Delay", "Weather Delay", "NAS Delay", "Security Delay", "Late Aircraft Delay")
 
 total_time_delayed <- c(summarise(late, sum(CARRIER_DELAY)),summarise(late, sum(WEATHER_DELAY)),summarise(late, sum(NAS_DELAY)),summarise(late, sum(SECURITY_DELAY)),summarise(late, sum(LATE_AIRCRAFT_DELAY)) )
 delay_data <- data.frame(delaytype, total_time_delayed)
-ggplot(delay_data)+geom_col(mapping = aes(x=delaytype, y=total_time_delayed))
+ggplot(delay_data)+geom_col(mapping = aes(x=delaytype, y=total_time_delayed), fill = 'light pink') + theme_minimal()
 ```
 
 ##Findings:
-#Peter:  
+
+####Peter:  
+
 I found that flight speed has almost no effect of the arrival delay of flights, as the disrtibution of late flights matches that of flight speed. 
-#Ping:
+
+####Ping:
+
 According to the plot I showed below, we can see that the month of the year and different brands of the carriers do affect the delay of the flights a little bit. We can see that January, and May through August are the months having the highest probability of a delayed flight. WN, UA, OO carriers have the highest probability of having a delayed flight. So, all in all, there is a higher chance of taking a delayed flight by WN, UA, and OO carriers in Jan, and May through August.  
+
 ##Recomendation:  
-#Ping:
+
+####Ping:
+
 When it comes to travelling, choose the months that are not that busy, for example, months from Feb to April and From Sep to Dec. Also, especially try to avoid choosing WN, UA, OO carriers in busy months, because they have a higher chance of being delayed.
 
+####Lauren: 
+
+I would recommend to the airport managers to focus on carrier delays since this is the one variable which is most in the airline's control. The managers should work on a more effective process in this area. 
 
 ###Personal Section
 
@@ -83,9 +102,16 @@ plateaircraft<-nlateaircraft/nlate
 delaytype <- c("Carrier Delay", "Weather Delay", "NAS Delay", "Security Delay", "Late Aircraft Delay")
 amount_of_delays <- c(20997,1667,23199,38,21087 )
 delay_data <- data.frame(delaytype, amount_of_delays)
-ggplot(delay_data)+geom_col(mapping = aes(x=delaytype, y=amount_of_delays))
+ggplot(delay_data)+geom_col(mapping = aes(x=delaytype, y=amount_of_delays)) + theme_dark()
 ```
 
+From this representation of the data it is clear that the largest amount of Arrival Delays occurs due to National Air System delays, with delays due to Late Aircraft and Carrier Delays
+close behind. The proabilities of each delay type occuring based on the number of delays (not the delays in minutes) is as follows. 
+
+
+Carrier Delay | Weather Delay | NAS Delay | Security Delay | Late Aircraft Delay
+---- | ------ | ------- | ------- | ------ 
+31.3% | 2.49%   | 34.6% |  .0567% | 31.5%
 
 ####Gregor
 
@@ -158,7 +184,7 @@ ggplot(data = secondHalf) +
 ####Ping
 I try to explore how can the month of the year and the brands of the carriers affect the delay of the flight to Denver.
 
-```{r eval=FALSE, include=FALSE}
+```{r echo=TRUE}
 
 DenDelayed_Month_Carrier <- COflights %>% filter(DEST == "DEN", ARR_DELAY >= 15) %>% select(YEAR, MONTH, CARRIER, ARR_DELAY)
 ggplot(data = DenDelayed_Month_Carrier) + geom_bar(mapping = aes(x = MONTH, fill = CARRIER)) + xlim(0,13)
@@ -170,7 +196,7 @@ ggplot(data = DenDelayed_Month_Carrier) + geom_bar(mapping = aes(x = MONTH, fill
 I examined the relationship between average airspeed and arrival delay, as well as helped with the formatting of the report and formulation of our research questions. 
 
 ###Lauren
-I examined the probability of different delay types given that a flight was delayed. 
+I examined the probability of different delay types given that a flight was delayed by calculating probabilities and representing the data in a bar graph. 
 
 ###Gregor
 Examined the probability of flights that have delayed taxi times delaying the actual arrival time of the flight
