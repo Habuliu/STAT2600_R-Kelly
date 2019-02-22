@@ -51,7 +51,7 @@ I found that flight speed has almost no effect of the arrival delay of flights, 
 
 ####Ping:
 
-According to the plot I showed below, we can see that the month of the year and different brands of the carriers do affect the delay of the flights a little bit. We can see that January, and May through August are the months having the highest probability of a delayed flight. WN, UA, OO carriers have the highest probability of having a delayed flight. So, all in all, there is a higher chance of taking a delayed flight by WN, UA, and OO carriers in Jan, and May through August.  
+According to the plot I showed below, we can see that the month of the year and different brands of the carriers do affect the delay of the flights a little bit. We can see that May through August are the months having the highest probability of a delayed flight. WN, UA, OO carriers have the highest probability of having a delayed flight. So, all in all, there is a higher chance of taking a delayed flight by WN, UA, and OO carriers in May through August.  
 
 ##Recomendation:  
 
@@ -189,7 +189,17 @@ I try to explore how can the month of the year and the brands of the carriers af
 DenDelayed_Month_Carrier <- COflights %>% filter(DEST == "DEN", ARR_DELAY >= 15) %>% select(YEAR, MONTH, CARRIER, ARR_DELAY)
 ggplot(data = DenDelayed_Month_Carrier) + geom_bar(mapping = aes(x = MONTH, fill = CARRIER)) + xlim(0,13)
 
+total_allMonths <- DenDelayed_Month_Carrier %>% count()
+highlyDelayedCount <- DenDelayed_Month_Carrier %>% filter((MONTH %in% c(5, 8)))  %>% count()
+prob <- (highlyDelayedCount/total_allMonths)
+
+pro_may_aug_lowdelayed <- (DenDelayed_Month_Carrier %>% filter(CARRIER %in% c("DL", "AA", "VX")) %>% count()) / total_allMonths
+
+pro_may_aug_highdelayed <- (DenDelayed_Month_Carrier %>% filter(CARRIER %in% c("WN", "VA", "OO")) %>% count()) / total_allMonths
+
 ```
+We can see from the information above, that the probability of a delayed flight in May through August is 20.58%. In May through August, if you take the flights of WN, UA, OO, there is a even higher chance of being delayed(53.34%), compaing to taking DL, AA, VX(11.16%).
+
 
 ##What we did:  
 ###Peter:  
