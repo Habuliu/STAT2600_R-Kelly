@@ -26,7 +26,7 @@ It is interesting to note that the probability of a Late Aircraft Delay occuring
 
 ####What variables, if any, have no predictable effect on arrival delays?   
 
-As seen in Peter's individual plot, we can conclude that the average air speed does not have a predictable effect on arrival delays. It is also intereseting to note that weather delays and security delays are the least likely to be a factor for a delayed flight arriving to Denver. 
+As seen in Peter's individual plot, we can conclude that the average air speed does not have a predictable effect on arrival delays. It is also interesting to note that weather delays and security delays are the least likely to be a factor for a delayed flight arriving to Denver. 
 
 ##Team Plot:
 
@@ -57,7 +57,7 @@ According to the plot I showed below, we can see that the month of the year and 
 
 ####Ping:
 
-When it comes to travelling, choose the months that are not that busy, for example, months from Feb to April and From Sep to Dec. Also, especially try to avoid choosing WN, UA, OO carriers in busy months, because they have a higher chance of being delayed.
+When it comes to travelling, choose the months that are not that busy, for example, months from Sep to April. Also, especially try to avoid choosing WN, UA, OO carriers in busy months, because they have a higher chance of being delayed.
 
 ####Lauren: 
 
