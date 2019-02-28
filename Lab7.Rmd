@@ -1,0 +1,60 @@
+---
+title: "Lab7"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+library(tidyverse)
+library(data.table)
+library(lubridate)
+powerC<-read.table('household_power_consumption.txt', sep=';',header= T, na.strings = c("NA","","?"), stringsAsFactors=FALSE)
+str(data5)
+```
+
+
+###Lauren
+
+```{r}
+powerConsum <- powerC %>% 
+  mutate(Year = year(dmy(Date)), Month = month(dmy(Date)), Day = day(dmy(Date)))
+
+Winter <- powerConsum %>% 
+  filter(Month %in% c(12,1,2))
+powerconsumwinter <- summarise(Winter, sum(Sub_metering_3, na.rm=T))
+
+Summer <- powerConsum %>% 
+  filter(Month %in% c(6,7,8))
+powerconsumsummer <- summarise(Summer, sum(Sub_metering_3, na.rm=T))
+
+Spring <- powerConsum %>% 
+  filter(Month %in% c(3,4,5))
+powerconsumspring <- summarise(Spring, sum(Sub_metering_3, na.rm=T))
+
+Fall <- powerConsum %>% 
+  filter(Month %in% c(9,10,11))
+powerconsumfall <- summarise(Fall, sum(Sub_metering_3, na.rm=T))
+
+season <- c("Winter", "Spring", "Summer", "Fall")
+power_consumption_sub_metering_3 <- c(powerconsumwinter,powerconsumspring,powerconsumsummer,powerconsumfall)
+season_data <- data.frame(season, power_consumption_sub_metering_3)
+ggplot(season_data)+geom_col(mapping = aes(x=season, y=power_consumption_sub_metering_3), fill = 'hot pink') + theme_classic()
+
+```
+
+###Gregor
+
+```{r}
+data <- powerC %>%
+  separate(Time, into  = c("Hours", "Minutes", "seconds"), sep = ":")
+
+filtered_time <- filter(data, Hours == 22)
+
+ggplot(data = filtered_time, aes(x = Minutes, y = Sub_metering_1)) + geom_jitter() + ylab("Energy use in kitchen") + xlab("Minutes past 11PM")
+
+```
+
+Answer: When looking at the graph, it is clear that throughout11PM, the energy use is either at 40 Watt Hour of energy, or near 0. This shows that there is either a high usage, or none at all. Something that could explain this is that either the household would put the dishwasher to use before going to bed, or they wouldn't, and that when the dishwasher is working it's using that precise amount of energy where the dark y line is. The other points could represent when the household is doing additional things in this area of the house, that are taking less / more energy than the constant of a dishwasher. This demonstrates this family generally has a similar schedule for power in this area of the house, with an assumption of putting the dishwasher to use a lot of nights, and the stray points not located near the bulk of the data represents nights their schedule is different. and that various things from this area of the house, such as a microwave or an oven, are being used
