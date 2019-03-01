@@ -114,7 +114,7 @@ decSum <- sum(Dec$Sub_metering_3,na.rm = TRUE)
 
 Graph <- tibble(Year = c(rep(2008,12)), Total = c(janSum,febSum,marSum,aprSum,maySum,junSum,julSum,augSum,sepSum,octSum,novSum,decSum), Month = c(1:12), Type = rep(3,12))
 
-ggplot(data = Graph) + geom_line(mapping = aes(x = Graph$Month, y = Graph$Total)) + labs(x = "Month", y = "Meter3 total", title = "Water-heater & Air-conditioner usage in 2008") + scale_x_continuous(breaks=c(1,3,5,7,9,11))
+ggplot(data = Graph) + geom_line(mapping = aes(x = Graph$Month, y = Graph$Total, fill = "red")) + labs(x = "Month", y = "Meter3 total", title = "Water-heater & Air-conditioner usage in 2008") + scale_x_continuous(breaks=c(1,3,5,7,9,11))
 ```
 
 conclusion: I started by analyzing the overall relatiosnhip between years and the trending of Meter1, 2 and 3. I realized Meter3 grows consistently, so I took 2008 to take a deeper look. We can see from the graph that water-heater and air-conditioner usage increases from Feb to Apr. The usage had a huge decreases from June to Aug. This can explain with their summer temperature is comfortable or people travel abroad a lot durin the summers.  
