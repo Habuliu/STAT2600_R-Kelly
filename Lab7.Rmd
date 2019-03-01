@@ -82,9 +82,9 @@ ggplot(powerC) +
 ###Ping   
 I want to explore how the year, month are affecting the meters assumptions. By the first graph I did, I learned that Meter3(water-heater and air-conditioner) is incresing more thtoughout the years, so I did one more step to see how the meter3 usage is changing in 2008.
 ```{r}
-powerConsum <- powerConsum %>% mutate(Year = year(dmy(Date)), Month = month(dmy(Date)), Day = day(dmy(Date)))
+powerC <- powerC %>% mutate(Year = year(dmy(Date)), Month = month(dmy(Date)), Day = day(dmy(Date)))
 
-mySecondData <- powerConsum %>% filter(powerConsum$Year != 2006) %>% select(Sub_metering_1,Sub_metering_2,Sub_metering_3,Year, Month)
+mySecondData <- powerC %>% filter(powerC$Year != 2006) %>% select(Sub_metering_1,Sub_metering_2,Sub_metering_3,Year, Month)
 Jan <- mySecondData %>% filter(mySecondData$Month == 1, mySecondData$Year == 2008)
 Feb <- mySecondData %>% filter(mySecondData$Month == 2, mySecondData$Year == 2008)
 Mar <- mySecondData %>% filter(mySecondData$Month == 3, mySecondData$Year == 2008)
