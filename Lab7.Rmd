@@ -58,3 +58,12 @@ ggplot(data = filtered_time, aes(x = Minutes, y = Sub_metering_1)) + geom_jitter
 ```
 
 Answer: When looking at the graph, it is clear that throughout11PM, the energy use is either at 40 Watt Hour of energy, or near 0. This shows that there is either a high usage, or none at all. Something that could explain this is that either the household would put the dishwasher to use before going to bed, or they wouldn't, and that when the dishwasher is working it's using that precise amount of energy where the dark y line is. The other points could represent when the household is doing additional things in this area of the house, that are taking less / more energy than the constant of a dishwasher. This demonstrates this family generally has a similar schedule for power in this area of the house, with an assumption of putting the dishwasher to use a lot of nights, and the stray points not located near the bulk of the data represents nights their schedule is different. and that various things from this area of the house, such as a microwave or an oven, are being used
+
+###Sasha
+
+ggplot(powerC) + 
+  geom_jitter(aes(x=Global_active_power, y = Sub_metering_1), color = "royalblue1")+
+  geom_jitter(  aes(x=Global_active_power, y = Sub_metering_2), color = "lightpink")+
+  geom_jitter( aes(x=Global_active_power, y = Sub_metering_3), color = "slateblue1")+ ylab("Sub Metering") + xlab("Global Active Power")
+
+  I graphed the three different Sub Metering as it relates to the Global Active Power. Global Active Power is the household global minute-averaged active power and Sub Metering 1 is the energy used in areas corresponding to the kitchen, usually in the form of a dishwasher, oven or microwave. Sub Metering 2 is the power used in areas corresponding to laundry rooms generally containing a washer, dryer and a refridgerator. Sub Metering 3 corresponds to areas relating to an electric water heater or air conditioner. As seen in the graph, it is clear that submetering 1 and 2 use relatively the same amount of energy while submetering 3 uses way less amount of energy.
