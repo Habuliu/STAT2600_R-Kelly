@@ -77,3 +77,43 @@ ggplot(powerC) +
 
 
   I graphed the three different Sub Metering as it relates to the Global Active Power. Global Active Power is the household global minute-averaged active power and Sub Metering 1 is the energy used in areas corresponding to the kitchen, usually in the form of a dishwasher, oven or microwave. Sub Metering 2 is the power used in areas corresponding to laundry rooms generally containing a washer, dryer and a refridgerator. Sub Metering 3 corresponds to areas relating to an electric water heater or air conditioner. As seen in the graph, it is clear that submetering 1 and 2 use relatively the same amount of energy while submetering 3 uses way less amount of energy.
+
+
+###Ping   
+I want to explore how the year, month are affecting the meters assumptions. By the first graph I did, I learned that Meter3(water-heater and air-conditioner) is incresing more thtoughout the years, so I did one more step to see how the meter3 usage is changing in 2008.
+```{r}
+powerConsum <- powerConsum %>% mutate(Year = year(dmy(Date)), Month = month(dmy(Date)), Day = day(dmy(Date)))
+
+Jan <- powerConsum %>% filter(powerConsum$Month == 1, powerConsum$Year == 2008) + select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Feb <- powerConsum %>% filter(powerConsum$Month == 2, powerConsum$Year == 2008) + select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Mar <- powerConsum %>% filter(powerConsum$Month == 3, powerConsum$Year == 2008) + select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Apr <- powerConsum %>% filter(powerConsum$Month == 4, powerConsum$Year == 2008) + select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+May <- powerConsum %>% filter(powerConsum$Month == 5, powerConsum$Year == 2008) + select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Jun <- powerConsum %>% filter(powerConsum$Month == 6, powerConsum$Year == 2008) + select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Jul <- powerConsum %>% filter(powerConsum$Month == 7, powerConsum$Year == 2008)+ select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Aug <- powerConsum %>% filter(powerConsum$Month == 8, powerConsum$Year == 2008) + select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Sep <- powerConsum %>% filter(powerConsum$Month == 9, powerConsum$Year == 2008) + select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Oct <- powerConsum %>% filter(powerConsum$Month == 10, powerConsum$Year == 2008)+ select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Nov <- powerConsum %>% filter(powerConsum$Month == 11, powerConsum$Year == 2008)+ select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+Dec <- powerConsum %>% filter(powerConsum$Month == 12, powerConsum$Year == 2008)+ select(powerConsum$Sub_metering_3, powerConsum$Year, powerConsum$Month)
+
+janSum <- sum(Jan$Sub_metering_3,na.rm = TRUE)
+febSum <- sum(Feb$Sub_metering_3,na.rm = TRUE)
+marSum <- sum(Mar$Sub_metering_3,na.rm = TRUE)
+aprSum <- sum(Apr$Sub_metering_3,na.rm = TRUE)
+maySum <- sum(May$Sub_metering_3,na.rm = TRUE)
+junSum <- sum(Jun$Sub_metering_3,na.rm = TRUE)
+julSum <- sum(Jul$Sub_metering_3,na.rm = TRUE)
+augSum <- sum(Aug$Sub_metering_3,na.rm = TRUE)
+sepSum <- sum(Sep$Sub_metering_3,na.rm = TRUE)
+octSum <- sum(Oct$Sub_metering_3,na.rm = TRUE)
+nowSum <- sum(Nov$Sub_metering_3,na.rm = TRUE)
+novSum <- sum(Nov$Sub_metering_3,na.rm = TRUE)
+decSum <- sum(Dec$Sub_metering_3,na.rm = TRUE)
+
+Graph <- tibble(Year = c(rep(2008,12)), Total = c(janSum,febSum,marSum,aprSum,maySum,junSum,julSum,augSum,sepSum,octSum,novSum,decSum), Month = c(1:12), Type = rep(3,12))
+
+ggplot(data = Graph) + geom_line(mapping = aes(x = Graph$Month, y = Graph$Total)) + labs(x = "Month", y = "Meter3 total", title = "Water-heater & Air-conditioner usage in 2008") + scale_x_continuous(breaks=c(1,3,5,7,9,11))
+```
+
+conclusion: I started by analyzing the overall relatiosnhip between years and the trending of Meter1, 2 and 3. I realized Meter3 grows consistently, so I took 2008 to take a deeper look. We can see from the graph that water-heater and air-conditioner usage increases from Feb to Apr. The usage had a huge decreases from June to Aug. This can explain with their summer temperature is comfortable or people travel abroad a lot durin the summers.  
