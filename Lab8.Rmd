@@ -111,4 +111,12 @@ geom_point(
 aes(x = lon, y = lat),
 data = gc, colour = "red", size = 3
 )
+###Peter
+```{r}
+datam <- limelocation
+datam$lat <- as.integer(datam$lat)
+datam$cases <- as.numeric(datam$cases)
+c <- ggplot(datam, aes(x = cases, y = lat)) +
+  geom_smooth( color = 'red')
+```
 >>>>>>> Stashed changes
