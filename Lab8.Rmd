@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 <<<<<<< Updated upstream
 ```{r, include=FALSE}
 library(tidyverse)
-Lyme_00_17 <- read.csv("lab8-file.csv", header = TRUE)
+lab8data <- read.csv("lab8-file.csv", header = TRUE)
 ```
 
 
@@ -108,10 +108,50 @@ Originally I wanted to plot the cases of lime disease on a map of the United Sta
 
 ###Peter
 ```{r}
-datam <- limelocation
-datam$lat <- as.integer(datam$lat)
-datam$cases <- as.numeric(datam$cases)
-c <- ggplot(datam, aes(x = cases, y = lat)) +
-  geom_smooth( color = 'red')
+datam <- limelocation %>% select(cases, lat)
+
+ggplot(datam) +
+  geom_point(aes(x = cases, y = lat))
+  
+```
+
+###Sasha
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readr)
+lymeDisease <- read_csv("lab8-file.csv")
+
+lymeDisease <- lymeDisease %>% 
+  gather(`Cases2000`, `Cases2001`,`Cases2002`,`Cases2003`,`Cases2004`,`Cases2005`,`Cases2006`, `Cases2007`,`Cases2008`,`Cases2009`,`Cases2010`,`Cases2011`,`Cases2012`,`Cases2013`,`Cases2014`,`Cases2015`,`Cases2016`,`Cases2017`,key = "Year", value = "Cases")
+lymeDisease$Year[lymeDisease$Year=='Cases2000'] <- 2000
+lymeDisease$Year[lymeDisease$Year=='Cases2001'] <- 2001
+lymeDisease$Year[lymeDisease$Year=='Cases2002'] <- 2002
+lymeDisease$Year[lymeDisease$Year=='Cases2003'] <- 2003
+lymeDisease$Year[lymeDisease$Year=='Cases2004'] <- 2004
+lymeDisease$Year[lymeDisease$Year=='Cases2005'] <- 2005
+lymeDisease$Year[lymeDisease$Year=='Cases2006'] <- 2006
+lymeDisease$Year[lymeDisease$Year=='Cases2007'] <- 2007
+lymeDisease$Year[lymeDisease$Year=='Cases2008'] <- 2008
+lymeDisease$Year[lymeDisease$Year=='Cases2009'] <- 2009
+lymeDisease$Year[lymeDisease$Year=='Cases2010'] <- 2010
+lymeDisease$Year[lymeDisease$Year=='Cases2011'] <- 2011
+lymeDisease$Year[lymeDisease$Year=='Cases2012'] <- 2012
+lymeDisease$Year[lymeDisease$Year=='Cases2013'] <- 2013
+lymeDisease$Year[lymeDisease$Year=='Cases2014'] <- 2014
+lymeDisease$Year[lymeDisease$Year=='Cases2015'] <- 2015
+lymeDisease$Year[lymeDisease$Year=='Cases2016'] <- 2016
+lymeDisease$Year[lymeDisease$Year=='Cases2017'] <- 2017
+lymeDisease$Year <- parse_integer(lymeDisease$Year)
+
+lymeDisease$STCODE <- NULL
+lymeDisease$CTYCODE <- NULL
+
+
+ggplot(data = lymeDisease, aes(x=Year, y=Cases, color = Stname)) +
+  geom_bar(stat="identity")
+
+
+
+
 ```
 >>>>>>> Stashed changes
