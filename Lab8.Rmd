@@ -53,6 +53,9 @@ library(readr)
 uscities <- read_csv("uscitiesv1.4.csv")
 lime$data <- parse_character(lime$Ctyname)
 
+fips <- read_csv("fipss.csv")
+
+
 `+` <- function(e1, e2) {
   ## unary
   if (missing(e2)) return(e1)
@@ -70,10 +73,13 @@ lime$data <- parse_character(lime$Ctyname)
 }
 
 uscities$county_name <- uscities$county_name + " County"
+fips$County <- fips$County + " County"
 
 lime2 <- merge(limetotal, uscities, by.x = "Ctyname", by.y = "county_name", all = TRUE)
 
-limelocation<- lime2 %>% select(Ctyname, cases, lat, lng)
+limelocation<- lime2 %>% select(Ctyname, state_name, cases, lat, lng)
+
+limelocation<- merge(limelocation, fips, by.x="Ctyname", by.y = "County", all = TRUE)
 
 #unique(limelocation, by = "Ctyname")
 
@@ -84,12 +90,13 @@ limelocation<- lime2 %>% select(Ctyname, cases, lat, lng)
 limelocation<-limelocation[!duplicated(limelocation$Ctyname), ]
 limelocation<-na.omit(limelocation)
 
+library(ggplot2)
+plot_usmap("counties")
+plot_usmap("counties", data = limelocation, values = "cases") #+ 
+    #ggplot2::scale_fill_continuous(low = "blue", high = "yellow", guide = FALSE)
 
 
-```
 
-
-```{r}
 
 ```
 
