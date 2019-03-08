@@ -7,6 +7,11 @@ output: html_document
 
 ###Team Statement
 
+Overall question we're answering -an explanation of why that question is important or interesting and a deeper explanation of why those reasons are important or interesting
+
+The pretend domain & the reference/link to the data 
+
+conclusion & recommendation
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
