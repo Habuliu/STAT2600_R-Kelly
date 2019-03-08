@@ -154,4 +154,59 @@ ggplot(data = lymeDisease, aes(x=Year, y=Cases, color = Stname)) +
 
 
 ```
+
+### Gregor
+
+All of Tidying / Arranging Data Set
+
+
+```{r}
+lime <- Lyme_00_17 %>% 
+  gather(`Cases2000`, `Cases2001`,`Cases2002`,`Cases2003`,`Cases2004`,`Cases2005`,`Cases2006`, `Cases2007`,`Cases2008`,`Cases2009`,`Cases2010`,`Cases2011`,`Cases2012`,`Cases2013`,`Cases2014`,`Cases2015`,`Cases2016`,`Cases2017`,key = "Year", value = "Cases")
+lime$Year[lime$Year=='Cases2000'] <- 2000
+lime$Year[lime$Year=='Cases2001'] <- 2001
+lime$Year[lime$Year=='Cases2002'] <- 2002
+lime$Year[lime$Year=='Cases2003'] <- 2003
+lime$Year[lime$Year=='Cases2004'] <- 2004
+lime$Year[lime$Year=='Cases2005'] <- 2005
+lime$Year[lime$Year=='Cases2006'] <- 2006
+lime$Year[lime$Year=='Cases2007'] <- 2007
+lime$Year[lime$Year=='Cases2008'] <- 2008
+lime$Year[lime$Year=='Cases2009'] <- 2009
+lime$Year[lime$Year=='Cases2010'] <- 2010
+lime$Year[lime$Year=='Cases2011'] <- 2011
+lime$Year[lime$Year=='Cases2012'] <- 2012
+lime$Year[lime$Year=='Cases2013'] <- 2013
+lime$Year[lime$Year=='Cases2014'] <- 2014
+lime$Year[lime$Year=='Cases2015'] <- 2015
+lime$Year[lime$Year=='Cases2016'] <- 2016
+lime$Year[lime$Year=='Cases2017'] <- 2017
+lime$Year <- parse_integer(lime$Year)
+
+library(plyr)
+colnames(lime)[2] <- "State"
+colnames(lime)[3] <- "State Code"
+lime$Ctyname <- NULL
+lime$CTYCODE <- NULL
+lime2 <- ddply(lime,"State",numcolwise(sum))
+lime2 <- mutate(lime2, HighState = ifelse(State == "Colorado" | State == "Wyoming" | State == "Utah" | State == "New Mexico" | State == "Nevada" | State == "Idaho" | State == "Arizona" | State == "Oregon" | State == "Hawaii", "Yes", "No"))
+
+lime3 <- filter(lime2, HighState == "No")
+lime4 <- filter(lime2, HighState == "Yes")
+
+
+```
+
+```{r}
+ggplot(lime3, aes(x = State, y = Cases)) + geom_histogram(stat = "identity") + coord_flip() + ylab("Cases of Lyme Disease from 2000-2017 in states with low average elevation") + ylim(0, 100000)
+
+ggplot(lime4, aes(x = State, y = Cases)) + geom_histogram(stat = "identity") + coord_flip() + ylab("Cases of Lyme Disease from 2000-2017 in states with high average elevation") + ylim(0, 100000)
+```
+
+
+I wanted to determine whether there was a correlation between number of total cases of Lyme disease throughout these 17 years and certain areas of the US. Initially, I tidied the raw set so that years would be under one column. I then had to sum up the cases for all of the years, and to do this I used a function from the "plyr" package, called ddply. In order to be able to see the difference in cases between different areas in the US, I created another variable called "High State" in my data frame using the mutate function. Within the mutate I used the base R function ifElse, so that I could make this variable on the condition of the state having a higher elevation.
+
+My data/graphs show that there are much less cases in the states that have a higher average elevation. My first graph shows the number of cases of Lyme disease in states that have a lower average elevation, and it is clear that there are many states that have a very high number, reaching up to almost 100,000. When looking at the second graph of the number of cases in states with a higher average elevation, it's apparent that the average is much lower; none of the states reach close to the 1000s. I used the same y value limit so that the difference could be observed. This shows a clear relationship between elevation and number of Lyme cases.
+
+To do this analysis, I did need to use outside information to find a ranking of which states had the highest elevation. If the original data set included a variable for elevation, a geom_smooth function could be used with elevation vs. number of cases, and it would show a clear linear relationship. 
 >>>>>>> Stashed changes
