@@ -11,9 +11,104 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<<<<<<< Updated upstream
 ```{r, include=FALSE}
 library(tidyverse)
 Lyme_00_17 <- read.csv("lab8-file.csv", header = TRUE)
 ```
 
 
+=======
+###Lauren
+```{r}
+library(tidyverse)
+library(readr)
+lime <- read_csv("lab8data.csv")
+View(lab8data)
+lime <- lime %>% 
+  gather(`Cases2000`, `Cases2001`,`Cases2002`,`Cases2003`,`Cases2004`,`Cases2005`,`Cases2006`, `Cases2007`,`Cases2008`,`Cases2009`,`Cases2010`,`Cases2011`,`Cases2012`,`Cases2013`,`Cases2014`,`Cases2015`,`Cases2016`,`Cases2017`,key = "year", value = "cases")
+lime$year[lime$year=='Cases2000'] <- 2000
+lime$year[lime$year=='Cases2001'] <- 2001
+lime$year[lime$year=='Cases2002'] <- 2002
+lime$year[lime$year=='Cases2003'] <- 2003
+lime$year[lime$year=='Cases2004'] <- 2004
+lime$year[lime$year=='Cases2005'] <- 2005
+lime$year[lime$year=='Cases2006'] <- 2006
+lime$year[lime$year=='Cases2007'] <- 2007
+lime$year[lime$year=='Cases2008'] <- 2008
+lime$year[lime$year=='Cases2009'] <- 2009
+lime$year[lime$year=='Cases2010'] <- 2010
+lime$year[lime$year=='Cases2011'] <- 2011
+lime$year[lime$year=='Cases2012'] <- 2012
+lime$year[lime$year=='Cases2013'] <- 2013
+lime$year[lime$year=='Cases2014'] <- 2014
+lime$year[lime$year=='Cases2015'] <- 2015
+lime$year[lime$year=='Cases2016'] <- 2016
+lime$year[lime$year=='Cases2017'] <- 2017
+lime$year <- parse_integer(lime$year)
+
+limetotal<-aggregate(lime['cases'], by= lime['Ctyname'], sum)
+
+library(readr)
+uscities <- read_csv("uscitiesv1.4.csv")
+lime$data <- parse_character(lime$Ctyname)
+
+`+` <- function(e1, e2) {
+  ## unary
+  if (missing(e2)) return(e1)
+  if (!is.na(suppressWarnings(as.numeric(e1))) & !is.na(suppressWarnings(as.numeric(e2)))) {
+    ## both arguments numeric-like but characters
+    return(base::`+`(as.numeric(e1), as.numeric(e2)))
+  } else if ((is.character(e1) & is.na(suppressWarnings(as.numeric(e1)))) | 
+             (is.character(e2) & is.na(suppressWarnings(as.numeric(e2))))) {
+    ## at least one true character 
+    return(paste0(e1, e2))
+  } else {
+    ## both numeric
+    return(base::`+`(e1, e2))
+  }
+}
+
+uscities$county_name <- uscities$county_name + " County"
+
+lime2 <- merge(limetotal, uscities, by.x = "Ctyname", by.y = "county_name", all = TRUE)
+
+limelocation<- lime2 %>% select(Ctyname, cases, lat, lng)
+
+#unique(limelocation, by = "Ctyname")
+
+#limetotal <- limeloacation %>% group_by(Ctyname) %>% summarise(cases = sum(cases)))
+
+#limetotal=tapply(limelocation$cases, cumsum(limelocation$Ctyname==1), FUN=sum, na.rm=TRUE)
+
+limelocation<-limelocation[!duplicated(limelocation$Ctyname), ]
+limelocation<-na.omit(limelocation)
+
+
+
+```
+
+
+```{r}
+
+```
+
+
+# grab a center/zoom map and compute its bounding box
+gc <- geocode("white house, washington dc")
+map <- get_map(gc)
+(bb <- attr(map, "bb"))
+(bbox <- bb2bbox(bb))
+# use the bounding box to get a stamen map
+stamMap <- get_stamenmap(bbox)
+ggmap(map) +
+geom_point(
+aes(x = lon, y = lat),
+data = gc, colour = "red", size = 3
+)
+ggmap(stamMap) +
+geom_point(
+aes(x = lon, y = lat),
+data = gc, colour = "red", size = 3
+)
+>>>>>>> Stashed changes
