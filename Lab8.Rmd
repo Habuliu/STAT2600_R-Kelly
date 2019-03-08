@@ -113,9 +113,9 @@ data = gc, colour = "red", size = 3
 )
 ###Peter
 ```{r}
-datam <- limelocation
-datam <- as.tibble(datam)
-datam$lat = as.integer(datam$lat)
+datam <- limelocation %>% select(cases, lat)
+datam$lat = as.double(datam$cases)
+datam <- as.data.frame(datam)
 ggplot(datam) +
   geom_point(aes(x = cases, y = lat))
   
