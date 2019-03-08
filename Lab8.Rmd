@@ -111,6 +111,8 @@ geom_point(
 aes(x = lon, y = lat),
 data = gc, colour = "red", size = 3
 )
+
+I was hoping to graph the relationship between cases of Lyme disease and the latitude of the county. Unfortunatly, I was not able to make my graph work, due to an un-googleable error. 
 ###Peter
 ```{r}
 datam <- limelocation %>% select(cases, lat)
