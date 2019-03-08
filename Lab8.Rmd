@@ -114,8 +114,7 @@ data = gc, colour = "red", size = 3
 ###Peter
 ```{r}
 datam <- limelocation %>% select(cases, lat)
-datam$lat = as.double(datam$cases)
-datam <- as.data.frame(datam)
+
 ggplot(datam) +
   geom_point(aes(x = cases, y = lat))
   
