@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 <<<<<<< Updated upstream
 ```{r, include=FALSE}
 library(tidyverse)
-Lyme_00_17 <- read.csv("lab8-file.csv", header = TRUE)
+lab8data <- read.csv("lab8-file.csv", header = TRUE)
 ```
 
 
@@ -114,9 +114,10 @@ data = gc, colour = "red", size = 3
 ###Peter
 ```{r}
 datam <- limelocation
-datam$lat <- as.integer(datam$lat)
-datam$cases <- as.numeric(datam$cases)
-c <- ggplot(datam, aes(x = cases, y = lat)) +
-  geom_smooth( color = 'red')
+datam <- as.tibble(datam)
+datam$lat = as.integer(datam$lat)
+ggplot(datam) +
+  geom_point(aes(x = cases, y = lat))
+  
 ```
 >>>>>>> Stashed changes
