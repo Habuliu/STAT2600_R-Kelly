@@ -48,10 +48,14 @@ lime$year[lime$year=='Cases2017'] <- 2017
 lime$year <- parse_integer(lime$year)
 
 limetotal<-aggregate(lime['cases'], by= lime['Ctyname'], sum)
+limestate<-aggregate(lime['cases'], by= lime['Stname'], sum)
 
 library(readr)
 uscities <- read_csv("uscitiesv1.4.csv")
 lime$data <- parse_character(lime$Ctyname)
+
+fips <- read_csv("fipss.csv")
+
 
 `+` <- function(e1, e2) {
   ## unary
@@ -70,10 +74,14 @@ lime$data <- parse_character(lime$Ctyname)
 }
 
 uscities$county_name <- uscities$county_name + " County"
+fips$County <- fips$County + " County"
 
 lime2 <- merge(limetotal, uscities, by.x = "Ctyname", by.y = "county_name", all = TRUE)
 
-limelocation<- lime2 %>% select(Ctyname, cases, lat, lng)
+limelocation<- lime2 %>% select(Ctyname, state_name, cases, lat, lng)
+
+limelocation<- merge(limelocation, fips, by.x="Ctyname", by.y = "County", all = TRUE)
+
 
 #unique(limelocation, by = "Ctyname")
 
@@ -82,37 +90,22 @@ limelocation<- lime2 %>% select(Ctyname, cases, lat, lng)
 #limetotal=tapply(limelocation$cases, cumsum(limelocation$Ctyname==1), FUN=sum, na.rm=TRUE)
 
 limelocation<-limelocation[!duplicated(limelocation$Ctyname), ]
+
 limelocation<-na.omit(limelocation)
 
 
+library(ggplot2)
+
+#ggplot(limestate) + geom_bar()
+
+
+
 
 ```
 
-
-```{r}
-
-```
+Originally I wanted to plot the cases of lime disease on a map of the United States, and so I merged our original data with data about FIPS for each county, and the longitude and latitude of each county. The plot_usmap function was not working, so I ditched the plot of the US and instead plot the amount of total cases per state. The most cases occured in Pennslyvania and the least in Hawaii.
 
 
-# grab a center/zoom map and compute its bounding box
-gc <- geocode("white house, washington dc")
-map <- get_map(gc)
-(bb <- attr(map, "bb"))
-(bbox <- bb2bbox(bb))
-# use the bounding box to get a stamen map
-stamMap <- get_stamenmap(bbox)
-ggmap(map) +
-geom_point(
-aes(x = lon, y = lat),
-data = gc, colour = "red", size = 3
-)
-ggmap(stamMap) +
-geom_point(
-aes(x = lon, y = lat),
-data = gc, colour = "red", size = 3
-)
-
-I was hoping to graph the relationship between cases of Lyme disease and the latitude of the county. Unfortunatly, I was not able to make my graph work, due to an un-googleable error. 
 ###Peter
 ```{r}
 datam <- limelocation %>% select(cases, lat)
