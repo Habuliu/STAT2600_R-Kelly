@@ -48,6 +48,7 @@ lime$year[lime$year=='Cases2017'] <- 2017
 lime$year <- parse_integer(lime$year)
 
 limetotal<-aggregate(lime['cases'], by= lime['Ctyname'], sum)
+limestate<-aggregate(lime['cases'], by= lime['Stname'], sum)
 
 library(readr)
 uscities <- read_csv("uscitiesv1.4.csv")
@@ -81,6 +82,7 @@ limelocation<- lime2 %>% select(Ctyname, state_name, cases, lat, lng)
 
 limelocation<- merge(limelocation, fips, by.x="Ctyname", by.y = "County", all = TRUE)
 
+
 #unique(limelocation, by = "Ctyname")
 
 #limetotal <- limeloacation %>% group_by(Ctyname) %>% summarise(cases = sum(cases)))
@@ -88,36 +90,22 @@ limelocation<- merge(limelocation, fips, by.x="Ctyname", by.y = "County", all = 
 #limetotal=tapply(limelocation$cases, cumsum(limelocation$Ctyname==1), FUN=sum, na.rm=TRUE)
 
 limelocation<-limelocation[!duplicated(limelocation$Ctyname), ]
+
 limelocation<-na.omit(limelocation)
 
+
 library(ggplot2)
-plot_usmap("counties")
-plot_usmap("counties", data = limelocation, values = "cases") #+ 
-    #ggplot2::scale_fill_continuous(low = "blue", high = "yellow", guide = FALSE)
+
+#ggplot(limestate) + geom_bar()
 
 
 
 
 ```
 
+Originally I wanted to plot the cases of lime disease on a map of the United States, and so I merged our original data with data about FIPS for each county, and the longitude and latitude of each county. The plot_usmap function was not working, so I ditched the plot of the US and instead plot the amount of total cases per state. The most cases occured in Pennslyvania and the least in Hawaii.
 
-# grab a center/zoom map and compute its bounding box
-gc <- geocode("white house, washington dc")
-map <- get_map(gc)
-(bb <- attr(map, "bb"))
-(bbox <- bb2bbox(bb))
-# use the bounding box to get a stamen map
-stamMap <- get_stamenmap(bbox)
-ggmap(map) +
-geom_point(
-aes(x = lon, y = lat),
-data = gc, colour = "red", size = 3
-)
-ggmap(stamMap) +
-geom_point(
-aes(x = lon, y = lat),
-data = gc, colour = "red", size = 3
-)
+
 ###Peter
 ```{r}
 datam <- limelocation
