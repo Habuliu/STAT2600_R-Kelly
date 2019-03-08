@@ -150,7 +150,7 @@ lymeDisease$CTYCODE <- NULL
 ggplot(data = lymeDisease, aes(x=Year, y=Cases, color = Stname)) +
   geom_bar(stat="identity")
 
-
+For my graph, I wanted to show the prevalence of lyme diseases per state per year. To draw a conclusion from our original dataset, it was necessary to gather the case columns and make two new coloumns for Case and Year. I then chose to get rid of columns that were redundant namely the state code and county code column. I made the graph a bar plot with the X axis being characterized by year while the Y axis was characterized by the amount of cases. From the graph, the amount of cases of lyme disease is increasing yearly but there is not a clear prevalence of lyme disease in a particular state.
 
 
 ```
