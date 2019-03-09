@@ -7,14 +7,22 @@ output: html_document
 
 ###Team Statement
 
-Overall question we're answering -an explanation of why that question is important or interesting and a deeper explanation of why those reasons are important or interesting
+Overall question we're answering - What's the distribution of Lyme disease in the US?
+A backed-up answer to the stated question can help doctors that specialize in the treatment of Lyme disease know where to operate. Knowing the distribution of Lyme 
+disease can also potentially inform doctors what the causes of Lyme disease are.
+
+The dataset we used includes the number of cases of Lyme disease broken down by year, and by county of each US state. 
+Our domain expert will be medical companies around the US interested in diseases like Lyme Disease.
+
+Conclusion:
+
+Recommendation:
+
 
 The pretend domain & the reference/link to the data 
 
 conclusion & recommendation
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 <<<<<<< Updated upstream
 ```{r, include=FALSE}
