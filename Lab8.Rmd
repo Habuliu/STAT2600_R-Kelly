@@ -132,7 +132,7 @@ ggplot(datam) +
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(readr)
-lymeDisease <- read_csv("lab8-file.csv")
+lymeDisease <- read_csv("lab8data.csv")
 
 lymeDisease <- lymeDisease %>% 
   gather(`Cases2000`, `Cases2001`,`Cases2002`,`Cases2003`,`Cases2004`,`Cases2005`,`Cases2006`, `Cases2007`,`Cases2008`,`Cases2009`,`Cases2010`,`Cases2011`,`Cases2012`,`Cases2013`,`Cases2014`,`Cases2015`,`Cases2016`,`Cases2017`,key = "Year", value = "Cases")
@@ -169,10 +169,11 @@ For my graph, I wanted to show the prevalence of lyme diseases per state per yea
 
 
 
+```
+
 ### Gregor
 
 All of Tidying / Arranging Data Set
-
 
 ```{r}
 lime <- Lyme_00_17 %>% 
@@ -208,8 +209,9 @@ lime2 <- mutate(lime2, HighState = ifelse(State == "Colorado" | State == "Wyomin
 lime3 <- filter(lime2, HighState == "No")
 lime4 <- filter(lime2, HighState == "Yes")
 
-
 ```
+
+
 
 ```{r}
 ggplot(lime3, aes(x = State, y = Cases)) + geom_histogram(stat = "identity") + coord_flip() + ylab("Cases of Lyme Disease from 2000-2017 in states with low average elevation") + ylim(0, 100000)
