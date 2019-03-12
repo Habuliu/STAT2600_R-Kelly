@@ -225,4 +225,24 @@ I wanted to determine whether there was a correlation between number of total ca
 My data/graphs show that there are much less cases in the states that have a higher average elevation. My first graph shows the number of cases of Lyme disease in states that have a lower average elevation, and it is clear that there are many states that have a very high number, reaching up to almost 100,000. When looking at the second graph of the number of cases in states with a higher average elevation, it's apparent that the average is much lower; none of the states reach close to the 1000s. I used the same y value limit so that the difference could be observed. This shows a clear relationship between elevation and number of Lyme cases.
 
 To do this analysis, I did need to use outside information to find a ranking of which states had the highest elevation. If the original data set included a variable for elevation, a geom_smooth function could be used with elevation vs. number of cases, and it would show a clear linear relationship. 
+
+### Ping
+
+library(tidyverse)
+library(readr)
+library(ggplot2)
+Lyme_00_17 <- read_csv("lab8data.csv")
+cases_by_state = lapply(split(Lyme_00_17[,c('Cases2000', 'Cases2001','Cases2002','Cases2003','Cases2004','Cases2005','Cases2006','Cases2007','Cases2008','Cases2009','Cases2010','Cases2011','Cases2012','Cases2013','Cases2014','Cases2015','Cases2016','Cases2017')], Lyme_00_17$Stname), colSums)
+cases_by_state = do.call(rbind, cases_by_state)
+cases_by_state = data.frame(cases_by_state)
+cases_by_state$State <- as.character(rownames(cases_by_state))
+cases_by_state <- dplyr::rename(cases_by_state, '2000' = "Cases2000",'2001' = "Cases2001", '2002' = "Cases2002", '2003' = "Cases2003", '2004' = "Cases2004", '2005' = "Cases2005", '2006' = "Cases2006", '2007' = "Cases2007", '2008' = "Cases2008", '2009' = "Cases2009", '2010' = "Cases2010", '2011' = "Cases2011", '2012' = "Cases2012", '2013' = "Cases2013", '2014' = "Cases2014", '2015' = "Cases2015", '2016' = "Cases2016", '2017' = "Cases2017" )
+firstdata <- cases_by_state  %>% select('2000','2003','2006','2009','2012', '2015',State)
+graphdata <- firstdata %>% filter ( State == "Maine"| State == "Colorado"|State == "California" | State == "Connecticut" | State == "New Jersey" | State == "Massachusetts" | State == "Minnesota" | State == "Wyoming" | State == "New York")
+graphdata_melt = reshape2::melt(graphdata)
+ggplot(data = graphdata_melt, aes(x = variable, y = value, color = State)) + geom_line()+ facet_wrap(~State) + theme(axis.text.x = element_text(angle = 90))
+
+
+
+
 >>>>>>> Stashed changes
