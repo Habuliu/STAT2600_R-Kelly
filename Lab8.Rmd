@@ -252,4 +252,5 @@ ggplot(data = Lyme_00_17, aes(x = Year, y = `Lyme Cases`, ylab = "Lyme Disease C
   facet_wrap(~Stname ) + 
   theme(axis.text.x = element_text(angle = 90))
 ```
+I want to look at what are the states have higher lyme disease cases. Fromt he graph, we can see New York state, Connecticut, Pennsylvania, Massachusetts and New jersey have the highest cases of Lyme Disease of all the 51 states. Especially in Pennsylvania and Massachusetts, they are having a growing trend of Lyme Disease for the past decade.
 
