@@ -7,6 +7,7 @@ output: html_document
 
 ###Team Statement
 
+<<<<<<< Updated upstream
 Overall question we're answering - What's the distribution of Lyme disease in the US?
 A backed-up answer to the stated question can help doctors that specialize in the treatment of Lyme disease know where to operate. Knowing the distribution of Lyme 
 disease can also potentially inform doctors what the causes of Lyme disease are.
@@ -23,20 +24,30 @@ The pretend domain & the reference/link to the data
 
 conclusion & recommendation
 
+=======
 
-<<<<<<< Updated upstream
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+>>>>>>> Stashed changes
+
 ```{r, include=FALSE}
 library(tidyverse)
-lab8data <- read.csv("lab8-file.csv", header = TRUE)
+library(readr)
+lime <- read_csv("lab8data.csv")
+
 ```
 
 
 =======
 ###Lauren
 ```{r}
+<<<<<<< Updated upstream
 library(tidyverse)
 library(readr)
 lime <- read_csv("lab8data.csv")
+=======
+>>>>>>> Stashed changes
 lime <- lime %>% 
   gather(`Cases2000`, `Cases2001`,`Cases2002`,`Cases2003`,`Cases2004`,`Cases2005`,`Cases2006`, `Cases2007`,`Cases2008`,`Cases2009`,`Cases2010`,`Cases2011`,`Cases2012`,`Cases2013`,`Cases2014`,`Cases2015`,`Cases2016`,`Cases2017`,key = "year", value = "cases")
 lime$year[lime$year=='Cases2000'] <- 2000
@@ -106,31 +117,26 @@ limestate<-aggregate(lime['cases'], by= lime['Stname'], sum)
 #limelocation<-na.omit(limelocation)
 
 
+
 library(ggplot2)
 
 ggplot(limestate) + geom_bar(mapping=aes(x=Stname))
-
-
-
 
 ```
 
 Originally I wanted to plot the cases of lime disease on a map of the United States, and so I merged our original data with data about FIPS for each county, and the longitude and latitude of each county. The plot_usmap function was not working, so I ditched the plot of the US and instead plot the amount of total cases per state. The most cases occured in Pennslyvania and the least in Hawaii.
 
 
-###Peter
-```{r}
-datam <- limelocation %>% select(cases, lat)
-
-ggplot(datam) +
-  geom_point(aes(x = cases, y = lat))
-  
-```
 
 ###Sasha
+<<<<<<< Updated upstream
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(readr)
+=======
+```{r}
+
+>>>>>>> Stashed changes
 lymeDisease <- read_csv("lab8data.csv")
 
 lymeDisease <- lymeDisease %>% 
@@ -159,6 +165,7 @@ lymeDisease$STCODE <- NULL
 lymeDisease$CTYCODE <- NULL
 
 
+<<<<<<< Updated upstream
 ggplot(data = lymeDisease, aes(x=Year, y=Cases, color = Stname)) +
   geom_bar(stat="identity")
 ```
@@ -166,6 +173,10 @@ ggplot(data = lymeDisease, aes(x=Year, y=Cases, color = Stname)) +
 For my graph, I wanted to show the prevalence of lyme diseases per state per year. To draw a conclusion from our original dataset, it was necessary to gather the case columns and make two new coloumns for Case and Year. I then chose to get rid of columns that were redundant namely the state code and county code column. I made the graph a bar plot with the X axis being characterized by year while the Y axis was characterized by the amount of cases. From the graph, the amount of cases of lyme disease is increasing yearly but there is not a clear prevalence of lyme disease in a particular state.
 
 
+=======
+#ggplot(data = lymeDisease, aes(x=Year, y=Cases, color = Stname)) +
+ # geom_bar(stat="identity")
+>>>>>>> Stashed changes
 
 ### Gregor
 
@@ -221,24 +232,24 @@ I wanted to determine whether there was a correlation between number of total ca
 My data/graphs show that there are much less cases in the states that have a higher average elevation. My first graph shows the number of cases of Lyme disease in states that have a lower average elevation, and it is clear that there are many states that have a very high number, reaching up to almost 100,000. When looking at the second graph of the number of cases in states with a higher average elevation, it's apparent that the average is much lower; none of the states reach close to the 1000s. I used the same y value limit so that the difference could be observed. This shows a clear relationship between elevation and number of Lyme cases.
 
 To do this analysis, I did need to use outside information to find a ranking of which states had the highest elevation. If the original data set included a variable for elevation, a geom_smooth function could be used with elevation vs. number of cases, and it would show a clear linear relationship. 
+<<<<<<< Updated upstream
 
-### Ping
 
+
+###Ping
+```{r}
 library(tidyverse)
 library(readr)
 library(ggplot2)
 Lyme_00_17 <- read_csv("lab8data.csv")
-cases_by_state = lapply(split(Lyme_00_17[,c('Cases2000', 'Cases2001','Cases2002','Cases2003','Cases2004','Cases2005','Cases2006','Cases2007','Cases2008','Cases2009','Cases2010','Cases2011','Cases2012','Cases2013','Cases2014','Cases2015','Cases2016','Cases2017')], Lyme_00_17$Stname), colSums)
-cases_by_state = do.call(rbind, cases_by_state)
-cases_by_state = data.frame(cases_by_state)
-cases_by_state$State <- as.character(rownames(cases_by_state))
-cases_by_state <- dplyr::rename(cases_by_state, '2000' = "Cases2000",'2001' = "Cases2001", '2002' = "Cases2002", '2003' = "Cases2003", '2004' = "Cases2004", '2005' = "Cases2005", '2006' = "Cases2006", '2007' = "Cases2007", '2008' = "Cases2008", '2009' = "Cases2009", '2010' = "Cases2010", '2011' = "Cases2011", '2012' = "Cases2012", '2013' = "Cases2013", '2014' = "Cases2014", '2015' = "Cases2015", '2016' = "Cases2016", '2017' = "Cases2017" )
-firstdata <- cases_by_state  %>% select('2000','2003','2006','2009','2012', '2015',State)
-graphdata <- firstdata %>% filter ( State == "Maine"| State == "Colorado"|State == "California" | State == "Connecticut" | State == "New Jersey" | State == "Massachusetts" | State == "Minnesota" | State == "Wyoming" | State == "New York")
-graphdata_melt = reshape2::melt(graphdata)
-ggplot(data = graphdata_melt, aes(x = variable, y = value, color = State)) + geom_line()+ facet_wrap(~State) + theme(axis.text.x = element_text(angle = 90))
 
+Lyme_00_17 <- rename(Lyme_00_17, '2000' = "Cases2000",'2001' = "Cases2001", '2002' = "Cases2002", '2003' = "Cases2003", '2004' = "Cases2004", '2005' = "Cases2005", '2006' = "Cases2006", '2007' = "Cases2007", '2008' = "Cases2008", '2009' = "Cases2009", '2010' = "Cases2010", '2011' = "Cases2011", '2012' = "Cases2012", '2013' = "Cases2013", '2014' = "Cases2014", '2015' = "Cases2015", '2016' = "Cases2016", '2017' = "Cases2017" )
 
+Lyme_00_17 <- Lyme_00_17 %>% gather('2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017', key = "Year", value = "Lyme Cases")
 
+ggplot(data = Lyme_00_17, aes(x = Year, y = `Lyme Cases`, ylab = "Lyme Disease Cases")) + 
+  geom_bar(stat = 'identity') + 
+  facet_wrap(~Stname ) + 
+  theme(axis.text.x = element_text(angle = 90))
+```
 
->>>>>>> Stashed changes
