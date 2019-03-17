@@ -15,6 +15,8 @@ library(lubridate)
 #library(OpenStreetMap)
 library(dplyr)
 library(readr)
+library(forcats)
+library(data.table)
 ```
 
 ```{r}
@@ -72,19 +74,17 @@ I made a graph that showed which stations have accumulated the most hours rode f
 
 ###Lauren
 
-###Peter
 ```{r}
-library(dplyr)
-startCount <- count(data, trip_history$Start.station.number)
-endCount <- count(data, trip_history$End.station.number)
-locs <- station_locations
-locs$starts <- as.numeric(startCount[[2]])
-locs$ends <- as.numeric(endCount[[2]])
-locs$diff <- as.integer(locs$starts - locs$ends)
-ggplot(data = locs, mapping = aes(x = Longitude, y = Latitude, color = diff))+
-  geom_point() +
-  scale_colour_gradient2(low = "blue", mid = "grey", high = "red")
+totaldata<- full_join(station_locations,trip_history,by = c("Number" = "Start station number"))
+totaldata$`Station Name` <- totaldata$`Start station`
+totaldata$`Date` <- totaldata$`Start date`
+totaldata<- totaldata %>% select(`Number`, `Start station`, `Latitude`, `Longitude`, `Total docks`,`Date`)
+totaldata <- totaldata %>% 
+  mutate(Year = year(mdy_hm(Date)), Month = month(mdy_hm(Date)), Day = day(mdy_hm(Date)))
 ```
-I wanted to graph the stations and their net change in bikes over time. I did this by aggregating all instances of starting or ending a ride at each station, and using the difference between these values to assign a color gradient to a map. The resulting plot shows which stations will need attention, and which stay well-stocked over time. One interesting trend found in this graph is that bikes tend to accumulate at the center of the city, indicating that riders would rather ride into the city, and use another form of transportation to leave. 
+
+
+
+
 #Team Findings
 
