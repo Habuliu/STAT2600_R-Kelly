@@ -106,6 +106,8 @@ I calculated the total rides per day which was 2123. I then plotted the total nu
 ```
 ###Peter
 ```{r}
+station_locations <- read.csv("Nice_Ride_2017_Station_Locations.csv")
+trip_history <- read.csv("Nice_ride_trip_history_2017_season.csv")
 library(dplyr)
 startCount <- count(data, trip_history$Start.station.number)
 endCount <- count(data, trip_history$End.station.number)
