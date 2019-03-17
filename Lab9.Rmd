@@ -103,7 +103,21 @@ ggplot(data = locs, mapping = aes(x = Longitude, y = Latitude, color = diff))+
 ```
 I wanted to graph the stations and their net change in bikes over time. I did this by aggregating all instances of starting or ending a ride at each station, and using the difference between these values to assign a color gradient to a map. The resulting plot shows which stations will need attention, and which stay well-stocked over time. One interesting trend found in this graph is that bikes tend to accumulate at the center of the city, indicating that riders would rather ride into the city, and use another form of transportation to leave. 
 
-
+###Sasha
+```{r}
+ stationLocation <- (Nice_Ride_2017_Station_Locations.csv)
+ tripHistory <- (Nice_ride_trip_history_2017_season.csv)
+ "Total Docks" <- NULL
+ duration <- "Total Duration (Seconds)"/ 60
+ bothSets <- full_join(stationLocation,tripHistory,by = c("Name" = "End Station"))
+        
+ ggplot() +  
+  geom_point(data=bothSets, 
+    aes(x=Longitude, y=Latitude, size = duration, color = "light pink") +
+    xlab ='Longitude'+
+    ylab = 'Latitude')
+```
+This graph or map rather was designed to show the relationship between trip duration and station location. Through the use of an outer join, namely a full join which keeps all observations. I then graphed the latitude and longitude of the end locations and the point's size represents the duration of the trip.
 
 #Team Findings
 
