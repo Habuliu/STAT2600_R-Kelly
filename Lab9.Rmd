@@ -122,6 +122,7 @@ ggplot(data = locs, mapping = aes(x = Longitude, y = Latitude, color = diff))+
 I wanted to graph the stations and their net change in bikes over time. I did this by aggregating all instances of starting or ending a ride at each station, and using the difference between these values to assign a color gradient to a map. The resulting plot shows which stations will need attention, and which stay well-stocked over time. One interesting trend found in this graph is that bikes tend to accumulate at the center of the city, indicating that riders would rather ride into the city, and use another form of transportation to leave. 
 
 
+
 ###Ping
 ```{r}
 Startdata <- trip_history %>% select(`Start date`, `Start station`, `Start station number`,`Total duration (Seconds)` )
@@ -132,6 +133,7 @@ EndData <- trip_history %>% select(`End date`, `End station`, `End station numbe
 colnames(EndData)[2] <- "Name"
 secondDATA <- left_join(EndData, station_locations, by = "Name")
 
+Data <- cbind(firstDATA,secondDATA)
 ```
 
 
