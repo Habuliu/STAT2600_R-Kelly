@@ -77,10 +77,16 @@ I made a graph that showed which stations have accumulated the most hours rode f
 ```{r}
 totaldata<- full_join(station_locations,trip_history,by = c("Number" = "Start station number"))
 totaldata$`Station Name` <- totaldata$`Start station`
-totaldata$`Date` <- totaldata$`Start date`
-totaldata<- totaldata %>% select(`Number`, `Start station`, `Latitude`, `Longitude`, `Total docks`,`Date`)
+totaldata$`DateTime` <- totaldata$`Start date`
+totaldata<- totaldata %>% select(`Number`, `Start station`, `Latitude`, `Longitude`, `Total docks`,`DateTime`)
 totaldata <- totaldata %>% 
-  mutate(Year = year(mdy_hm(Date)), Month = month(mdy_hm(Date)), Day = day(mdy_hm(Date)))
+  mutate(year = year(mdy_hm(DateTime)), month = month(mdy_hm(DateTime)), day = day(mdy_hm(DateTime)))
+totaldata <- totaldata %>%
+  mutate(DATE = make_date(year, month, day))
+
+ridesperday<- count(totaldata, DATE)
+
+
 ```
 
 
