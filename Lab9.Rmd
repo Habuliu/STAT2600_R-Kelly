@@ -1,7 +1,7 @@
 ---
 title: "Lab9"
-author: "Gregor Tzinov"
-date: "March 16, 2019"
+author: "R-Kelly"
+date: "March 6, 2019"
 output: html_document
 ---
 
@@ -12,24 +12,35 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(tidyverse)
 library(lubridate)
-library(OpenStreetMap)
+#library(OpenStreetMap)
 library(dplyr)
+library(readr)
 ```
 
 ```{r}
-stations_locations <- read.csv("C:\\Users\\Gregor\\Documents\\College\\Data Science\\Homeworks\\Lab 9\\Nice_Ride_2017_Station_Locations.csv", header = TRUE)
+#Gregor Import
+#stations_locations <- read.csv("C:\\Users\\Gregor\\Documents\\College\\Data Science\\Homeworks\\Lab #9\\Nice_Ride_2017_Station_Locations.csv", header = TRUE)
+
+#Lauren Import
+station_locations <- read_csv("Nice_Ride_2017_Station_Locations.csv")
 ```
 
 ```{r}
-trip_history <- read.csv("C:\\Users\\Gregor\\Documents\\College\\Data Science\\Homeworks\\Lab 9\\Nice_ride_trip_history_2017_season.csv")
+#Gregor Import
+#trip_history <- read.csv("C:\\Users\\Gregor\\Documents\\College\\Data Science\\Homeworks\\Lab 9\\Nice_ride_trip_history_2017_season.csv")
+
+#Lauren Import
+trip_history <- read_csv("Nice_ride_trip_history_2017_season.csv")
 ```
 
 
+#Individual Sections
 
 ### Gregor
 
 
 Joining into new data set
+
 ```{r}
 start_locations <- select(trip_history, Start.date:Start.station, Account.type:Total.duration..Seconds.)
 colnames(start_locations)[2] <- "Name"
@@ -44,6 +55,7 @@ location_calculations <- left_join(stations_locations, location_calculations, by
 
 
 Graphing
+
 ```{r}
 ggplot() + # Plots a map 
   geom_point(data=location_calculations, 
@@ -57,3 +69,10 @@ ggplot() + # Plots a map
 
 
 I made a graph that showed which stations have accumulated the most hours rode from. I created a ggplot that has x and y as longitude and latitude, and a size aesthetic that shows duration of all of the ride lengths summed up at this station. Hence, the plotted points show the location of each station. The greater the plotted point, the longer the ride time the station is responsble for.
+
+###Lauren
+
+
+
+#Team Findings
+
