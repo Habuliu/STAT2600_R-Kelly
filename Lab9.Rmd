@@ -15,6 +15,8 @@ library(lubridate)
 #library(OpenStreetMap)
 library(dplyr)
 library(readr)
+library(forcats)
+library(data.table)
 ```
 
 ```{r}
@@ -71,6 +73,16 @@ ggplot() + # Plots a map
 I made a graph that showed which stations have accumulated the most hours rode from. I created a ggplot that has x and y as longitude and latitude, and a size aesthetic that shows duration of all of the ride lengths summed up at this station. Hence, the plotted points show the location of each station. The greater the plotted point, the longer the ride time the station is responsble for.
 
 ###Lauren
+
+```{r}
+totaldata<- full_join(station_locations,trip_history,by = c("Number" = "Start station number"))
+totaldata$`Station Name` <- totaldata$`Start station`
+totaldata$`Date` <- totaldata$`Start date`
+totaldata<- totaldata %>% select(`Number`, `Start station`, `Latitude`, `Longitude`, `Total docks`,`Date`)
+totaldata <- totaldata %>% 
+  mutate(Year = year(mdy_hm(Date)), Month = month(mdy_hm(Date)), Day = day(mdy_hm(Date)))
+```
+
 
 
 
