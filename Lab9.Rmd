@@ -1,0 +1,121 @@
+---
+title: "Lab9"
+author: "R-Kelly"
+date: "March 6, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(lubridate)
+#library(OpenStreetMap)
+library(dplyr)
+library(readr)
+library(forcats)
+library(data.table)
+```
+
+```{r}
+#Gregor Import
+#stations_locations <- read.csv("C:\\Users\\Gregor\\Documents\\College\\Data Science\\Homeworks\\Lab #9\\Nice_Ride_2017_Station_Locations.csv", header = TRUE)
+
+#Lauren Import
+station_locations <- read.csv("Nice_Ride_2017_Station_Locations.csv")
+```
+
+```{r}
+#Gregor Import
+#trip_history <- read.csv("C:\\Users\\Gregor\\Documents\\College\\Data Science\\Homeworks\\Lab 9\\Nice_ride_trip_history_2017_season.csv")
+
+#Lauren Import
+trip_history <- read.csv("Nice_ride_trip_history_2017_season.csv")
+```
+
+
+#Individual Sections
+
+### Gregor
+
+
+Joining into new data set
+
+```{r}
+start_locations <- select(trip_history, Start.date:Start.station, Account.type:Total.duration..Seconds.)
+colnames(start_locations)[2] <- "Name"
+start_locations_joined <- left_join(start_locations, stations_locations, by = "Name")
+start_locations_joined$Number <- NULL
+colnames(start_locations_joined)[4] <- "secondsDuration"
+start_locations_joined <- mutate(start_locations_joined, Hours = secondsDuration / (60*60))
+
+location_calculations <- aggregate(Hours~Name, start_locations_joined, FUN = sum)
+location_calculations <- left_join(stations_locations, location_calculations, by = "Name")
+```
+
+
+Graphing
+
+```{r}
+ggplot() + # Plots a map 
+  geom_point(data=location_calculations, 
+               aes(x=Longitude, y=Latitude, size = Hours), 
+               color = 'blue') +
+  labs(x='Longitude', y='Latitude') +
+  ggtitle('Hour total from each station')
+```
+
+
+
+
+I made a graph that showed which stations have accumulated the most hours rode from. I created a ggplot that has x and y as longitude and latitude, and a size aesthetic that shows duration of all of the ride lengths summed up at this station. Hence, the plotted points show the location of each station. The greater the plotted point, the longer the ride time the station is responsble for.
+
+###Lauren
+
+```{r}
+totaldata<- full_join(station_locations,trip_history,by = c("Number" = "Start station number"))
+totaldata$`Station Name` <- totaldata$`Start station`
+totaldata$`DateTime` <- totaldata$`Start date`
+totaldata<- totaldata %>% select(`Number`, `Start station`, `Latitude`, `Longitude`, `Total docks`,`DateTime`)
+totaldata <- totaldata %>% 
+  mutate(year = year(mdy_hm(DateTime)), month = month(mdy_hm(DateTime)), day = day(mdy_hm(DateTime)))
+totaldata <- totaldata %>%
+  mutate(DATE = make_date(year, month, day))
+
+ridesperday<- count(totaldata, DATE)
+
+
+```
+###Peter
+```{r}
+library(dplyr)
+startCount <- count(data, trip_history$Start.station.number)
+endCount <- count(data, trip_history$End.station.number)
+locs <- station_locations
+locs$starts <- as.numeric(startCount[[2]])
+locs$ends <- as.numeric(endCount[[2]])
+locs$diff <- as.integer(locs$starts - locs$ends)
+ggplot(data = locs, mapping = aes(x = Longitude, y = Latitude, color = diff))+
+  geom_point() +
+  scale_colour_gradient2(low = "blue", mid = "grey", high = "red")
+```
+I wanted to graph the stations and their net change in bikes over time. I did this by aggregating all instances of starting or ending a ride at each station, and using the difference between these values to assign a color gradient to a map. The resulting plot shows which stations will need attention, and which stay well-stocked over time. One interesting trend found in this graph is that bikes tend to accumulate at the center of the city, indicating that riders would rather ride into the city, and use another form of transportation to leave. 
+
+
+###Ping
+```{r}
+Startdata <- trip_history %>% select(`Start date`, `Start station`, `Start station number`,`Total duration (Seconds)` )
+colnames(Startdata)[3] <- "Number" 
+firstDATA <- left_join(Startdata, station_locations, by = "Number")
+
+EndData <- trip_history %>% select(`End date`, `End station`, `End station number`)
+colnames(EndData)[2] <- "Name"
+secondDATA <- left_join(EndData, station_locations, by = "Name")
+
+```
+
+
+#Team Findings
+

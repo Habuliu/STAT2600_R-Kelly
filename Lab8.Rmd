@@ -9,17 +9,17 @@ output: html_document
 
 <<<<<<< Updated upstream
 Overall question we're answering - What's the distribution of Lyme disease in the US?
-A backed-up answer to the stated question can help doctors that specialize in the treatment of Lyme disease know where to operate. Knowing the distribution of Lyme 
-disease can also potentially inform doctors what the causes of Lyme disease are.
+A backed-up answer to the stated question can help doctors that specialize in the treatment of Lyme disease know where to operate. Knowing the distribution of Lyme disease can also potentially inform doctors what the causes of Lyme disease are.
 
 The dataset we used includes the number of cases of Lyme disease broken down by year, and by county of each US state. 
 Our domain expert will be medical companies around the US interested in diseases like Lyme Disease.
 
-Conclusion:
+Conclusion: From our data, we can conclude that Lyme Disease occurs mostly in the north eastern part of the United States. We can also conlcude that Lyme Disease has (on average), increased every year. 
 
-Recommendation:
+Recommendation: Our recommendation would be to increase treatment of Lyme disease in the North-Easern part of the United States, as well as to conduct further studies to investigate why Lyme disease has increased through the years. This could help prevent growth of Lyme disease in the future. 
 
 
+<<<<<<< HEAD
 The pretend domain & the reference/link to the data 
 
 conclusion & recommendation
@@ -30,6 +30,8 @@ conclusion & recommendation
 knitr::opts_chunk$set(echo = TRUE)
 ```
 >>>>>>> Stashed changes
+=======
+>>>>>>> master
 
 ```{r, include=FALSE}
 library(tidyverse)
@@ -120,13 +122,14 @@ limestate<-aggregate(lime['cases'], by= lime['Stname'], sum)
 
 library(ggplot2)
 
-ggplot(limestate) + geom_bar(mapping=aes(x=Stname))
+ggplot(limestate) + geom_col(mapping=aes(x=Stname,y=cases))+theme(axis.text.x = element_text(angle = 90))
 
 ```
 
 Originally I wanted to plot the cases of lime disease on a map of the United States, and so I merged our original data with data about FIPS for each county, and the longitude and latitude of each county. The plot_usmap function was not working, so I ditched the plot of the US and instead plot the amount of total cases per state. The most cases occured in Pennslyvania and the least in Hawaii.
 
 
+<<<<<<< HEAD
 
 ###Sasha
 <<<<<<< Updated upstream
@@ -138,8 +141,25 @@ library(readr)
 
 >>>>>>> Stashed changes
 lymeDisease <- read_csv("lab8data.csv")
+=======
+###Peter
+```{r}
+limetotal<-aggregate(lime['cases'], by= lime['year'], sum)
 
-lymeDisease <- lymeDisease %>% 
+ggplot(lime) +
+  geom_col(aes(x = year, y = cases))
+  
+```
+
+###Sasha
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+lymeDiseaseyay <- read_csv("lab8data.csv")
+>>>>>>> master
+
+lymeDisease <- lymeDiseaseyay %>% 
   gather(`Cases2000`, `Cases2001`,`Cases2002`,`Cases2003`,`Cases2004`,`Cases2005`,`Cases2006`, `Cases2007`,`Cases2008`,`Cases2009`,`Cases2010`,`Cases2011`,`Cases2012`,`Cases2013`,`Cases2014`,`Cases2015`,`Cases2016`,`Cases2017`,key = "Year", value = "Cases")
 lymeDisease$Year[lymeDisease$Year=='Cases2000'] <- 2000
 lymeDisease$Year[lymeDisease$Year=='Cases2001'] <- 2001
@@ -183,7 +203,7 @@ For my graph, I wanted to show the prevalence of lyme diseases per state per yea
 All of Tidying / Arranging Data Set
 
 ```{r}
-lime <- limeDisease %>% 
+lime <- lymeDiseaseyay %>% 
   gather(`Cases2000`, `Cases2001`,`Cases2002`,`Cases2003`,`Cases2004`,`Cases2005`,`Cases2006`, `Cases2007`,`Cases2008`,`Cases2009`,`Cases2010`,`Cases2011`,`Cases2012`,`Cases2013`,`Cases2014`,`Cases2015`,`Cases2016`,`Cases2017`,key = "Year", value = "Cases")
 lime$Year[lime$Year=='Cases2000'] <- 2000
 lime$Year[lime$Year=='Cases2001'] <- 2001
@@ -235,14 +255,18 @@ To do this analysis, I did need to use outside information to find a ranking of 
 <<<<<<< Updated upstream
 
 
+<<<<<<< HEAD
 
 ###Ping
+=======
+>>>>>>> master
 ```{r}
 library(tidyverse)
 library(readr)
 library(ggplot2)
 Lyme_00_17 <- read_csv("lab8data.csv")
 
+<<<<<<< HEAD
 Lyme_00_17 <- rename(Lyme_00_17, '2000' = "Cases2000",'2001' = "Cases2001", '2002' = "Cases2002", '2003' = "Cases2003", '2004' = "Cases2004", '2005' = "Cases2005", '2006' = "Cases2006", '2007' = "Cases2007", '2008' = "Cases2008", '2009' = "Cases2009", '2010' = "Cases2010", '2011' = "Cases2011", '2012' = "Cases2012", '2013' = "Cases2013", '2014' = "Cases2014", '2015' = "Cases2015", '2016' = "Cases2016", '2017' = "Cases2017" )
 
 Lyme_00_17 <- Lyme_00_17 %>% gather('2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017', key = "Year", value = "Lyme Cases")
@@ -254,3 +278,7 @@ ggplot(data = Lyme_00_17, aes(x = Year, y = `Lyme Cases`, ylab = "Lyme Disease C
 ```
 I want to look at what are the states have higher lyme disease cases. Fromt he graph, we can see New York state, Connecticut, Pennsylvania, Massachusetts and New jersey have the highest cases of Lyme Disease of all the 51 states. Especially in Pennsylvania and Massachusetts, they are having a growing trend of Lyme Disease for the past decade.
 
+=======
+```
+
+>>>>>>> master
