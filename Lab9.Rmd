@@ -103,14 +103,14 @@ ggplot(ridesperday, mapping=aes(x=DATE,y=n)) + geom_point(colour='hot pink') + g
 I calculated the total rides per day which was 2123. I then plotted the total number of rides vs the day. From the trendline, it is easy to see that the number of rides increases during the summer days, and then decreases in the spring and fall. The trendline suggests there could be a parabolic relationship between the date and the number of rides given. 
 
 
-```
 ###Peter
 ```{r}
 station_locations <- read.csv("Nice_Ride_2017_Station_Locations.csv")
 trip_history <- read.csv("Nice_ride_trip_history_2017_season.csv")
 library(dplyr)
-startCount <- count(data, trip_history$Start.station.number)
-endCount <- count(data, trip_history$End.station.number)
+
+startCount <- count(trip_history, Start.station.number)
+endCount <- count(trip_history, End.station.number)
 locs <- station_locations
 locs$starts <- as.numeric(startCount[[2]])
 locs$ends <- as.numeric(endCount[[2]])
