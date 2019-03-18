@@ -70,7 +70,11 @@ ggplot() + # Plots a map
 
 
 
-I made a graph that showed which stations have accumulated the most hours rode from. I created a ggplot that has x and y as longitude and latitude, and a size aesthetic that shows duration of all of the ride lengths summed up at this station. Hence, the plotted points show the location of each station. The greater the plotted point, the longer the ride time the station is responsble for.
+
+I made a graph that showed which stations have accumulated the most hours rode from. I created a ggplot that has x and y as longitude and latitude, and a size aesthetic that shows duration of all of the ride lengths summed up at this station. Hence, the plotted points show the location of each station. The greater the plotted point, the longer the ride time the station has accumulated for.
+
+The significance of this graph is how important each station is for bicycle riders. If a station has a high amount of hours, that means that either it has many people renting from it, and/or  people rent from this station for a long amount of time. This graph shows that these highly populated stations are near each other, perhaps revealing where the main parts of the city are. It also shows that the popular cities also rely on bicycle transportation more, which is something that is desired in order to reduce harmful vehicle emissions. The smaller plotted points are a little more scattered, showing that bicycles in perhaps less concentrated areas aren't used as much. This data reveals where bicycling is more prominent, which can help the city make decisions with bicycle laws / regulations. 
+
 
 ###Lauren
 
@@ -85,15 +89,29 @@ totaldata <- totaldata %>%
   mutate(DATE = make_date(year, month, day))
 
 ridesperday<- count(totaldata, DATE)
+rideaverage <- summarise(ridesperday, sum(n)) / 217
 
 
 ```
+
+
+```{r}
+ggplot(ridesperday, mapping=aes(x=DATE,y=n)) + geom_point(colour='hot pink') + geom_smooth() + theme_classic()
+```
+
+
+I calculated the total rides per day which was 2123. I then plotted the total number of rides vs the day. From the trendline, it is easy to see that the number of rides increases during the summer days, and then decreases in the spring and fall. The trendline suggests there could be a parabolic relationship between the date and the number of rides given. 
+
+
 ###Peter
 ```{r}
-library(dplyr)
-startCount <- count(data, trip_history$Start.station.number)
-endCount <- count(data, trip_history$End.station.number)
-locs <- station_locations
+statLocs <- read.csv("Nice_Ride_2017_Station_Locations.csv")
+tripHist <- read.csv("Nice_ride_trip_history_2017_season.csv")
+
+
+startCount <- count(tripHist, Start.station.number)
+endCount <- count(tripHist, End.station.number)
+locs <- statLocs
 locs$starts <- as.numeric(startCount[[2]])
 locs$ends <- as.numeric(endCount[[2]])
 locs$diff <- as.integer(locs$starts - locs$ends)
@@ -118,6 +136,20 @@ I wanted to graph the stations and their net change in bikes over time. I did th
     ylab = 'Latitude')
 ```
 This graph or map rather was designed to show the relationship between trip duration and station location. Through the use of an outer join, namely a full join which keeps all observations. I then graphed the latitude and longitude of the end locations and the point's size represents the duration of the trip.
+
+###Ping
+```{r}
+Startdata <- trip_history %>% select(`Start date`, `Start station`, `Start station number`,`Total duration (Seconds)` )
+colnames(Startdata)[3] <- "Number" 
+firstDATA <- left_join(Startdata, station_locations, by = "Number")
+
+EndData <- trip_history %>% select(`End date`, `End station`, `End station number`)
+colnames(EndData)[2] <- "Name"
+secondDATA <- left_join(EndData, station_locations, by = "Name")
+
+Data <- cbind(firstDATA,secondDATA)
+```
+
 
 #Team Findings
 
