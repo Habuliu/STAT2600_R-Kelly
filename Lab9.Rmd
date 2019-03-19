@@ -25,7 +25,7 @@ library(data.table)
 
 #Lauren Import
 station_locations <- read.csv("Nice_Ride_2017_Station_Locations.csv")
-```
+```1
 
 ```{r}
 #Gregor Import
@@ -149,6 +149,24 @@ secondDATA <- left_join(EndData, station_locations, by = "Name")
 
 Data <- cbind(firstDATA,secondDATA)
 ```
+
+###Sasha
+
+stationLocation <- (Nice_Ride_2017_Station_Locations.csv)
+
+ tripHistory <- (Nice_ride_trip_history_2017_season.csv)
+ 
+ "Total Docks" <- NULL
+ 
+ duration <- "Total Duration (Seconds)"/ 60
+ 
+bothSets <- full_join(stationLocation,tripHistory,by = c("Name" = "End Station"))
+
+
+          
+ ggplot() +  
+  geom_point(data=bothSets, aes(x=Longitude, y=Latitude, size = duration, 
+               color = "End Station"") 
 
 
 #Team Findings
