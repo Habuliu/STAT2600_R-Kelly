@@ -103,15 +103,15 @@ ggplot(ridesperday, mapping=aes(x=DATE,y=n)) + geom_point(colour='hot pink') + g
 I calculated the total rides per day which was 2123. I then plotted the total number of rides vs the day. From the trendline, it is easy to see that the number of rides increases during the summer days, and then decreases in the spring and fall. The trendline suggests there could be a parabolic relationship between the date and the number of rides given. 
 
 
-```
 ###Peter
 ```{r}
-station_locations <- read.csv("Nice_Ride_2017_Station_Locations.csv")
-trip_history <- read.csv("Nice_ride_trip_history_2017_season.csv")
-library(dplyr)
-startCount <- count(data, trip_history$Start.station.number)
-endCount <- count(data, trip_history$End.station.number)
-locs <- station_locations
+statLocs <- read.csv("Nice_Ride_2017_Station_Locations.csv")
+tripHist <- read.csv("Nice_ride_trip_history_2017_season.csv")
+
+
+startCount <- count(tripHist, Start.station.number)
+endCount <- count(tripHist, End.station.number)
+locs <- statLocs
 locs$starts <- as.numeric(startCount[[2]])
 locs$ends <- as.numeric(endCount[[2]])
 locs$diff <- as.integer(locs$starts - locs$ends)
@@ -120,6 +120,7 @@ ggplot(data = locs, mapping = aes(x = Longitude, y = Latitude, color = diff))+
   scale_colour_gradient2(low = "blue", mid = "grey", high = "red")
 ```
 I wanted to graph the stations and their net change in bikes over time. I did this by aggregating all instances of starting or ending a ride at each station, and using the difference between these values to assign a color gradient to a map. The resulting plot shows which stations will need attention, and which stay well-stocked over time. One interesting trend found in this graph is that bikes tend to accumulate at the center of the city, indicating that riders would rather ride into the city, and use another form of transportation to leave. 
+
 
 
 ###Ping
@@ -132,6 +133,7 @@ EndData <- trip_history %>% select(`End date`, `End station`, `End station numbe
 colnames(EndData)[2] <- "Name"
 secondDATA <- left_join(EndData, station_locations, by = "Name")
 
+Data <- cbind(firstDATA,secondDATA)
 ```
 
 ###Sasha
