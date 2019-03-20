@@ -1,0 +1,39 @@
+---
+title: "Lab10"
+author: "Gregor Tzinov"
+date: "March 19, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+
+
+```{r}
+#dont include your own code, lets keep them up here so that we don't have the program load libraries twice
+library(tidyverse)
+library(dplyr)
+```
+
+
+```{r}
+answers_trunc <- read.csv("Answers_trunc.csv")
+questions_trunc <- read.csv("Questions_trunc.csv")
+```
+
+
+# Individual Sections
+
+
+### Gregor
+
+### Peter
+
+### Ping
+
+### Sasha
+
+### Lauren
