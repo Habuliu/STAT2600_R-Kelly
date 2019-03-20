@@ -32,6 +32,16 @@ questions_trunc <- read.csv("Questions_trunc.csv")
 
 ### Peter
 
+```{r}
+dat <- questions_trunc
+dat$myInT <- grepl("my", dat$Title, fixed = TRUE)
+ggplot(data = dat, mapping = aes(x = Score, y = as.factor(myInT), color = Score)) + geom_jitter()
+```
+This graph shows the score relationship between questions whose titles do or do not contain the character string "my". The presence of this string indicates a personal question, which is likley to be a program specific problem, which is unlikley to be helpful to other people with similar issues.  
+This assertion is supported by both the graph, and the mean values for score in each category: Questions containing 'my' have a mean score of 13.47, while questions without 'my' have a mean score of 25.69. 
+
+
+
 ### Ping
 
 ### Sasha
