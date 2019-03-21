@@ -41,6 +41,8 @@ qa <- qa %>% separate(AnswerDate, into = c("ADate", "ATime"),sep = "T")
 
 qa <- qa %>% separate(QDate,into= c("QYear","QMonth","QDay"), sep="-")
 qa <- qa %>% separate(QTime, into = c("QHour", "QMin","QSecond"),sep = ":")
+qa <- qa %>% separate(ADate,into= c("AYear","AMonth","ADay"), sep="-")
+qa <- qa %>% separate(ATime, into = c("AHour", "AMin","ASecond"),sep = ":")
 qa$QSecond <- substr(lqa$QSecond,1,nchar(lqa$QSecond)-1)
 
 
