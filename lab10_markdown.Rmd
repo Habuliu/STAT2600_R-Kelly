@@ -46,4 +46,44 @@ This assertion is supported by both the graph, and the mean values for score in 
 
 ### Sasha
 
+```r
+sanswers_trunc <- answers_trunc 
+squestions_trunc <- questions_trunc 
+sanswers_trunc$X <- NULL
+squestions_trunc$X <- NULL
+
+library(stringr)
+library(tidyverse)
+library(dplyr)
+
+squestions_trunc <- squestions_trunc %>% 
+  separate(CreationDate, into = c("Date", "Time"), sep = "T") 
+
+squestions_trunc <- squestions_trunc %>% 
+  separate(Time, into = c("Hours", "Minutes", "Seconds"), sep = ":")
+
+squestions_trunc$Seconds <- NULL 
+squestions_trunc$Minutes <- NULL 
+
+sanswers_trunc <- sanswers_trunc %>% 
+  separate(CreationDate, into = c("Date", "Time"), sep = "T") 
+sanswers_trunc <- sanswers_trunc %>% 
+  separate(Time, into = c("Hours", "Minutes", "Seconds"), sep = ":") 
+
+sanswers_trunc$Seconds <- NULL 
+sanswers_trunc$Minutes <- NULL 
+
+ggplot(data = sanswers_trunc, mapping = aes(x = as.factor(Hours), y = Score)) +
+  geom_bar(stat="identity", color = "lightpink", fill = "lightpink")+
+  xlab("Hour of the Day")+
+  ggtitle("Score of Answers by Hour")
+
+ggplot(data = squestions_trunc, mapping = aes(x = as.factor(Hours), y = Score)) +
+  geom_bar(stat="identity", color = "lightblue", fill = "lightblue")+
+  xlab("Hour of the Day")+
+  ggtitle("Score of Questions by Hour")
+
+
+```
+
 ### Lauren
