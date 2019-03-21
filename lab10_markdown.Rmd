@@ -30,6 +30,14 @@ questions_trunc <- read.csv("Questions_trunc.csv")
 
 ### Gregor
 
+```{r}
+gregor_answers_trunc <- mutate(answers_trunc, ContainsQuestion = str_detect(answers_trunc$Body, "\\?"), ContainsTry = str_detect(answers_trunc$Body, "try"), Length400_600 = (str_length(answers_trunc$Body) > 400 & str_length(answers_trunc$Body) < 600))
+ggplot(data = gregor_answers_trunc, aes(x = Score)) + geom_histogram(bins = 100) + facet_grid(ContainsQuestion~Length400_600, labeller = label_both) + xlim(0, 100) + ylim(0, 1000) + xlim(-100, 100)
+
+```
+
+I wanted to determine whether or not there was a relationship between answer length and whether the answer had a question mark with what the rating of the answer is. The data shown above can lead to various conclusions. The filter combination that lead to the greatest average score was when the answer did not contain the question mark, nor was the answer in between 400 - 600 characters. What this could represent is that people do not rate answers that are very long/very short highly. However this filter combination also has the highest proportion to negative scores, which could be caused by those answers that are very, very short, such as only a few characters, that people will clearly rate poorly generally. The filter that has the lowest average score is the group of answers that is between 400 and 600 characters, and there's a question mark included. People tend to not like being asked questions back in an answer that has moderate length. Perhaps when people are reading this response, they want to spend time to find exactly what they're looking for, rather than being asked a counter question.
+
 ### Peter
 
 ```{r}
@@ -43,6 +51,14 @@ This assertion is supported by both the graph, and the mean values for score in 
 
 
 ### Ping
+```{r}
+ping <- mutate(answers_trunc,Pythonanswer = str_detect(answers_trunc$Body, "Python")) 
+ggplot(data = ping, aes(x = Score)) + geom_histogram(bin = 10, col = "blue", main = "Histogram for scores distribution for Python related questions") + xlim(0, 100)+  ylim(0,1000) +
+  facet_wrap(~Pythonanswer)
+```
+I want to see how frequent people ask about Python related questions on this website and how people are satisfied with the answers related with Python questions. From the grpah, we can see that almost equally, people ask about Python related questions versus non python related questions. And we can also see that the scores for both Python related questions or non Python related questions, distribute mainly from 5 -50.  
+
+
 
 ### Sasha
 
