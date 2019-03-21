@@ -32,8 +32,68 @@ questions_trunc <- read.csv("Questions_trunc.csv")
 
 ### Peter
 
+```{r}
+dat <- questions_trunc
+dat$myInT <- grepl("my", dat$Title, fixed = TRUE)
+ggplot(data = dat, mapping = aes(x = Score, y = as.factor(myInT), color = Score)) + geom_jitter() + ylab("If Question contains the word 'My'")
+```
+This graph shows the score relationship between questions whose titles do or do not contain the character string "my". The presence of this string indicates a personal question, which is likley to be a program specific problem, which is unlikley to be helpful to other people with similar issues.  
+This assertion is supported by both the graph, and the mean values for score in each category: Questions containing 'my' have a mean score of 13.47, while questions without 'my' have a mean score of 25.69. 
+
+
+
 ### Ping
 
 ### Sasha
+
+```r
+sanswers_trunc <- answers_trunc 
+squestions_trunc <- questions_trunc 
+sanswers_trunc$X <- NULL
+squestions_trunc$X <- NULL
+
+library(stringr)
+library(tidyverse)
+library(dplyr)
+
+squestions_trunc <- squestions_trunc %>% 
+  separate(CreationDate, into = c("Date", "Time"), sep = "T") 
+
+squestions_trunc <- squestions_trunc %>% 
+  separate(Time, into = c("Hours", "Minutes", "Seconds"), sep = ":")
+
+squestions_trunc$Seconds <- NULL 
+squestions_trunc$Minutes <- NULL 
+
+sanswers_trunc <- sanswers_trunc %>% 
+  separate(CreationDate, into = c("Date", "Time"), sep = "T") 
+sanswers_trunc <- sanswers_trunc %>% 
+  separate(Time, into = c("Hours", "Minutes", "Seconds"), sep = ":") 
+
+sanswers_trunc$Seconds <- NULL 
+sanswers_trunc$Minutes <- NULL 
+
+ggplot(data = sanswers_trunc, mapping = aes(x = as.factor(Hours), y = Score)) +
+  geom_bar(stat="identity", color = "lightpink", fill = "lightpink")+
+  xlab("Hour of the Day")+
+  ggtitle("Score of Answers by Hour")
+
+ggplot(data = squestions_trunc, mapping = aes(x = as.factor(Hours), y = Score)) +
+  geom_bar(stat="identity", color = "lightblue", fill = "lightblue")+
+  xlab("Hour of the Day")+
+  ggtitle("Score of Questions by Hour")
+
+
+```
+
+I chose to explore the relationship between Score and time of day for both questions 
+and answers. I seperated the CreationDate column into date and time and then further 
+seperated time by hours, minutes and seconds. I then nullified seconds to narrow the 
+scope to just hours. From there, I plotted in ggpolt using a barplot to show the score 
+for questions and answers per hour. From the graph, it's seen that questions asked at 
+6 pm and 10 pm have the greatest score which lends itself to the idea that those questions
+ are deemed more pertinent and will likely recieve more attention and therefore better 
+ answers. On the answer side there is similar result with the highest scores occuring at 6 pm
+ and again at 10 pm.
 
 ### Lauren
