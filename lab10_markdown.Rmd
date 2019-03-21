@@ -24,6 +24,27 @@ answers_trunc <- read.csv("Answers_trunc.csv")
 questions_trunc <- read.csv("Questions_trunc.csv")
 ```
 
+#Team
+
+```{r}
+answers <- answers_trunc
+answers$Id <- answers$ParentId
+answers$AnswerDate <- answers$CreationDate
+answers <- answers %>% select(Id,AnswerDate)
+
+questions <- questions_trunc
+questions$QuestionDate <- questions$CreationDate
+questions <- questions %>% select(Id,QuestionDate)
+qa<- right_join(questions,answers,by = "Id")
+qa <- qa %>% separate(QuestionDate,into= c("QDate","QTime"), sep="T")
+qa <- qa %>% separate(AnswerDate, into = c("ADate", "ATime"),sep = "T")
+
+qa <- qa %>% separate(QDate,into= c("QYear","QMonth","QDay"), sep="-")
+qa <- qa %>% separate(QTime, into = c("QHour", "QMin","QSecond"),sep = ":")
+qa$QSecond <- substr(lqa$QSecond,1,nchar(lqa$QSecond)-1)
+
+
+```
 
 # Individual Sections
 
