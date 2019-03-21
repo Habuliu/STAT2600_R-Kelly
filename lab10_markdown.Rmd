@@ -51,6 +51,14 @@ This assertion is supported by both the graph, and the mean values for score in 
 
 
 ### Ping
+```{r}
+ping <- mutate(answers_trunc,Pythonanswer = str_detect(answers_trunc$Body, "Python")) 
+ggplot(data = ping, aes(x = Score)) + geom_histogram(bin = 10, col = "blue", main = "Histogram for scores distribution for Python related questions") + xlim(0, 100)+  ylim(0,1000) +
+  facet_wrap(~Pythonanswer)
+```
+I want to see how frequent people ask about Python related questions on this website and how people are satisfied with the answers related with Python questions. From the grpah, we can see that almost equally, people ask about Python related questions versus non python related questions. And we can also see that the scores for both Python related questions or non Python related questions, distribute mainly from 5 -50.  
+
+
 
 ### Sasha
 
