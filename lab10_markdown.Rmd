@@ -86,4 +86,14 @@ ggplot(data = squestions_trunc, mapping = aes(x = as.factor(Hours), y = Score)) 
 
 ```
 
+I chose to explore the relationship between Score and time of day for both questions 
+and answers. I seperated the CreationDate column into date and time and then further 
+seperated time by hours, minutes and seconds. I then nullified seconds to narrow the 
+scope to just hours. From there, I plotted in ggpolt using a barplot to show the score 
+for questions and answers per hour. From the graph, it's seen that questions asked at 
+6 pm and 10 pm have the greatest score which lends itself to the idea that those questions
+ are deemed more pertinent and will likely recieve more attention and therefore better 
+ answers. On the answer side there is similar result with the highest scores occuring at 6 pm
+ and again at 10 pm.
+
 ### Lauren
