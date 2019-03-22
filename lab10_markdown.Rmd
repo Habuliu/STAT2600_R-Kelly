@@ -44,6 +44,28 @@ qa <- qa %>% separate(QTime, into = c("QHour", "QMin","QSecond"),sep = ":")
 qa <- qa %>% separate(ADate,into= c("AYear","AMonth","ADay"), sep="-")
 qa <- qa %>% separate(ATime, into = c("AHour", "AMin","ASecond"),sep = ":")
 qa$QSecond <- substr(qa$QSecond,1,nchar(qa$QSecond)-1)
+qa$ASecond <- substr(qa$ASecond,1,nchar(qa$ASecond)-1)
+
+qa<- qa %>% na.omit(qa)
+
+qa$QYear<- as.numeric(qa$QYear)
+qa$QMonth<- as.numeric(qa$QMonth)
+qa$QDay<- as.numeric(qa$QDay)
+qa$QHour<- as.numeric(qa$QHour)
+qa$QMinute<- as.numeric(qa$QMin)
+qa$QSecond<- as.numeric(qa$QSecond)
+
+qa$AYear<- as.numeric(qa$AYear)
+qa$AMonth<- as.numeric(qa$AMonth)
+qa$ADay<- as.numeric(qa$ADay)
+qa$AHour<- as.numeric(qa$AHour)
+qa$AMinute<- as.numeric(qa$AMin)
+qa$ASecond<- as.numeric(qa$ASecond)
+
+qa$QDT<- ISOdatetime(qa$QYear,qa$QMonth,qa$QDay,qa$QHour,qa$QMin,qa$QSecond)
+qa$ADT<- ISOdatetime(qa$AYear,qa$AMonth,qa$ADay,qa$AHour,qa$AMin,qa$ASecond)
+qa<- qa%>%select(QDT,ADT,Id)
+qa<- qa %>% mutate(timediff = difftime(ADT,QDT,units = "hours"))
 
 
 ```
