@@ -43,7 +43,7 @@ qa <- qa %>% separate(QDate,into= c("QYear","QMonth","QDay"), sep="-")
 qa <- qa %>% separate(QTime, into = c("QHour", "QMin","QSecond"),sep = ":")
 qa <- qa %>% separate(ADate,into= c("AYear","AMonth","ADay"), sep="-")
 qa <- qa %>% separate(ATime, into = c("AHour", "AMin","ASecond"),sep = ":")
-qa$QSecond <- substr(lqa$QSecond,1,nchar(lqa$QSecond)-1)
+qa$QSecond <- substr(qa$QSecond,1,nchar(qa$QSecond)-1)
 
 
 ```
@@ -85,7 +85,7 @@ I want to see how frequent people ask about Python related questions on this web
 
 ### Sasha
 
-```r
+```{r}
 sanswers_trunc <- answers_trunc 
 squestions_trunc <- questions_trunc 
 sanswers_trunc$X <- NULL
