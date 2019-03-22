@@ -26,49 +26,7 @@ questions_trunc <- read.csv("Questions_trunc.csv")
 
 #Team
 
-```{r}
-answers <- answers_trunc
-answers$Id <- answers$ParentId
-answers$AnswerDate <- answers$CreationDate
-answers <- answers %>% select(Id,AnswerDate)
 
-questions <- questions_trunc
-questions$QuestionDate <- questions$CreationDate
-questions <- questions %>% select(Id,QuestionDate)
-qa<- right_join(questions,answers,by = "Id")
-qa <- qa %>% separate(QuestionDate,into= c("QDate","QTime"), sep="T")
-qa <- qa %>% separate(AnswerDate, into = c("ADate", "ATime"),sep = "T")
-
-qa <- qa %>% separate(QDate,into= c("QYear","QMonth","QDay"), sep="-")
-qa <- qa %>% separate(QTime, into = c("QHour", "QMin","QSecond"),sep = ":")
-qa <- qa %>% separate(ADate,into= c("AYear","AMonth","ADay"), sep="-")
-qa <- qa %>% separate(ATime, into = c("AHour", "AMin","ASecond"),sep = ":")
-qa$QSecond <- substr(qa$QSecond,1,nchar(qa$QSecond)-1)
-qa$ASecond <- substr(qa$ASecond,1,nchar(qa$ASecond)-1)
-
-qa<- qa %>% na.omit(qa)
-
-qa$QYear<- as.numeric(qa$QYear)
-qa$QMonth<- as.numeric(qa$QMonth)
-qa$QDay<- as.numeric(qa$QDay)
-qa$QHour<- as.numeric(qa$QHour)
-qa$QMinute<- as.numeric(qa$QMin)
-qa$QSecond<- as.numeric(qa$QSecond)
-
-qa$AYear<- as.numeric(qa$AYear)
-qa$AMonth<- as.numeric(qa$AMonth)
-qa$ADay<- as.numeric(qa$ADay)
-qa$AHour<- as.numeric(qa$AHour)
-qa$AMinute<- as.numeric(qa$AMin)
-qa$ASecond<- as.numeric(qa$ASecond)
-
-qa$QDT<- ISOdatetime(qa$QYear,qa$QMonth,qa$QDay,qa$QHour,qa$QMin,qa$QSecond)
-qa$ADT<- ISOdatetime(qa$AYear,qa$AMonth,qa$ADay,qa$AHour,qa$AMin,qa$ASecond)
-qa<- qa%>%select(QDT,ADT,Id)
-qa<- qa %>% mutate(timediff = difftime(ADT,QDT,units = "hours"))
-
-
-```
 
 # Individual Sections
 
@@ -158,3 +116,56 @@ for questions and answers per hour. From the graph, it's seen that questions ask
  and again at 10 pm.
 
 ### Lauren
+
+```{r}
+answers <- answers_trunc
+answers$Id <- answers$ParentId
+answers$AnswerDate <- answers$CreationDate
+answers <- answers %>% select(Id,AnswerDate)
+
+questions <- questions_trunc
+questions$QuestionDate <- questions$CreationDate
+questions <- questions %>% select(Id,QuestionDate,Body)
+qa<- full_join(questions,answers,by = "Id")
+qa <- qa %>% separate(QuestionDate,into= c("QDate","QTime"), sep="T")
+qa <- qa %>% separate(AnswerDate, into = c("ADate", "ATime"),sep = "T")
+
+qa <- qa %>% separate(QDate,into= c("QYear","QMonth","QDay"), sep="-")
+qa <- qa %>% separate(QTime, into = c("QHour", "QMin","QSecond"),sep = ":")
+qa <- qa %>% separate(ADate,into= c("AYear","AMonth","ADay"), sep="-")
+qa <- qa %>% separate(ATime, into = c("AHour", "AMin","ASecond"),sep = ":")
+qa$QSecond <- substr(qa$QSecond,1,nchar(qa$QSecond)-1)
+qa$ASecond <- substr(qa$ASecond,1,nchar(qa$ASecond)-1)
+
+qa<- qa %>% na.omit(qa)
+
+qa$QYear<- as.numeric(qa$QYear)
+qa$QMonth<- as.numeric(qa$QMonth)
+qa$QDay<- as.numeric(qa$QDay)
+qa$QHour<- as.numeric(qa$QHour)
+qa$QMinute<- as.numeric(qa$QMin)
+qa$QSecond<- as.numeric(qa$QSecond)
+
+qa$AYear<- as.numeric(qa$AYear)
+qa$AMonth<- as.numeric(qa$AMonth)
+qa$ADay<- as.numeric(qa$ADay)
+qa$AHour<- as.numeric(qa$AHour)
+qa$AMinute<- as.numeric(qa$AMin)
+qa$ASecond<- as.numeric(qa$ASecond)
+
+qa$QDT<- ISOdatetime(qa$QYear,qa$QMonth,qa$QDay,qa$QHour,qa$QMin,qa$QSecond)
+qa$ADT<- ISOdatetime(qa$AYear,qa$AMonth,qa$ADay,qa$AHour,qa$AMin,qa$ASecond)
+qa<- qa%>%select(QDT,ADT,Id,Body)
+qa<- qa %>% mutate(timediff = difftime(ADT,QDT,units = "hours"))
+qa$Body <- as.character(qa$Body)
+qa<- qa %>% mutate(qlength = nchar(Body))
+
+ggplot(qa)+geom_jitter(aes(x=timediff,y=qlength,color=),alpha = 1/5,color="hot pink")+coord_cartesian(xlim = c(0, 10000), ylim = c(0, 10000))
+
+qa$timediff<- as.numeric(qa$timediff)
+qa$qlength<- as.numeric(qa$qlength)
+corr<-cor(qa$timediff,qa$qlength)
+print(corr)
+```
+
+I chose to investigate the relationship between the time it took to answer a question, and the length of the question. I did so by creating a new column which calculated the difference in the time a question was asked and asnwered. I then created another column which calculated the length of the question. According to the plot, and the correlation calculation, there is almost no correlation between the time it takes to answer a question and the length of the question. The reason there was no correlation could be answered by taking a further look into the relationship between the question topic and the time it took to answer a question. 
