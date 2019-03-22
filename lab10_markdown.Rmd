@@ -26,7 +26,13 @@ questions_trunc <- read.csv("Questions_trunc.csv")
 
 #Team
 
-
+From all of our individual data manipulation and investigations, we found the following about question and answers:
+    1. There is no correlation between the length of the question asked, and how long it takes to answer it
+    2. Very long/very short answers do not get rated very highly
+    3. Personal questions have a lower average rating than more general questions
+    4. The best questions and answers are asked at 6pm and 10pm.
+    
+According to our findings, the ideal questions and answers are ones which aren't too short, nor too long. However, shorter questions dont necessarily get an answer faster. If one is looking for an answer quickly, they don't need to wory about the length of the question. It is also beneficial to ask questions at 6:00pm or 10:00pm. 
 
 # Individual Sections
 
