@@ -12,9 +12,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(tidyverse)
 library(babynames)
+srcbabynames<-(babynames::babynames)
 ```
 
 ```{r}
+#make your own version of the data by assigning a new variable to the srcbabynames data object
+babynamesPersonal <- srcbabynames
 babynames<-(babynames::babynames)
 Megan <- filter(babynames,str_detect(babynames$name, "Megan")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
 
