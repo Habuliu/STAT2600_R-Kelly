@@ -1,0 +1,26 @@
+---
+title: "Lab11"
+author: "R Kelly"
+date: "4/3/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(babynames)
+```
+
+```{r}
+babynames<-(babynames::babynames)
+Megan <- filter(babynames,str_detect(babynames$name, "Megan")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+ggplot(data=Megan) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies named \"Megan\"")
+
+```
+
