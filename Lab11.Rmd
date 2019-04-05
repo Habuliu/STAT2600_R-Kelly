@@ -93,23 +93,8 @@ graphData <- as.tibble(x)
 ggplot(data = graphData, aes(x = x, y = y)) + geom_bar(stat = "identity") + ylim(0, 500) + ylab("Percent Increase of name from 1988 to 1989") + xlab("Various girls names")
 
 
-
-
 ```
 The data reveals that the percent increase of Ariel names is the greatest. It seems as if the Little Mermaid had a huge effect on the number of Ariel babynames, as from 1988 to 1989, when the movie came out, there was 212% increase. Compared to other girl names, Caroline had a 12% increase, while Isabella had a decrease of 27%, and Megan with 6% decrease as well. 
-
-
-
-```{r}
-Rachel <- filter(babynames,str_detect(babynames$name,"Ra[ey]?ch.*l"),year%in%c(1973,1988,1990)) %>% filter(name!="Rachelann") %>% filter(name!="Rachelanne")
-
-Rachel.diff <- filter(Rachel,year==1990,sex=="F") %>% count(wt=prop) - filter(Rachel,year==1988,sex=="F") %>% count(wt=prop) #-0.001888172
-
-ggplot(Agirls) +
- geom_histogram(aes(x=diff),bins=100) + 
- geom_vline(aes(xintercept=Ariel.diff),color="red",lwd=1)+
-  geom_vline(aes(xintercept=Rachel.diff),color="blue",lwd=1)
-```
 
 
 
