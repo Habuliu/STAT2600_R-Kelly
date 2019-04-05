@@ -129,7 +129,7 @@ From looking at the proportion of US babies named a version of "Lauren", it is i
 
 
 ###Ping
-#As Ping is a unique name to appear here so I choose Austin instead
+As Ping is a unique name to appear here so I choose Austin instead
 ```{r}
 babynamesAustin <- babynamesPersonal
 Ping_Austin0 <- filter(babynamesAustin,str_detect(babynamesAustin$name, "Aust[ioe]n")) %>% group_by(year) %>% summarize(sumProp0 = sum(prop))
