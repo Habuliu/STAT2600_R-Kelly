@@ -199,7 +199,7 @@ Gregors2017 <- filter(myBabynames,str_detect(myBabynames$name, "Greg[geo]") & ye
 Over time, the popularity of Gregor has varied. It seemed to have its peak around 1970, however in the past 19 years, its steadily gone down. Using Gregors1970 and Gregors2017 I was able to find the percentages that variations of Gregor had in these two years out of all names. In 1970, .005% of people had variations of Gregor, while in 2017 it was only .000285%. This indicates that this name is very uncomnnon 
     
 ###Peter
-```{r, include = FALSE, warning = FALSE, message = FALSE}
+```{r, warning = FALSE, message = FALSE}
 babies <- srcbabynames
 firstThree <- babies %>% filter(str_detect(babies$name, "^Pet"))
 yearAg <- firstThree %>% aggregate(firstThree$prop, by=list( firstThree$year), FUN = median)
@@ -215,7 +215,7 @@ ggplot(data = peterAg, aes(x = year, y = prop)) + geom_smooth() + geom_smooth(da
 ```
 The plot above shows the proportion over time of names starting with the "Pet", and the red line is proportion of people named "Peter". The curves are similar due the small proportion of names that are not "Peter". 
 
-```{r, include = FALSE, warning = FALSE, message = FALSE}
+```{r, warning = FALSE, message = FALSE}
 since199 <- peterAg %>% filter(year > 1999)
 ggplot(data = since199, aes(x = year, y = prop)) + geom_smooth()
 ```
