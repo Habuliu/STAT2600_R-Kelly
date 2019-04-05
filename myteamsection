@@ -1,0 +1,67 @@
+
+```{r}
+#Ariel and Rachel Code
+Regex_1973 <- filter(babynames, year == 1973 )
+Ariels1973 <- mutate(Regex_1973, containsName = str_detect(Regex_1973$name,"Ar[ie]")) %>% filter(containsName == TRUE) 
+#look for regex combining beginning of name and adding end condition
+
+
+Regex_1988 <- filter(babynames, year == 1988 )
+Ariels1988 <- mutate(Regex_1988, containsName = str_detect(Regex_1988$name,"Ari[el]")) %>% filter(containsName == TRUE & sex == "F")
+
+
+
+
+Regex_1990 <- filter(babynames, year == 1990 )
+Ariels1990 <- mutate(Regex_1990, containsName = str_detect(Regex_1990$name,"Ari[el]")) %>% filter(containsName == TRUE)
+
+
+Rachels1973 <- mutate(Regex_1973, containsName = str_detect(Regex_1973$name, "Rach[ae]")) %>% filter(containsName == TRUE)
+Rachels1988 <- mutate(Regex_1988, containsName = str_detect(Regex_1988$name, "Rach[ae]")) %>% filter(containsName == TRUE)
+Rachels1990 <- mutate(Regex_1990, containsName = str_detect(Regex_1990$name, "Rach[ae]")) %>% filter(containsName == TRUE)
+
+joinedSet <- rbind(Rachels1973, Ariels1973)
+
+RachelandAriels1973 = sum(joinedSet$n)
+totalCount1973 = sum(Regex_1973$n)
+prob1973 = RachelandAriels1973 / totalCount1973
+```
+The chances of a girl being named Ariel or Rachel in 1973 is .31% chance
+
+The Little Mermaid Effect
+```{r}
+Ariels1989 <- filter(babynames, year == 1989) %>% mutate(isAriel = str_detect(name, "Ar[ie]")) %>% filter (isAriel == TRUE & sex == "F") 
+
+percent_incAriel <- ((sum(Ariels1989$n) / sum(Ariels1988$n)) * 100) - 100
+#acheieved by taking the total number of ariels and its name variations in 1989, divided by that number in 1988, multiplying by 100 to get the percent, than subtracting 100 to get just the percent increase not total percent
+
+
+Carolines1988  <- filter(babynames, year == 1988) %>% mutate(isCaroline = str_detect(name, "Carol[iy]")) %>% filter (isCaroline == TRUE & sex == "F") 
+Carolines1989  <- filter(babynames, year == 1989) %>% mutate(isCaroline = str_detect(name, "Carol[iy]")) %>% filter (isCaroline == TRUE & sex == "F") 
+
+percent_incCaroline <- ((sum(Carolines1989$n) / sum(Carolines1988$n)) * 100) - 100
+
+Isabella1988  <- filter(babynames, year == 1988) %>% mutate(isIsabella = str_detect(name, "Isabel[la.]")) %>% filter (isIsabella == TRUE & sex == "F") 
+Isabella1989  <- filter(babynames, year == 1989) %>% mutate(isIsabella = str_detect(name, "Isabel[la.]")) %>% filter (isIsabella == TRUE & sex == "F") 
+
+percent_incIsabella <- ((sum(Isabella1988$n) / sum(Isabella1989$n)) * 100) - 100
+
+Megan1988  <- filter(babynames, year == 1988) %>% mutate(isMegan = str_detect(name, "Meg[ha]")) %>% filter (isMegan == TRUE & sex == "F") 
+Megan1989  <- filter(babynames, year == 1989) %>% mutate(isMegan = str_detect(name, "Meg[ha]")) %>% filter (isMegan == TRUE & sex == "F")  
+
+percent_incMegan <- ((sum(Megan1988$n) / sum(Megan1989$n)) * 100) - 100
+
+
+#graphData <- as.tibble(x)
+
+#creating tibble with x = c("Ariel", "Caroline", "Isabella", "Megan")
+# y = c(percent_incAriel, percent_incCaroline, percent_incIsabella, percent_incMegan)
+
+#ggplot(data = graphData, aes(x = x, y = y)) + geom_bar(stat = "identity") + ylim(0, 500) + ylab("Percent Increase of name from 1988 to 1989") + xlabs("Various girls names")
+
+
+
+
+```
+The data reveals that the percent increase of Ariel names is the greatest. It seems as if the Little Mermaid had a huge effect on the number of Ariel babynames, as from 1988 to 1989, when the movie came out, there was 212% increase. Compared to other girl names, Caroline had a 12% increase, while Isabella had a decrease of 27%, and Megan with 6% decrease as well. 
+
