@@ -155,3 +155,25 @@ sbirth <-filter(Sasha, year > 2000)
 Before I was born, my name became increasingly popular, peaking in the late 80s, since 
 then however, it has been on a steady decline.
     
+###Peter
+```{r, include = FALSE, warning = FALSE, message = FALSE}
+babies <- srcbabynames
+firstThree <- babies %>% filter(str_detect(babies$name, "^Pet"))
+yearAg <- firstThree %>% aggregate(firstThree$prop, by=list( firstThree$year), FUN = median)
+
+firstThree <- babies %>% filter(str_detect(babies$name, "^Pet"))
+peter <- babies %>% filter(str_detect(babies$name, "^Pet[o|e]r$"))
+peterAg <- peter %>% aggregate(peter$prop, by=list(peter$year), FUN = median)
+
+
+ggplot(data = peterAg, aes(x = year, y = prop)) + geom_smooth() + geom_smooth(data = peter, aes(x = year, y = prop ), color = "red")
+
+
+```
+The plot above shows the proportion over time of names starting with the "Pet", and the red line is proportion of people named "Peter". The curves are similar due the small proportion of names that are not "Peter". 
+
+```{r, include = FALSE, warning = FALSE, message = FALSE}
+since199 <- peterAg %>% filter(year > 1999)
+ggplot(data = since199, aes(x = year, y = prop)) + geom_smooth()
+```
+The plot above shows the proportion of people names "Peter" since my birth year, 1999. 
