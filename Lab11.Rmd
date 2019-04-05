@@ -27,6 +27,42 @@ ggplot(data=Megan) +
 
 ```
 
+#Team
+
+```{r}
+filter(babynames,str_detect(babynames$name,"Ar[iy]+.l+[^a]?$"),year==1988,sex=="F") %>% count(wt=prop) #0.000841196	
+
+filter(babynames,str_detect(babynames$name,"Ar[iy]+.l+[^a]?$"),year==1990,sex=="F") %>% count(wt=prop) #0.002612356	
+```
+
+Deciding on list of A girl names
+```{r}
+Agirls1 <- filter(babynames,str_detect(babynames$name,"A"),year==1988,sex=="F")
+Agirls2 <- filter(babynames,str_detect(babynames$name,"A"),year==1990,sex=="F")
+
+Agirls <- inner_join(Agirls1,Agirls2,by="name") %>% mutate(diff=prop.y-prop.x) %>% select(name,prop.x,prop.y,diff)
+
+Ariel.diff <- filter(babynames,str_detect(babynames$name,"Ar[iy]+.l+[^a]?$"),year==1990,sex=="F") %>% count(wt=prop) - filter(babynames,str_detect(babynames$name,"Ar[iy]+.l+[^a]?$"),year==1988,sex=="F") %>% count(wt=prop)
+
+ggplot(Agirls) +
+ geom_histogram(aes(x=Ariel.diff),bins=100) + 
+ geom_vline(aes(xintercept=Ariel.diff),color="red",lwd=1) 
+```
+
+```{r}
+Rachel <- filter(babynames,str_detect(babynames$name,"Ra[ey]?ch.*l"),year%in%c(1973,1988,1990)) %>% filter(name!="Rachelann") %>% filter(name!="Rachelanne")
+
+Rachel.diff <- filter(Rachel,year==1990,sex=="F") %>% count(wt=prop) - filter(Rachel,year==1988,sex=="F") %>% count(wt=prop) #-0.001888172
+
+ggplot(Agirls) +
+ geom_histogram(aes(x=diff),bins=100) + 
+ geom_vline(aes(xintercept=Ariel.diff),color="red",lwd=1)+
+  geom_vline(aes(xintercept=Rachel.diff),color="blue",lwd=1)
+```
+
+
+
+#Individual
 
 ###Lauren
 
