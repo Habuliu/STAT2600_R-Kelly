@@ -47,3 +47,5 @@ ggplot(data=Laurensincebirth) +
 
 ```
 
+From looking at the proportion of US babies named a version of "Lauren", it is interesting to note the peak of people named "Lauren" occured before 1998, the year I was born. Since then, there has been a significant decrease in the number of people named Lauren. It would be interesting to investigate the same question, but separate the babies into male and female. The proportion of babies with a first name that starts with Lau, began to significantly rise near the 1950's, and again, has significantly decreased since 1998.
+
