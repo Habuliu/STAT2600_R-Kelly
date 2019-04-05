@@ -107,10 +107,13 @@ As we can see from the graph, Austin, as a name, does not have a lot of variatio
 
 
 ###Sasha
+```{r}
 
 sbabynames<-(babynamesPersonal)
 
 Sas <- filter(sbabynames,str_detect(sbabynames$name, "Sas")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+Sasha <- filter(sbabynames,str_detect(sbabynames$name, "Sasha")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
 
 ggplot(data=Sas) +
   geom_line(aes(x=year,y=sumprop)) +
@@ -130,10 +133,15 @@ ggplot(data=diff) +
   ylab("Proportion") +
   xlab("Year")
 
+```
+
+
 Based on the above plots, my name was actually in a decline of popularity the year 
 I was born but is around the same level of popularity currently.
 My name is more popular than the names that just start with "Sas"
-  
+
+```{r}
+
 sbirth <-filter(Sasha, year > 2000)
   
   ggplot(data=sbirth) +
@@ -142,8 +150,13 @@ sbirth <-filter(Sasha, year > 2000)
     ylab("Proportion") +
     xlab("Year")
   
+```
+  
+
   Since I was born, my name became a little more popular in the 2010s and since then has 
   rapidly declined.
+  
+```{r}
     
     sbbirth <-filter(Sasha, year < 2000)
   
@@ -153,6 +166,35 @@ sbirth <-filter(Sasha, year > 2000)
     ylab("Proportion") +
     xlab("Year")
     
+
+```
 Before I was born, my name became increasingly popular, peaking in the late 80s, since 
 then however, it has been on a steady decline.
+
+
+### Gregor
+```{r}
+myBabynames <- srcbabynames
+
+
+Gregor <- filter(myBabynames,str_detect(myBabynames$name, "Greg[geo]")) %>% group_by(year) %>% 
+summarize(prop=sum(prop))
+
+
+ggplot(data = Gregor, aes(x = year, y = prop)) + geom_smooth()
+
+Gregor_1999 <- filter(myBabynames,str_detect(myBabynames$name, "Greg[geo]") & year > 1999) %>% group_by(year) %>% 
+summarize(prop=sum(prop))
+
+ggplot(data = Gregor_1999, aes(x = year, y = prop)) + geom_smooth()
+
+Gregors1970 <- filter(myBabynames,str_detect(myBabynames$name, "Greg[geo]") & year==1970)
+Gregors2017 <- filter(myBabynames,str_detect(myBabynames$name, "Greg[geo]") & year==2017)
+
+
+
+
+
+```
+Over time, the popularity of Gregor has varied. It seemed to have its peak around 1970, however in the past 19 years, its steadily gone down. Using Gregors1970 and Gregors2017 I was able to find the percentages that variations of Gregor had in these two years out of all names. In 1970, .005% of people had variations of Gregor, while in 2017 it was only .000285%. This indicates that this name is very uncomnnon 
     
