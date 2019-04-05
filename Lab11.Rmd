@@ -100,3 +100,4 @@ Ping_Austin2 <- filter(babynamesAustin,str_detect(babynamesAustin$name, fixed("A
 
 ggplot() + geom_line(data = Ping_Austin0, mapping = aes(x = year, y = sumProp0), col = "red") + ylab("Sum of Proportion") + geom_line(data = Ping_Austin1, mapping = aes(x = year, y = sumProp1), col = "blue") + geom_line(data = Ping_Austin2, mapping = aes(x = year, y = sumProp2), col = "green") + ggtitle("The proportion of babys' name is 'Austin' and start with 'Aus' and all variations of 'Austin' from 1880 to 2001")
 ```
+As we can see from the graph, Austin, as a name, does not have a lot of variations. Alos, names with variations, names start with 'Aus', and 'Austin' have similar proportions throughout the years. The name started to get popular in 1980 and reached to the highest point around 1993. Austin was born in 1995, so it was still the time that "Austin" was a popular name. 
