@@ -27,3 +27,23 @@ ggplot(data=Megan) +
 
 ```
 
+
+###Lauren
+
+```{r}
+babynamesLauren <- babynamesPersonal
+babynamesL<-(babynames::babynames)
+Lauren <- filter(babynamesL,str_detect(babynamesL$name, "L[ao][^ie]r[ey]n+[^a]?$")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+ggplot(data=Lauren) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies named a version of \"Lauren\"")
+
+Laurensincebirth <- filter(Lauren,year>1998)
+
+ggplot(data=Laurensincebirth) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies named a version of \"Lauren\" since 1998")
+
+```
+
