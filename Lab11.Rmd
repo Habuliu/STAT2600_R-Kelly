@@ -103,3 +103,55 @@ Ping_Austin2 <- filter(babynamesAustin,str_detect(babynamesAustin$name, fixed("A
 ggplot() + geom_line(data = Ping_Austin0, mapping = aes(x = year, y = sumProp0), col = "red") + ylab("Sum of Proportion") + geom_line(data = Ping_Austin1, mapping = aes(x = year, y = sumProp1), col = "blue") + geom_line(data = Ping_Austin2, mapping = aes(x = year, y = sumProp2), col = "green") + ggtitle("The proportion of babys' name is 'Austin' and start with 'Aus' and all variations of 'Austin' from 1880 to 2001")
 ```
 As we can see from the graph, Austin, as a name, does not have a lot of variations. Alos, names with variations, names start with 'Aus', and 'Austin' have similar proportions throughout the years. The name started to get popular in 1980 and reached to the highest point around 1993. Austin was born in 1995, so it was still the time that "Austin" was a popular name. 
+
+
+###Sasha
+
+sbabynames<-(babynamesPersonal)
+
+Sas <- filter(sbabynames,str_detect(sbabynames$name, "Sas")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+ggplot(data=Sas) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies whose name starts with \"Sas\"") +
+  ylab("Proportion") +
+  xlab("Year")
+  
+soundex('Sacha') == soundex('Sasha')
+
+soundex('Sasho') == soundex('Sasha')
+
+diff <- filter(sbabynames, str_detect(sbabynames$name, "Sasha")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+ggplot(data=diff) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies whose name is some version of \"Sasha\"") +
+  ylab("Proportion") +
+  xlab("Year")
+
+Based on the above plots, my name was actually in a decline of popularity the year 
+I was born but is around the same level of popularity currently.
+My name is more popular than the names that just start with "Sas"
+  
+sbirth <-filter(Sasha, year > 2000)
+  
+  ggplot(data=sbirth) +
+    geom_line(aes(x=year,y=sumprop)) +
+    ggtitle("Total proportion of US babies whose name is \"Sasha\" since 2000") +
+    ylab("Proportion") +
+    xlab("Year")
+  
+  Since I was born, my name became a little more popular in the 2010s and since then has 
+  rapidly declined.
+    
+    sbbirth <-filter(Sasha, year < 2000)
+  
+  ggplot(data=sbbirth) +
+    geom_line(aes(x=year,y=sumprop)) +
+    ggtitle("Total proportion of US babies whose name is \"Sasha\" before 2000") +
+    ylab("Proportion") +
+    xlab("Year")
+    
+Before I was born, my name became increasingly popular, peaking in the late 80s, since 
+then however, it has been on a steady decline.
+    
