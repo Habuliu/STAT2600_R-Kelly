@@ -90,3 +90,13 @@ ggplot(data=Lau) +
 
 From looking at the proportion of US babies named a version of "Lauren", it is interesting to note the peak of people named "Lauren" occured before 1998, the year I was born. Since then, there has been a significant decrease in the number of people named Lauren. It would be interesting to investigate the same question, but separate the babies into male and female. The proportion of babies with a first name that starts with Lau, began to significantly rise near the 1950's, and again, has significantly decreased since 1998.
 
+###Ping
+#As Ping is a unique name to appear here so I choose Austin instead
+```{r}
+babynamesAustin <- babynamesPersonal
+Ping_Austin <- filter(babynamesAustin,str_detect(babynamesAustin$name, fixed("Aus"))) %>% group_by(year)
+Ping_Austin2 <- Ping_Austin %>% filter(name == "Austin") %>% group_by(year) %>% summarize(sumProp2 = sum(prop))
+Ping_Austin <- Ping_Austin %>% summarize(sumProp = sum(prop))
+
+ggplot(data = Ping_Austin, mapping = aes(x = year, y = sumProp)) + geom_line(col = "red") + ylab("Sum of Proportion") + geom_line(data = Ping_Austin2, mapping = aes(x = year, y = sumProp2), col = "blue") + ggtitle("The proportion of babys' name is 'Austin' and start with 'Aus' from 1880 to 2001")
+```
