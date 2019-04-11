@@ -2,7 +2,7 @@
 
 ---
 title: "Lab 12"
-author: "Gregor, Ping, Sasha, Lauren, Peter"
+author: "Team RKelly: Gregor, Ping, Sasha, Lauren, Peter"
 date: "April 11, 2019"
 output: html_document
 ---
@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message = FALSE)
 
 ```{r}
 library(tidyverse)
+library(dplyr)
 ```
 
 
@@ -22,7 +23,7 @@ library(tidyverse)
 
 gapminder<- gapminder::gapminder
 samp <- sample(gapminder$lifeExp,300, replace = FALSE)
-view(samp)
+#view(samp)
 ```
 
 
@@ -93,8 +94,43 @@ perm_mean <- function(perms = 1000, values, n1)
 ```{r}
 test<-perm_mean(1000, 300, 50)
 test<- data.frame(test)
-ggplot(test) + geom_density(aes(x=test))
+
+test1 <- perm_mean(1000, 300, 50)
+test2 <- perm_mean(1000, 400, 30)
+test3 <- perm_mean(1000, 500, 20)
+
+test1 <- data.frame(test1)
+#test1 %>% mutate(testNum = "test1")
+test2 <- data.frame(test2)
+#test2 %>% mutate(testNum = "test2")
+test3 <- data.frame(test3)
+#test3 %>% mutate(testNum = "test3")
+
+ggplot(test1, aes(x = test1))+
+  geom_density(color = "magenta", fill = "pink", alpha = 0.6)+
+  xlab("Sample Mean")+
+  ylab("Mean Density")+
+  ggtitle("Sample Test 1")
+
+ggplot(test2, aes(x = test2))+
+  geom_density(color = "dark blue", fill = "blue", alpha = 0.2)+
+  xlab("Sample Mean")+
+  ylab("Mean Density")+
+  ggtitle("Sample Test 2")
+
+ggplot(test3, aes(x = test3))+
+  geom_density(color = "dark green", fill = "green", alpha = 0.2)+
+  xlab("Sample Mean")+
+  ylab("Mean Density")+
+  ggtitle("Sample Test 3")
+
 ```
+
+
+Question: Does sample size difference have a statistical relevance, and how does that affect sample mean?
+
+The graphs above show that as we vary sample size, the distribution of Sample Mean varies. Test 1 has sample difference of 250, Test 2 has sample difference of 370, and Test 3 has sample difference of 480. As we look at the graphs, there is a greater sample with Test 3, where the sample difference is the greatest. The closer the two samples are, the closer sample mean will be to 0.
+
 
 ```{r}
 perm_corr <- function(perms = 1000, v1, v2)
@@ -142,14 +178,13 @@ perm_corr <- function(perms = 1000, v1, v2)
 ```{r}
 
 corTest <- perm_corr(1000, v1, v2)
-print(corTest)
+plot(corTest)
+#print(corTest)
 ```
 
+Question: Is there a correlation between life expectancy and year?
 
-
-
-
-
+The graph above shows that there is essentially no correlation between life expectancy and year. We're testing correlation between life expectancy and year with the vectors v1 and v2, which represent year and life expectancy, respectively. At all indexes, the correlation is near 0, and if it does vary, it doesn't exceed +- .05, which shows very little correlation. 
 
 
 
