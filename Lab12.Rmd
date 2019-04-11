@@ -1,26 +1,44 @@
+
+
 ---
-title: "Lab12"
-author: "R Kelly"
-date: "4/10/2019"
+title: "Lab 12"
+author: "Gregor, Ping, Sasha, Lauren, Peter"
+date: "April 11, 2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message = FALSE)
 ```
+
+
 
 ```{r}
 library(tidyverse)
-library(gapminder)
+```
+
+
+```{r}
+
 gapminder<- gapminder::gapminder
 samp <- sample(gapminder$lifeExp,300, replace = FALSE)
 view(samp)
+```
+
+
+```{r}
+
+```
+
+```{r}
 
 v1 <- gapminder$year
 v2 <- gapminder$lifeExp
 group1 <- samp[1:3]
 group2 <- samp[3+1:300]
+
 ```
+
 
 
 ```{r}
@@ -78,32 +96,59 @@ print(test)
 ```
 
 ```{r}
-gap_by_cotinents <- gapminder %>% group_by(continent, country)
-perm_cor <- function(perms = 1000, year, lifeExp)
+perm_corr <- function(perms = 1000, v1, v2)
 {
-  vector <- c(rep(0,perms))
-
+  ## Variables ##
+  # perms: The number of permutations 
+  # v1 : first correlation vector
+  # v2 : second correlation vector
+  ###############
+  vec <- numeric(1000)
+  # Step 1:
+  # Create vector of zeroes of length "perms" to store
+  # permuted mean differnces
+  
+  
+  
   # Loop throught number of permutations
   for (i in c(1:perms))
   {
     # Step 2:
-    # Randomly mix up the values in the vector "y"
-    life_exp <- sample(lifeExp, length(lifeExp))
-    
+    mixedV2 <- sample(v2)
     # Step 3:
-    # Compute the correlation between x and the randomly mixed
-    # up y-vector. Store this value in the vector from step 1.
-    vector[i] <- cor(life_exp, year)
+    # Compute the sample means for the two groups from 
+    # step 2
+    
+    vec [[i]] <- cor(v1,mixedV2)
+    
+    # Step 4: 
+    # Compute the difference in sample means, store the
+    # value in the vector from step 1
+    
+    
+    
   }
   
-  # Step 4:
+  # Step 5:
   # Return new updated vector, created in step 1
-  return(vector)
+  return(vec)
+  
 }
+
 ```
 
+
 ```{r}
-correlation <- perm_cor(perms = 1000, gapminder$year, gapminder$lifeExp)
-plot(correlation)
-histogram(correlation)
+
+corTest <- perm_corr(1000, v1, v2)
+print(corTest)
 ```
+
+
+
+
+
+
+
+
+
