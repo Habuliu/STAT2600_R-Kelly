@@ -73,8 +73,9 @@ perm_mean <- function(perms = 1000, values, n1)
 ```
 
 ```{r}
-test <-  perm_mean(1000, 300, 50)
-print(test)
+test<-perm_mean(1000, 300, 50)
+test<- data.frame(test)
+ggplot(test) + geom_density(aes(x=test))
 ```
 
 ```{r}
