@@ -1,0 +1,257 @@
+---
+title: "Lab11"
+author: "R Kelly"
+date: "4/3/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(babynames)
+library(phonics)
+srcbabynames<-(babynames::babynames)
+```
+
+```{r}
+#make your own version of the data by assigning a new variable to the srcbabynames data object
+babynamesPersonal <- srcbabynames
+babynames<-(babynames::babynames)
+Megan <- filter(babynames,str_detect(babynames$name, "Megan")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+ggplot(data=Megan) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies named \"Megan\"")
+
+```
+
+#Team
+
+
+```{r}
+#Ariel and Rachel Code
+Regex_1973 <- filter(babynames, year == 1973 )
+Ariels1973 <- mutate(Regex_1973, containsName = str_detect(Regex_1973$name,"Ar[ie]")) %>% filter(containsName == TRUE) 
+#look for regex combining beginning of name and adding end condition
+
+
+Regex_1988 <- filter(babynames, year == 1988 )
+Ariels1988 <- mutate(Regex_1988, containsName = str_detect(Regex_1988$name,"Ari[el]")) %>% filter(containsName == TRUE & sex == "F")
+
+
+
+
+Regex_1990 <- filter(babynames, year == 1990 )
+Ariels1990 <- mutate(Regex_1990, containsName = str_detect(Regex_1990$name,"Ari[el]")) %>% filter(containsName == TRUE)
+
+
+Rachels1973 <- mutate(Regex_1973, containsName = str_detect(Regex_1973$name, "Rach[ae]")) %>% filter(containsName == TRUE)
+Rachels1988 <- mutate(Regex_1988, containsName = str_detect(Regex_1988$name, "Rach[ae]")) %>% filter(containsName == TRUE)
+Rachels1990 <- mutate(Regex_1990, containsName = str_detect(Regex_1990$name, "Rach[ae]")) %>% filter(containsName == TRUE)
+
+joinedSet <- rbind(Rachels1973, Ariels1973)
+
+RachelandAriels1973 = sum(joinedSet$n)
+totalCount1973 = sum(Regex_1973$n)
+prob1973 = RachelandAriels1973 / totalCount1973
+```
+The chances of a girl being named Ariel or Rachel in 1973 is .31% chance
+
+The Little Mermaid Effect
+```{r}
+Ariels1989 <- filter(babynames, year == 1989) %>% mutate(isAriel = str_detect(name, "Ar[ie]")) %>% filter (isAriel == TRUE & sex == "F") 
+
+percent_incAriel <- ((sum(Ariels1989$n) / sum(Ariels1988$n)) * 100) - 100
+#acheieved by taking the total number of ariels and its name variations in 1989, divided by that number in 1988, multiplying by 100 to get the percent, than subtracting 100 to get just the percent increase not total percent
+
+
+Carolines1988  <- filter(babynames, year == 1988) %>% mutate(isCaroline = str_detect(name, "Carol[iy]")) %>% filter (isCaroline == TRUE & sex == "F") 
+Carolines1989  <- filter(babynames, year == 1989) %>% mutate(isCaroline = str_detect(name, "Carol[iy]")) %>% filter (isCaroline == TRUE & sex == "F") 
+
+percent_incCaroline <- ((sum(Carolines1989$n) / sum(Carolines1988$n)) * 100) - 100
+
+Isabella1988  <- filter(babynames, year == 1988) %>% mutate(isIsabella = str_detect(name, "Isabel[la.]")) %>% filter (isIsabella == TRUE & sex == "F") 
+Isabella1989  <- filter(babynames, year == 1989) %>% mutate(isIsabella = str_detect(name, "Isabel[la.]")) %>% filter (isIsabella == TRUE & sex == "F") 
+
+percent_incIsabella <- ((sum(Isabella1988$n) / sum(Isabella1989$n)) * 100) - 100
+
+Megan1988  <- filter(babynames, year == 1988) %>% mutate(isMegan = str_detect(name, "Meg[ha]")) %>% filter (isMegan == TRUE & sex == "F") 
+Megan1989  <- filter(babynames, year == 1989) %>% mutate(isMegan = str_detect(name, "Meg[ha]")) %>% filter (isMegan == TRUE & sex == "F")  
+
+percent_incMegan <- ((sum(Megan1988$n) / sum(Megan1989$n)) * 100) - 100
+
+
+#
+#creating tibble with 
+x = c("Ariel", "Caroline", "Isabella", "Megan")
+graphData <- as.tibble(x)
+ y = c(percent_incAriel, percent_incCaroline, percent_incIsabella, percent_incMegan)
+
+ggplot(data = graphData, aes(x = x, y = y)) + geom_bar(stat = "identity") + ylim(0, 500) + ylab("Percent Increase of name from 1988 to 1989") + xlab("Various girls names")
+
+
+```
+The data reveals that the percent increase of Ariel names is the greatest. It seems as if the Little Mermaid had a huge effect on the number of Ariel babynames, as from 1988 to 1989, when the movie came out, there was 212% increase. Compared to other girl names, Caroline had a 12% increase, while Isabella had a decrease of 27%, and Megan with 6% decrease as well. 
+
+
+
+#Individual
+
+###Lauren
+
+```{r}
+babynamesLauren <- babynamesPersonal
+babynamesL<-(babynames::babynames)
+Lauren <- filter(babynamesL,str_detect(babynamesL$name, "L[ao][^ie]r[ey]n+[^a]?$")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+ggplot(data=Lauren) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies named a version of \"Lauren\"")
+
+Laurensincebirth <- filter(Lauren,year>1998)
+
+ggplot(data=Laurensincebirth) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies named a version of \"Lauren\" since 1998")
+
+  Lau <- filter(babynamesL,str_detect(babynamesL$name, "Lau")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+ggplot(data=Lau) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies with \"Lau\" as the first three lettters in there name")
+
+```
+
+From looking at the proportion of US babies named a version of "Lauren", it is interesting to note the peak of people named "Lauren" occured before 1998, the year I was born. Since then, there has been a significant decrease in the number of people named Lauren. It would be interesting to investigate the same question, but separate the babies into male and female. The proportion of babies with a first name that starts with Lau, began to significantly rise near the 1950's, and again, has significantly decreased since 1998.
+
+
+
+###Ping
+As Ping is a unique name to appear here so I choose Austin instead
+```{r}
+babynamesAustin <- babynamesPersonal
+Ping_Austin0 <- filter(babynamesAustin,str_detect(babynamesAustin$name, "Aust[ioe]n")) %>% group_by(year) %>% summarize(sumProp0 = sum(prop))
+Ping_Austin1 <- filter(babynamesAustin,str_detect(babynamesAustin$name, fixed("Aus"))) %>% group_by(year) %>% summarize(sumProp1 = sum(prop))
+Ping_Austin2 <- filter(babynamesAustin,str_detect(babynamesAustin$name, fixed("Austin"))) %>% group_by(year) %>% summarize(sumProp2 = sum(prop))
+
+ggplot() + geom_line(data = Ping_Austin0, mapping = aes(x = year, y = sumProp0), col = "red") + ylab("Sum of Proportion") + geom_line(data = Ping_Austin1, mapping = aes(x = year, y = sumProp1), col = "blue") + geom_line(data = Ping_Austin2, mapping = aes(x = year, y = sumProp2), col = "green") + ggtitle("The proportion of babys' name is 'Austin' and start with 'Aus' and all variations of 'Austin' from 1880 to 2001")
+```
+As we can see from the graph, Austin, as a name, does not have a lot of variations. Alos, names with variations, names start with 'Aus', and 'Austin' have similar proportions throughout the years. The name started to get popular in 1980 and reached to the highest point around 1993. Austin was born in 1995, so it was still the time that "Austin" was a popular name. 
+
+
+###Sasha
+```{r}
+
+sbabynames<-(babynamesPersonal)
+
+Sas <- filter(sbabynames,str_detect(sbabynames$name, "Sas")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+Sasha <- filter(sbabynames,str_detect(sbabynames$name, "Sasha")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+ggplot(data=Sas) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies whose name starts with \"Sas\"") +
+  ylab("Proportion") +
+  xlab("Year")
+  
+soundex('Sacha') == soundex('Sasha')
+
+soundex('Sasho') == soundex('Sasha')
+
+diff <- filter(sbabynames, str_detect(sbabynames$name, "Sasha")) %>% group_by(year) %>% summarize(sumprop=sum(prop))
+
+ggplot(data=diff) +
+  geom_line(aes(x=year,y=sumprop)) +
+  ggtitle("Total proportion of US babies whose name is some version of \"Sasha\"") +
+  ylab("Proportion") +
+  xlab("Year")
+
+```
+
+
+Based on the above plots, my name was actually in a decline of popularity the year 
+I was born but is around the same level of popularity currently.
+My name is more popular than the names that just start with "Sas"
+
+```{r}
+
+sbirth <-filter(Sasha, year > 2000)
+  
+  ggplot(data=sbirth) +
+    geom_line(aes(x=year,y=sumprop)) +
+    ggtitle("Total proportion of US babies whose name is \"Sasha\" since 2000") +
+    ylab("Proportion") +
+    xlab("Year")
+  
+```
+  
+
+  Since I was born, my name became a little more popular in the 2010s and since then has 
+  rapidly declined.
+  
+```{r}
+    
+    sbbirth <-filter(Sasha, year < 2000)
+  
+  ggplot(data=sbbirth) +
+    geom_line(aes(x=year,y=sumprop)) +
+    ggtitle("Total proportion of US babies whose name is \"Sasha\" before 2000") +
+    ylab("Proportion") +
+    xlab("Year")
+    
+
+```
+Before I was born, my name became increasingly popular, peaking in the late 80s, since 
+then however, it has been on a steady decline.
+
+
+### Gregor
+```{r}
+myBabynames <- srcbabynames
+
+
+Gregor <- filter(myBabynames,str_detect(myBabynames$name, "Greg[geo]")) %>% group_by(year) %>% 
+summarize(prop=sum(prop))
+
+
+ggplot(data = Gregor, aes(x = year, y = prop)) + geom_smooth()
+
+Gregor_1999 <- filter(myBabynames,str_detect(myBabynames$name, "Greg[geo]") & year > 1999) %>% group_by(year) %>% 
+summarize(prop=sum(prop))
+
+ggplot(data = Gregor_1999, aes(x = year, y = prop)) + geom_smooth()
+
+Gregors1970 <- filter(myBabynames,str_detect(myBabynames$name, "Greg[geo]") & year==1970)
+Gregors2017 <- filter(myBabynames,str_detect(myBabynames$name, "Greg[geo]") & year==2017)
+
+
+
+
+
+```
+Over time, the popularity of Gregor has varied. It seemed to have its peak around 1970, however in the past 19 years, its steadily gone down. Using Gregors1970 and Gregors2017 I was able to find the percentages that variations of Gregor had in these two years out of all names. In 1970, .005% of people had variations of Gregor, while in 2017 it was only .000285%. This indicates that this name is very uncomnnon 
+    
+###Peter
+```{r, warning = FALSE, message = FALSE}
+babies <- srcbabynames
+firstThree <- babies %>% filter(str_detect(babies$name, "^Pet"))
+yearAg <- firstThree %>% aggregate(firstThree$prop, by=list( firstThree$year), FUN = median)
+
+firstThree <- babies %>% filter(str_detect(babies$name, "^Pet"))
+peter <- babies %>% filter(str_detect(babies$name, "^Pet[o|e]r$"))
+peterAg <- peter %>% aggregate(peter$prop, by=list(peter$year), FUN = median)
+
+
+c <- ggplot(data = peterAg, aes(x = year, y = prop)) + geom_smooth() + geom_smooth(data = peter, aes(x = year, y = prop ), color = "red")
+
+print(c)
+```
+The plot above shows the proportion over time of names starting with the "Pet", and the red line is proportion of people named "Peter". The curves are similar due the small proportion of names that are not "Peter". 
+
+```{r, warning = FALSE, message = FALSE}
+since199 <- peterAg %>% filter(year > 1999)
+ggplot(data = since199, aes(x = year, y = prop)) + geom_smooth()
+```
+The plot above shows the proportion of people names "Peter" since my birth year, 1999. 
