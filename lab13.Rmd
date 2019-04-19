@@ -249,19 +249,36 @@ perm_cor <- function(perms, year, mean)
 }
 ```
 
+Ho: There is a significant difference between the mean education from 1970 to 2009.
+H1: There is no significant difference between the mean education from 1970 to 2009.
+
 ```{r}
 correlation_men <- perm_cor(perms = 4000, years_in_school_men$year, years_in_school_men$mean)
 correlation_men <- data.frame(correlation_men)
-ggplot(correlation_men) + geom_density(aes(x = correlation_men))
+cor_men <- cor(years_in_school_men$year, years_in_school_men$mean)
+cor_men
+ggplot(correlation_men) + geom_density(aes(x = correlation_men)) +    geom_vline(aes(xintercept=cor_men), linetype="dashed", size=1)
+
 
 correlation_women <- perm_cor(perms = 4000, years_in_school_women$year, years_in_school_women$mean)
+cor2 <- cor(years_in_school_women$year, years_in_school_women$mean)
+cor2
 correlation_women <- data.frame(correlation_women)
-ggplot(correlation_women) + geom_density(aes(x = correlation_women))
+ggplot(correlation_women) + geom_density(aes(x = correlation_women)) +    geom_vline(aes(xintercept=cor2), linetype="dashed", size=1)
 
 correlation <- perm_cor(perms = 4000, years_in_school$year, years_in_school$mean)
 correlation <- data.frame(correlation)
-ggplot(correlation) + geom_density(aes(x = correlation))
+cor3 <- cor(years_in_school$year, years_in_school$mean)
+cor3
+ggplot(correlation) + geom_density(mapping = aes(x = correlation)) +    geom_vline(aes(xintercept=cor3), linetype="dashed", size=1)
 ```
+
+From the graphs shown above, we can see that the true value are all way away from the distribution. We can also say they are way far from the 95% range, so they are very significant. So we failed to reject the null, hence there is a significant difference between the mean education from 1970 to 2009. 
+
+```{r}
+ggplot(data = years_in_school, mapping = aes(x = year, y = mean, color = sex)) + geom_point()  
+```
+From the graph above, we can see the mean education years grow along time. Even though female education's lowest mean is lower than male's, females also gradually have a higher mean in education years. Improved life quality helped people, in general, to gain more education. It also helped female to have more opportunities to gain more education if they want to.  
 
 
 
