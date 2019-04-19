@@ -67,8 +67,31 @@ rm(bmi)
 rm(bmiNAOmit)
 
 ##final usable data is bmiFinal
-
 ```
+
+
+
+
+
+##Ping's data
+```{r}
+years_in_school_men <- Years_in_school_men_25_34
+names(years_in_school_men)[1] <- "country"
+years_in_school_men <- years_in_school_men %>% gather("year", "mean", -country)
+years_in_school_men <- na.omit(years_in_school_men)
+years_in_school_men$year <-as.numeric(years_in_school_men$year)
+years_in_school_men <- years_in_school_men %>% mutate(sex = "male")
+
+years_in_school_women <- Years_in_school_women_25_34
+names(years_in_school_women)[1] <- "country"
+years_in_school_women <-years_in_school_women %>% gather("year", "mean", -country)
+years_in_school_women <- na.omit(years_in_school_women)
+years_in_school_women$year <-as.numeric(years_in_school_women$year)
+years_in_school_women <- years_in_school_women %>% mutate(sex = "female")
+
+years_in_school <- full_join(years_in_school_women, years_in_school_men, by.x = "country", by.y = "year")
+```
+#final usable data is called 'years_in_school'
 
 
 
@@ -199,9 +222,50 @@ However, Rwanda is an example of a country that breaks the calories consumed and
 
 A further explanation of this can perhaps come from activity level. Sugar generally is found in unhealthy food, and often can create an energy dip in an individual, discouraging one from exercising and being active. Eating healthy, strong foods will generally give an individual more constant energy, encouraging one to be more active and burn off calories. 
 
+
+
+
 ## Lauren's Individual:
 
+
+
+
 ## Ping's Individual:
+I am looking at how the education is changing over time. More specifically, how does the mean of education years for male and female change over time. Also, what can education tell us about the overall quality of life.
+
+```{r}
+perm_cor <- function(perms, year, mean)
+{
+ vector <- c(rep(0,perms))
+
+ # Loop throught number of permutations
+ for (i in c(1:perms))
+ {
+   mean <- sample(mean, length(mean))
+   vector[i] <- cor(mean, year)
+ }
+
+ return(vector)
+}
+```
+
+```{r}
+correlation_men <- perm_cor(perms = 1000, years_in_school_men$year, years_in_school_men$mean)
+correlation_men <- data.frame(correlation_men)
+ggplot(correlation_men) + geom_density(aes(x = correlation_men))
+
+correlation_women <- perm_cor(perms = 1000, years_in_school_women$year, years_in_school_women$mean)
+correlation_women <- data.frame(correlation_women)
+ggplot(correlation_women) + geom_density(aes(x = correlation_women))
+
+correlation <- perm_cor(perms = 1000, years_in_school$year, years_in_school$mean)
+correlation <- data.frame(correlation)
+ggplot(correlation) + geom_density(aes(x = correlation))
+```
+
+
+
+
 
 ## Sasha's Individual:
 
