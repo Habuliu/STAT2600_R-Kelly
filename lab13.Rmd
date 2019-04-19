@@ -1,0 +1,208 @@
+---
+title: "Lab 13"
+author: "Team RKelly"
+date: "April 18, 2019"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+###!!!PUT ANY PACKAGES USED HERE TO NOT RELOAD PACKAGES MULTIPLE TIMES!!!
+library(tidyverse)
+library(dplyr)
+
+```
+
+##!!!PUT DATASETS IN HERE TO MAKE IT CLEANER!!! If someone wants to access another persons data set it will be more easily organized this way. Removing these comments in the end will be super easy
+
+## Gregor's Data 
+```{r}
+calorie <- read.csv("food_consumption.csv")
+for (i in seq_along(colnames(calorie))){
+  colnames(calorie)[i] <- substr(colnames(calorie)[i], 2, 5)
+}
+calorieNAOmit <- na.omit(calorie)
+names(calorieNAOmit)[1] <- "CountryNames"
+calorieFinal <- calorieNAOmit %>%
+  gather("Year", "CalorieConsumption", -CountryNames)
+
+rm(calorie)
+rm(calorieNAOmit)
+
+##final usable data is called CalorieFinal
+
+
+
+sugar <- read.csv("sugar_consumption.csv")
+for (i in seq_along(colnames(sugar))){
+  colnames(sugar)[i] <- substr(colnames(sugar)[i], 2, 5)
+}
+sugar[46] <- NULL
+sugarNAOmit <- na.omit(sugar)
+names(sugarNAOmit)[1] <- "CountryNames"
+sugarFinal <- sugarNAOmit %>%
+  gather("Year", "SugarConsumption", -CountryNames)
+
+
+rm(sugar)
+rm(sugarNAOmit)
+
+##final usable data is sugarFinal
+
+bmi <- read.csv("bmi.csv")
+for (i in seq_along(colnames(bmi))){
+  colnames(bmi)[i] <- substr(colnames(bmi)[i], 2, 5)
+}
+bmiNAOmit <- na.omit(bmi)
+names(bmiNAOmit)[1] <- "CountryNames"
+bmiFinal <- bmiNAOmit %>%
+  gather("Year", "BMI", -CountryNames)
+
+
+rm(bmi)
+rm(bmiNAOmit)
+
+##final usable data is bmiFinal
+
+```
+
+
+
+# Individual Sections:
+
+## Gregor's Individual:
+```{r}
+##am creating new data sets, but they're specific to my own questions, not the most general ones, which will be on top
+test <- left_join(calorieFinal, bmiFinal, by.x = "CountryNames", by.y = "Year")
+test <- na.omit(test)
+
+nutritionData <- left_join(test, sugarFinal)
+
+rm(test)
+```
+
+```{r}
+USAnutritionData <- filter(nutritionData, CountryNames == "United States")
+USAnutritionData <- na.omit(USAnutritionData)
+
+SugarBMICor <- cor(USAnutritionData$SugarConsumption, USAnutritionData$BMI)
+CaloriesBMICor <- cor(USAnutritionData$CalorieConsumption, USAnutritionData$BMI)
+```
+
+I'm interested in examining diet patterns around the world and how that affects the average Body Mass Index of an individual, one of the biggest markers for whether an individual is healthy. A higher BMI is typically associated with one being overweight or obese, which can lead to greater risks of Cardiovascular Disease, Diabetes, and many more life threatening diseases.
+
+
+Before graphing any plots, one of my interest was seeing whether an increase of sugar consumption lead to an increase to BMI, or whether an increase of calories directly lead to an increase of BMI. For this, I ran a correlation function to determine the correlation between the two variables with the United States. For **sugar and BMI**, I found a correlation value of **.974**. An increase of sugar consumption absolutely correlates with an increase of BMI from the years of 1980 - 2004 here in the US.
+
+I did the same test but with **calories consumed and BMI**. The result of this was a correlation value of **.976.**
+
+Let's see how this relates to some countries around the world. 
+
+```{r}
+rangeOf <- function(countryName){
+  tempDataSet <- filter(nutritionData, CountryNames == countryName)
+  maxMin <- c(max(tempDataSet$BMI), min(tempDataSet$BMI))
+  return (difference <- abs(diff(maxMin)))
+}
+
+USDiff <- rangeOf("United States")
+CubaDiff <- rangeOf("Cuba")
+FranceDiff <- rangeOf("France")
+AustriaDiff <- rangeOf("Austria")
+SouthAfricaDiff <- rangeOf("South Africa")
+RwandaDiff <- rangeOf("Rwanda")
+JapanDiff <- rangeOf("Japan")
+ChinaDiff <- rangeOf("China")
+BrazilDiff <- rangeOf("Brazil")
+ArgentinaDiff <- rangeOf("Argentina")
+
+CountryList <- c("US", "Cuba", "France", "Austria", "South Africa", "Rwanda", "Japan", "China", "Brazil", "Argentina")
+CountryValues <- c(USDiff, CubaDiff, FranceDiff, AustriaDiff, SouthAfricaDiff, RwandaDiff, JapanDiff, ChinaDiff, BrazilDiff, ArgentinaDiff)
+
+CountryDifferencesData <- as_tibble(CountryList)
+CountryDifferencesData <- mutate(CountryDifferencesData, BMI_Difference = CountryValues)
+colnames(CountryDifferencesData)[1] <- "Country_Name"
+
+ggplot(CountryDifferencesData, aes(x = Country_Name, y = BMI_Difference))  +  geom_histogram(stat = "identity", fill = "steelblue") + labs(title ="Change of BMI in various countries from 1980 - 2000 ") + ylab("BMI Difference") + xlab("Country Name") + theme_bw()
+
+
+```
+
+The graph above shows the BMI difference in various countries around the world. I selected a couple from each continent so that each region of the world is represented. As expected, the US' increase of BMI is of the highest, rising nearly 3 points. Rwanda, being a more poor nation, has a very small increase of BMI, which is expected as well. However, what surprised me is that Brazil and South Africa had a BMI increase that was similar to the US, if not higher. Seeing this, I decided to look more into their calorie consumption. 
+
+```{r, echo= FALSE}
+BrazilCalDiff <- max(filter(nutritionData, CountryNames == "Brazil")$CalorieConsumption) - 
+  min(filter(nutritionData, CountryNames == "Brazil")$CalorieConsumption)
+
+RwandaCalDiff <- max(filter(nutritionData, CountryNames == "Rwanda")$CalorieConsumption) - 
+  min(filter(nutritionData, CountryNames == "Rwanda")$CalorieConsumption)
+
+SouthAfricaCalDiff <- max(filter(nutritionData, CountryNames == "South Africa")$CalorieConsumption) - 
+  min(filter(nutritionData, CountryNames == "South Africa")$CalorieConsumption)
+```
+
+```{r}
+CountryList <- c("Brazil","Rwanda", "South Africa")
+CountryValues <- c(BrazilCalDiff, RwandaCalDiff, SouthAfricaCalDiff)
+
+CountryDifferencesData <- as_tibble(CountryList)
+CountryDifferencesData <- mutate(CountryDifferencesData, CalorieDiff = CountryValues)
+colnames(CountryDifferencesData)[1] <- "Country_Name"
+
+ggplot(CountryDifferencesData, aes(x = Country_Name, y = CalorieDiff))  +  geom_histogram(stat = "identity", fill = "red") + labs(title ="Change of Calories in given countries 1980 - 2000 ") + ylab("Calorie difference") + xlab("Country Name") + theme_bw()
+
+
+```
+
+Contrary to what I expected, Rwanda had the biggest calorie difference despite having the lowest increase of BMI. Maybe sugar intake will help narrow down what's going down a bit better?
+
+```{r, echo = FALSE}
+nutritionDataFinal <- na.omit(nutritionData)
+
+BrazilSugarDiff <- max(filter(nutritionDataFinal, CountryNames == "Brazil")$SugarConsumption) - 
+  min(filter(nutritionDataFinal, CountryNames == "Brazil")$SugarConsumption)
+
+RwandaSugarDiff <- max(filter(nutritionDataFinal, CountryNames == "Rwanda")$SugarConsumption) - 
+  min(filter(nutritionDataFinal, CountryNames == "Rwanda")$SugarConsumption)
+
+SouthAfricaSugarDiff <- max(filter(nutritionDataFinal, CountryNames == "South Africa")$SugarConsumption) - 
+  min(filter(nutritionDataFinal, CountryNames == "South Africa")$SugarConsumption)
+
+rm(nutritionData)
+
+```
+
+```{r}
+CountryList <- c("Brazil","Rwanda", "South Africa")
+CountryValues <- c(BrazilSugarDiff, RwandaSugarDiff, SouthAfricaSugarDiff)
+
+CountryDifferencesData <- as_tibble(CountryList)
+CountryDifferencesData <- mutate(CountryDifferencesData, SugarDiff = CountryValues)
+colnames(CountryDifferencesData)[1] <- "Country_Name"
+
+ggplot(CountryDifferencesData, aes(x = Country_Name, y = SugarDiff))  +  geom_histogram(stat = "identity", fill = "light blue") + labs(title ="Change of Calories in given countries 1980 - 2000 ") + ylab("Sugar difference") + xlab("Country Name") + theme_bw()
+```
+
+There's the explanation. 
+
+
+From 1980 - 2000, the increase of sugar of Rwanda has gone up only about 5g per day per individual. Brazil's difference is over 30g, with South Africa's around 20g. This provides explanation for the first graph. In regard to these 3 countries, it's not the increase of calories that makes the difference in BMI, but rather the increase of sugar. Rwanda's calorie difference over this time frame is over 550 calories per day per individual, however in the selected countries, the difference of sugar is the lowest in Rwanda.
+
+Going back to the US example, I stated that there was strong correlation between sugar consumption and increase of BMI, as well as a strong correlation between calories consumed and BMI. This is true with most countries.
+It is true with Brazil and South Africa. Both countries have seen an increase of sugar and calories, and this has lead to a great increase of BMI. 
+
+However, Rwanda is an example of a country that breaks the calories consumed and BMI increase. It follows the sugar consumed and BMI increase, as a slight increase in sugar only leads to a slight increase in BMI, but breaks the other pattern. This is possible, as the correlation value isn't 1, but .97, leaving some potential for data points to break this pattern.
+
+A further explanation of this can perhaps come from activity level. Sugar generally is found in unhealthy food, and often can create an energy dip in an individual, discouraging one from exercising and being active. Eating healthy, strong foods will generally give an individual more constant energy, encouraging one to be more active and burn off calories. 
+
+## Lauren's Individual:
+
+## Ping's Individual:
+
+## Sasha's Individual:
+
+## Peter's Individual:
