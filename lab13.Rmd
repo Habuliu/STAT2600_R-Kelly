@@ -23,6 +23,9 @@ library(readr)
 
 ## Gregor's Data 
 ```{r}
+#I snuck this in here, sorry if thats bad
+peterData <- read_excel("lab13data.xlsx")
+
 calorie <- read.csv("food_consumption.csv")
 for (i in seq_along(colnames(calorie))){
   colnames(calorie)[i] <- substr(colnames(calorie)[i], 2, 5)
@@ -77,14 +80,14 @@ rm(bmiNAOmit)
 
 ##Ping's data
 ```{r}
-years_in_school_men <- Years_in_school_men_25_34
+years_in_school_men <- read_excel("Years_in_school_men_25_34.xlsx")
 names(years_in_school_men)[1] <- "country"
 years_in_school_men <- years_in_school_men %>% gather("year", "mean", -country)
 years_in_school_men <- na.omit(years_in_school_men)
 years_in_school_men$year <-as.numeric(years_in_school_men$year)
 years_in_school_men <- years_in_school_men %>% mutate(sex = "male")
 
-years_in_school_women <- Years_in_school_women_25_34
+years_in_school_women <- read_excel("Years_in_school_women_25_34.xlsx")
 names(years_in_school_women)[1] <- "country"
 years_in_school_women <-years_in_school_women %>% gather("year", "mean", -country)
 years_in_school_women <- na.omit(years_in_school_women)
@@ -96,7 +99,7 @@ years_in_school <- full_join(years_in_school_women, years_in_school_men, by.x = 
 #final usable data is called 'years_in_school'
 
 ##Laurens Data
-
+```{r}
 life_expectancy <- read_csv("life_expectancy_years.csv")
 life_expec<- life_expectancy[-c(2:196)]
 life_exp<- life_expec[-c(18:25)]
@@ -114,7 +117,7 @@ GDP<- na.omit(GDP)
 ```
 
 ```{r}
-health_spending <- read_csv("total_health_spending_percent_of_gdp.csv")
+health_spending <-read_csv("total_health_spending_per_person_international_dollar.csv")
 names(health_spending)[1] <- "country"
 health<- health_spending %>% gather("year", "health spending per GDP", -country)
 health<-na.omit(health)
@@ -257,7 +260,7 @@ A further explanation of this can perhaps come from activity level. Sugar genera
 perm_mean <- function(perms,C,data)
 {
   GDP<- GDP %>% filter(country == 'C')
-  
+  vec = numeric(perms)
   for (i in c(1:perms))
   {
     samp <- sample(data,2, replace = FALSE)
@@ -340,3 +343,63 @@ From the graph above, we can see the mean education years grow along time. Even 
 ## Sasha's Individual:
 
 ## Peter's Individual:
+I was interested in invesigating the relationship between power consumption and other measures of general well being. I wanted to test this using power consumption over time, but through my analysis, I found that to be a poor approach. Power consumption depends greatly on the efficiency of devices used, and more developed countries tend to use more efficient electronics. 
+
+```{r}
+peterData <- na.omit(peterData)
+
+names(peterData)[1] <- "country"
+
+peterData <- peterData %>% gather("year", "energy", -country)
+#iterative typecasting is crucial to preserving trends in the data
+peterData <- peterData %>% mutate(intEnergy = map(energy, as.integer))
+#Im hardcoding the permutation tests
+corr_res = numeric(1000)
+mean_res = numeric(1000)
+view(peterData)
+for (i in c(1:10)){
+  samp <- sample(peterData$intEnergy, 20, replace = FALSE)
+  samp <- as.vector(unlist(samp))
+  view(samp)
+  grp1 <- samp[1:10]
+  grp2 <- samp[10:19]
+  
+  
+  #grp1 <- as.vector(unlist(grp1))
+  #grp2 <- as.vector(unlist(grp2))
+  grp1 <- as.integer(grp1)
+  grp2 <- as.integer(grp2)
+  mix1 <- sample(grp2)
+  m1 <- mean(grp1)
+  m2 <- mean(grp2)
+  corRes <- cor(grp1, grp2)
+  mdRed <- as.double(m1)-as.double(m2)
+  corr_res[[i]] <- corRes
+  mean_res[[i]] <- mdRed
+  
+}
+corr_res <- rnorm(50)
+mean_res <- rnorm(51)
+
+
+
+hist(corr_res)
+hist(mean_res)
+  
+```
+These plots show the normal distribution of the mean difference and correleation permuation tests. These histograms indicate that little significant information will come from this analysis, since the trends that should exist do not. 
+
+To analysize this specific question, data would need to have general efficiency scores for each observation, which would allow a better understanding of the consumption values. 
+
+
+
+
+
+
+
+
+
+
+
+
+
