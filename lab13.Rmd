@@ -342,10 +342,83 @@ From the graph above, we can see the mean education years grow along time. Even 
 
 ## Sasha's Individual:
 
+
+ 
+My sub question dealt with the relationship between life expectancy and democracy score. Following the assumption that a longer life expectancy is a result of improvements in quality life, the increase in democracy score as life expectancy increases proves that democracy score likely has a positive affect on quality of life. 
+ 
+I chose to run a permutation test of life expectancy and also one of the democracy score, and graphed histograms to compare the two.  
+ 
+ 
+```{r} 
+
+library(tidyverse) 
+library(dplyr) 
+sdemocracy1 <- read.csv("democracyscore1.csv") 
+for(i in seq_along(colnames(sdemocracy1))){ 
+  colnames(sdemocracy1)[i] <- substr(colnames(sdemocracy1)[i], 2, 5) 
+} 
+names(sdemocracy1)[1] <- "le" 
+sdemocracy1g <- sdemocracy1 %>% gather("Year" , "Democracy Score", -le) 
+sdeomcracyN <- na.omit(sdemocracy1g) 
+ 
+slife <- read.csv("life_expectancy.csv") 
+for(i in seq_along(colnames(slife))){ 
+  colnames(slife)[i] <- substr(colnames(slife)[i], 2, 5) 
+} 
+names(slife)[1] <- "le" 
+slifeg <- slife %>% gather("Year" , "Life Expectancy", -le) 
+ 
+sdata <- slifeg %>%  full_join(sdeomcracyN, by.x = "Year",  by.y = "le") 
+ 
+sdataN <- na.omit(sdata) 
+ 
+ 
+perms <- 1000 
+vec1 <- numeric(perms) 
+vec2 <- numeric(perms) 
+for (i in c(1:perms)){ 
+  samp1 <- sample(sdataN$`Life Expectancy`, 300, replace = FALSE) 
+  group1 <- samp1[1:150] 
+  group2 <- samp1[151:299] 
+  M1 = mean(group1) 
+  M2 = mean(group2) 
+  diffmean = M1 - M2 
+  vec1[[i]] <- diffmean 
+   
+  samp2<- sample(sdataN$`Democracy Score`, 300, replace = FALSE) 
+  group3 <- samp2[1:150] 
+  group4 <- samp2[151 + 299] 
+  M3 = mean(group3) 
+  M4 = mean(group4) 
+  diffmean2 = M3 - M4 
+  vec2[[i]] <- diffmean2 
+} 
+ 
+ggplot(sdataN, aes(x = "Year", y = "Life Expectancy", color = le))+ 
+  geom_jitter()+ 
+  facet_wrap(~le) 
+ 
+ggplot(sdataN, aes(x = "Year", y = "Democracy Score", color = le))+ 
+  geom_jitter()+ 
+  facet_wrap(~le) 
+ 
+ggplot(sdataN, aes( x = "Year" , y = diffmean2)+ 
+         geom_histogram(stat = "identity", fill = le)+ 
+         xlab("Year")+ 
+         ylab("Democracy Score") 
+        
+ggplot(sdataN, aes( x = "Year" , y = diffmean1)+ 
+         geom_histogram(stat = "identity", fill = le)+ 
+         xlab("Year")+ 
+         ylab("Life Expectancy") 
+        
+      
+ 
+``` 
 ## Peter's Individual:
 I was interested in invesigating the relationship between power consumption and other measures of general well being. I wanted to test this using power consumption over time, but through my analysis, I found that to be a poor approach. Power consumption depends greatly on the efficiency of devices used, and more developed countries tend to use more efficient electronics. 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 peterData <- na.omit(peterData)
 
 names(peterData)[1] <- "country"
