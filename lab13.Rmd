@@ -250,15 +250,15 @@ perm_cor <- function(perms, year, mean)
 ```
 
 ```{r}
-correlation_men <- perm_cor(perms = 1000, years_in_school_men$year, years_in_school_men$mean)
+correlation_men <- perm_cor(perms = 4000, years_in_school_men$year, years_in_school_men$mean)
 correlation_men <- data.frame(correlation_men)
 ggplot(correlation_men) + geom_density(aes(x = correlation_men))
 
-correlation_women <- perm_cor(perms = 1000, years_in_school_women$year, years_in_school_women$mean)
+correlation_women <- perm_cor(perms = 4000, years_in_school_women$year, years_in_school_women$mean)
 correlation_women <- data.frame(correlation_women)
 ggplot(correlation_women) + geom_density(aes(x = correlation_women))
 
-correlation <- perm_cor(perms = 1000, years_in_school$year, years_in_school$mean)
+correlation <- perm_cor(perms = 4000, years_in_school$year, years_in_school$mean)
 correlation <- data.frame(correlation)
 ggplot(correlation) + geom_density(aes(x = correlation))
 ```
