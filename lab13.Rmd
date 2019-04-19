@@ -14,6 +14,8 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ###!!!PUT ANY PACKAGES USED HERE TO NOT RELOAD PACKAGES MULTIPLE TIMES!!!
 library(tidyverse)
 library(dplyr)
+library(readxl)
+library(readr)
 
 ```
 
@@ -93,7 +95,31 @@ years_in_school <- full_join(years_in_school_women, years_in_school_men, by.x = 
 ```
 #final usable data is called 'years_in_school'
 
+##Laurens Data
 
+life_expectancy <- read_csv("life_expectancy_years.csv")
+life_expec<- life_expectancy[-c(2:196)]
+life_exp<- life_expec[-c(18:25)]
+names(life_exp)[1] <- "country"
+life_exp<- life_exp %>% gather("year", "life expectancy", -country)
+life_exp<-na.omit(life_exp)
+```
+
+```{r}
+GDP <- read_excel("GDPpercapitaconstant2000US.xlsx")
+names(GDP)[1] <- "country"
+GDP<- GDP %>% gather("year", "gdp", -country)
+GDP$year<- GDP$year %>% map_int(as.integer)
+GDP<- na.omit(GDP)
+```
+
+```{r}
+health_spending <- read_csv("total_health_spending_percent_of_gdp.csv")
+names(health_spending)[1] <- "country"
+health<- health_spending %>% gather("year", "health spending per GDP", -country)
+health<-na.omit(health)
+healthdata<- full_join(life_exp,health)
+```
 
 # Individual Sections:
 
@@ -226,6 +252,33 @@ A further explanation of this can perhaps come from activity level. Sugar genera
 
 
 ## Lauren's Individual:
+
+```{r}
+perm_mean <- function(perms,C,data)
+{
+  GDP<- GDP %>% filter(country == 'C')
+  
+  for (i in c(1:perms))
+  {
+    samp <- sample(data,2, replace = FALSE)
+    value1<- samp[[1]]
+    value2<- samp[[2]]
+
+    diff = value1 - value2
+    vec[[i]] <- diff
+    
+  }
+  return(vec)
+}
+
+GDPtest<-perm_mean(10000,Canada,GDP$gdp)
+GDPtest<- data.frame(GDPtest)
+med<-GDPtest %>% summarise(med = median(GDPtest))
+med<- as.numeric(med)
+ggplot(GDPtest) + geom_density(aes(x=GDPtest)) + geom_vline(xintercept = med,color = 'red') + ggtitle('GDP over time in Canada')
+summary(GDPtest)
+t.test(GDPtest)
+```
 
 
 
