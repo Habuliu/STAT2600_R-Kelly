@@ -345,7 +345,7 @@ From the graph above, we can see the mean education years grow along time. Even 
 ## Peter's Individual:
 I was interested in invesigating the relationship between power consumption and other measures of general well being. I wanted to test this using power consumption over time, but through my analysis, I found that to be a poor approach. Power consumption depends greatly on the efficiency of devices used, and more developed countries tend to use more efficient electronics. 
 
-```{r}
+```{r, echo = FALSE}
 peterData <- na.omit(peterData)
 
 names(peterData)[1] <- "country"
