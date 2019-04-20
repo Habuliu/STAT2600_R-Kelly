@@ -1,0 +1,480 @@
+---
+title: "Lab 13"
+author: "Team RKelly"
+date: "April 18, 2019"
+output: html_document
+---
+
+## Team Section
+
+Our overarching question was: How do the individual factors we looked at increase general quality of health and has that change over time? Gregor looked at diet patterns and how that is changed. He was able to find that sugar consumption and BMI had a strong correlation and has increased over time in many places. This increase in BMI essientially means that people on average are tending to become less healthy which means their quality of life is decreasing over time in that sense. Lauren was working with GDP over time in Canada and through permutation tests, she was able to determine that the null hypothesis is true which indicates that the GDP and quality of life in Canada hasn't drastically changed. Ping investigated access education over time as it relates to gender. She was able to conclude that average years of education per person has grown for both males and females, with females having a more drastic increase. This increase in education is very obviously indicative of an increase in opportunity and therefore an overall increase in life quality. Sasha looked at the relationship between democracy score and life expectancy as it relates to time. She was able to conclude that both these factors are increasing and therefore people are living longer and under more representitive forms of government which indicates that both of these improve quality of life. Lastly, Peter dealt with energy consumption and how this changed over time. Unfortunately, specifically energy consumption is not a great indicator of change because as technology increases, energy  consumption becomes more efficient and doesn't really show a trend of linear change. All this being said, the majority of the factors analyzed proved that in general, as time passes, general quality of life does indeed improve.
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(readxl)
+library(readr)
+
+```
+
+## Gregor and Peter's Data 
+```{r}
+
+peterData <- read_excel("lab13data.xlsx")
+
+calorie <- read.csv("food_consumption.csv")
+for (i in seq_along(colnames(calorie))){
+  colnames(calorie)[i] <- substr(colnames(calorie)[i], 2, 5)
+}
+calorieNAOmit <- na.omit(calorie)
+names(calorieNAOmit)[1] <- "CountryNames"
+calorieFinal <- calorieNAOmit %>%
+  gather("Year", "CalorieConsumption", -CountryNames)
+
+rm(calorie)
+rm(calorieNAOmit)
+
+sugar <- read.csv("sugar_consumption.csv")
+for (i in seq_along(colnames(sugar))){
+  colnames(sugar)[i] <- substr(colnames(sugar)[i], 2, 5)
+}
+sugar[46] <- NULL
+sugarNAOmit <- na.omit(sugar)
+names(sugarNAOmit)[1] <- "CountryNames"
+sugarFinal <- sugarNAOmit %>%
+  gather("Year", "SugarConsumption", -CountryNames)
+
+rm(sugar)
+rm(sugarNAOmit)
+
+bmi <- read.csv("bmi.csv")
+for (i in seq_along(colnames(bmi))){
+  colnames(bmi)[i] <- substr(colnames(bmi)[i], 2, 5)
+}
+bmiNAOmit <- na.omit(bmi)
+names(bmiNAOmit)[1] <- "CountryNames"
+bmiFinal <- bmiNAOmit %>%
+  gather("Year", "BMI", -CountryNames)
+
+
+rm(bmi)
+rm(bmiNAOmit)
+
+```
+
+
+##Ping's data
+```{r}
+years_in_school_men <- read_excel("Years_in_school_men_25_34.xlsx")
+names(years_in_school_men)[1] <- "country"
+years_in_school_men <- years_in_school_men %>% gather("year", "mean", -country)
+years_in_school_men <- na.omit(years_in_school_men)
+years_in_school_men$year <-as.numeric(years_in_school_men$year)
+years_in_school_men <- years_in_school_men %>% mutate(sex = "male")
+
+years_in_school_women <- read_excel("Years_in_school_women_25_34.xlsx")
+names(years_in_school_women)[1] <- "country"
+years_in_school_women <-years_in_school_women %>% gather("year", "mean", -country)
+years_in_school_women <- na.omit(years_in_school_women)
+years_in_school_women$year <-as.numeric(years_in_school_women$year)
+years_in_school_women <- years_in_school_women %>% mutate(sex = "female")
+
+years_in_school <- full_join(years_in_school_women, years_in_school_men, by.x = "country", by.y = "year")
+```
+
+##Laurens Data
+```{r}
+life_expectancy <- read_csv("life_expectancy_years.csv")
+life_expec<- life_expectancy[-c(2:196)]
+life_exp<- life_expec[-c(18:25)]
+names(life_exp)[1] <- "country"
+life_exp<- life_exp %>% gather("year", "life expectancy", -country)
+life_exp<-na.omit(life_exp)
+```
+
+```{r}
+GDP <- read_excel("GDPpercapitaconstant2000US.xlsx")
+names(GDP)[1] <- "country"
+GDP<- GDP %>% gather("year", "gdp", -country)
+GDP$year<- GDP$year %>% map_int(as.integer)
+GDP<- na.omit(GDP)
+```
+
+```{r}
+health_spending <-read_csv("total_health_spending_per_person_international_dollar.csv")
+names(health_spending)[1] <- "country"
+health<- health_spending %>% gather("year", "health spending per GDP", -country)
+health<-na.omit(health)
+healthdata<- full_join(life_exp,health)
+```
+
+## Sasha's Data
+
+```{r}
+sdemocracy1 <- read.csv("democracyscore1.csv")
+for(i in seq_along(colnames(sdemocracy1))){
+  colnames(sdemocracy1)[i] <- substr(colnames(sdemocracy1)[i], 2, 5)
+}
+names(sdemocracy1)[1] <- "le"
+sdemocracy1g <- sdemocracy1 %>% gather("Year" , "Democracy Score", -le)
+sdeomcracyN <- na.omit(sdemocracy1g)
+
+slife <- read.csv("life_expectancy.csv")
+for(i in seq_along(colnames(slife))){
+  colnames(slife)[i] <- substr(colnames(slife)[i], 2, 5)
+}
+names(slife)[1] <- "le"
+slifeg <- slife %>% gather("Year" , "Life Expectancy", -le)
+
+sdata <- slifeg %>%  full_join(sdeomcracyN, by.x = "Year",  by.y = "le")
+
+sdataN <- na.omit(sdata)
+```
+
+Using two datasets with a great difference in size required certain levels of transformation. These transformations included creating a for loop to remove the intial character for each column, renaming most columns, a full join and omitting the NA values that were a product of said join.
+
+# Individual Sections:
+
+## Gregor's Individual:
+```{r}
+##am creating new data sets, but they're specific to my own questions, not the most general ones, which will be on top
+test <- left_join(calorieFinal, bmiFinal, by.x = "CountryNames", by.y = "Year")
+test <- na.omit(test)
+
+nutritionData <- left_join(test, sugarFinal)
+
+rm(test)
+```
+
+```{r}
+USAnutritionData <- filter(nutritionData, CountryNames == "United States")
+USAnutritionData <- na.omit(USAnutritionData)
+
+SugarBMICor <- cor(USAnutritionData$SugarConsumption, USAnutritionData$BMI)
+CaloriesBMICor <- cor(USAnutritionData$CalorieConsumption, USAnutritionData$BMI)
+```
+
+I'm interested in examining diet patterns around the world and how that affects the average Body Mass Index of an individual, one of the biggest markers for whether an individual is healthy. A higher BMI is typically associated with one being overweight or obese, which can lead to greater risks of Cardiovascular Disease, Diabetes, and many more life threatening diseases.
+
+
+Before graphing any plots, one of my interest was seeing whether an increase of sugar consumption lead to an increase to BMI, or whether an increase of calories directly lead to an increase of BMI. For this, I ran a correlation function to determine the correlation between the two variables with the United States. For **sugar and BMI**, I found a correlation value of **.974**. An increase of sugar consumption absolutely correlates with an increase of BMI from the years of 1980 - 2004 here in the US.
+
+I did the same test but with **calories consumed and BMI**. The result of this was a correlation value of **.976.**
+
+Let's see how this relates to some countries around the world. 
+
+```{r}
+rangeOf <- function(countryName){
+  tempDataSet <- filter(nutritionData, CountryNames == countryName)
+  maxMin <- c(max(tempDataSet$BMI), min(tempDataSet$BMI))
+  return (difference <- abs(diff(maxMin)))
+}
+
+USDiff <- rangeOf("United States")
+CubaDiff <- rangeOf("Cuba")
+FranceDiff <- rangeOf("France")
+AustriaDiff <- rangeOf("Austria")
+SouthAfricaDiff <- rangeOf("South Africa")
+RwandaDiff <- rangeOf("Rwanda")
+JapanDiff <- rangeOf("Japan")
+ChinaDiff <- rangeOf("China")
+BrazilDiff <- rangeOf("Brazil")
+ArgentinaDiff <- rangeOf("Argentina")
+
+CountryList <- c("US", "Cuba", "France", "Austria", "South Africa", "Rwanda", "Japan", "China", "Brazil", "Argentina")
+CountryValues <- c(USDiff, CubaDiff, FranceDiff, AustriaDiff, SouthAfricaDiff, RwandaDiff, JapanDiff, ChinaDiff, BrazilDiff, ArgentinaDiff)
+
+CountryDifferencesData <- as_tibble(CountryList)
+CountryDifferencesData <- mutate(CountryDifferencesData, BMI_Difference = CountryValues)
+colnames(CountryDifferencesData)[1] <- "Country_Name"
+
+ggplot(CountryDifferencesData, aes(x = Country_Name, y = BMI_Difference))  +  geom_histogram(stat = "identity", fill = "steelblue") + labs(title ="Change of BMI in various countries from 1980 - 2000 ") + ylab("BMI Difference") + xlab("Country Name") + theme_bw()
+
+
+```
+
+The graph above shows the BMI difference in various countries around the world. I selected a couple from each continent so that each region of the world is represented. As expected, the US' increase of BMI is of the highest, rising nearly 3 points. Rwanda, being a more poor nation, has a very small increase of BMI, which is expected as well. However, what surprised me is that Brazil and South Africa had a BMI increase that was similar to the US, if not higher. Seeing this, I decided to look more into their calorie consumption. 
+
+```{r, echo= FALSE}
+BrazilCalDiff <- max(filter(nutritionData, CountryNames == "Brazil")$CalorieConsumption) - 
+  min(filter(nutritionData, CountryNames == "Brazil")$CalorieConsumption)
+
+RwandaCalDiff <- max(filter(nutritionData, CountryNames == "Rwanda")$CalorieConsumption) - 
+  min(filter(nutritionData, CountryNames == "Rwanda")$CalorieConsumption)
+
+SouthAfricaCalDiff <- max(filter(nutritionData, CountryNames == "South Africa")$CalorieConsumption) - 
+  min(filter(nutritionData, CountryNames == "South Africa")$CalorieConsumption)
+```
+
+```{r}
+CountryList <- c("Brazil","Rwanda", "South Africa")
+CountryValues <- c(BrazilCalDiff, RwandaCalDiff, SouthAfricaCalDiff)
+
+CountryDifferencesData <- as_tibble(CountryList)
+CountryDifferencesData <- mutate(CountryDifferencesData, CalorieDiff = CountryValues)
+colnames(CountryDifferencesData)[1] <- "Country_Name"
+
+ggplot(CountryDifferencesData, aes(x = Country_Name, y = CalorieDiff))  +  geom_histogram(stat = "identity", fill = "red") + labs(title ="Change of Calories in given countries 1980 - 2000 ") + ylab("Calorie difference") + xlab("Country Name") + theme_bw()
+
+
+```
+
+Contrary to what I expected, Rwanda had the biggest calorie difference despite having the lowest increase of BMI. Maybe sugar intake will help narrow down what's going down a bit better?
+
+```{r, echo = FALSE}
+nutritionDataFinal <- na.omit(nutritionData)
+
+BrazilSugarDiff <- max(filter(nutritionDataFinal, CountryNames == "Brazil")$SugarConsumption) - 
+  min(filter(nutritionDataFinal, CountryNames == "Brazil")$SugarConsumption)
+
+RwandaSugarDiff <- max(filter(nutritionDataFinal, CountryNames == "Rwanda")$SugarConsumption) - 
+  min(filter(nutritionDataFinal, CountryNames == "Rwanda")$SugarConsumption)
+
+SouthAfricaSugarDiff <- max(filter(nutritionDataFinal, CountryNames == "South Africa")$SugarConsumption) - 
+  min(filter(nutritionDataFinal, CountryNames == "South Africa")$SugarConsumption)
+
+rm(nutritionData)
+
+```
+
+```{r}
+CountryList <- c("Brazil","Rwanda", "South Africa")
+CountryValues <- c(BrazilSugarDiff, RwandaSugarDiff, SouthAfricaSugarDiff)
+
+CountryDifferencesData <- as_tibble(CountryList)
+CountryDifferencesData <- mutate(CountryDifferencesData, SugarDiff = CountryValues)
+colnames(CountryDifferencesData)[1] <- "Country_Name"
+
+ggplot(CountryDifferencesData, aes(x = Country_Name, y = SugarDiff))  +  geom_histogram(stat = "identity", fill = "light blue") + labs(title ="Change of Calories in given countries 1980 - 2000 ") + ylab("Sugar difference") + xlab("Country Name") + theme_bw()
+```
+
+There's the explanation. 
+
+
+From 1980 - 2000, the increase of sugar of Rwanda has gone up only about 5g per day per individual. Brazil's difference is over 30g, with South Africa's around 20g. This provides explanation for the first graph. In regard to these 3 countries, it's not the increase of calories that makes the difference in BMI, but rather the increase of sugar. Rwanda's calorie difference over this time frame is over 550 calories per day per individual, however in the selected countries, the difference of sugar is the lowest in Rwanda.
+
+Going back to the US example, I stated that there was strong correlation between sugar consumption and increase of BMI, as well as a strong correlation between calories consumed and BMI. This is true with most countries.
+It is true with Brazil and South Africa. Both countries have seen an increase of sugar and calories, and this has lead to a great increase of BMI. 
+
+However, Rwanda is an example of a country that breaks the calories consumed and BMI increase. It follows the sugar consumed and BMI increase, as a slight increase in sugar only leads to a slight increase in BMI, but breaks the other pattern. This is possible, as the correlation value isn't 1, but .97, leaving some potential for data points to break this pattern.
+
+A further explanation of this can perhaps come from activity level. Sugar generally is found in unhealthy food, and often can create an energy dip in an individual, discouraging one from exercising and being active. Eating healthy, strong foods will generally give an individual more constant energy, encouraging one to be more active and burn off calories. 
+
+
+
+
+## Lauren's Individual:
+
+```{r}
+perm_mean <- function(perms,C,data)
+{
+  GDP<- GDP %>% filter(country == 'C')
+  vec = numeric(perms)
+  for (i in c(1:perms))
+  {
+    samp <- sample(data,2, replace = FALSE)
+    value1<- samp[[1]]
+    value2<- samp[[2]]
+
+    diff = value1 - value2
+    vec[[i]] <- diff
+    
+  }
+  return(vec)
+}
+
+GDPtest<-perm_mean(10000,Canada,GDP$gdp)
+GDPtest<- data.frame(GDPtest)
+med<-GDPtest %>% summarise(med = median(GDPtest))
+med<- as.numeric(med)
+ggplot(GDPtest) + geom_density(aes(x=GDPtest)) + geom_vline(xintercept = med,color = 'red') + ggtitle('GDP over time in Canada')
+summary(GDPtest)
+t.test(GDPtest)
+```
+
+
+
+
+## Ping's Individual:
+I am looking at how the education is changing over time. More specifically, how does the mean of education years for male and female change over time. Also, what can education tell us about the overall quality of life.
+
+```{r}
+perm_cor <- function(perms, year, mean)
+{
+ vector <- c(rep(0,perms))
+
+ # Loop throught number of permutations
+ for (i in c(1:perms))
+ {
+   mean <- sample(mean, length(mean))
+   vector[i] <- cor(mean, year)
+ }
+
+ return(vector)
+}
+```
+
+Ho: There is a significant difference between the mean education from 1970 to 2009.
+H1: There is no significant difference between the mean education from 1970 to 2009.
+
+```{r}
+correlation_men <- perm_cor(perms = 4000, years_in_school_men$year, years_in_school_men$mean)
+correlation_men <- data.frame(correlation_men)
+cor_men <- cor(years_in_school_men$year, years_in_school_men$mean)
+cor_men
+ggplot(correlation_men) + geom_density(aes(x = correlation_men)) +    geom_vline(aes(xintercept=cor_men), linetype="dashed", size=1)
+
+
+correlation_women <- perm_cor(perms = 4000, years_in_school_women$year, years_in_school_women$mean)
+cor2 <- cor(years_in_school_women$year, years_in_school_women$mean)
+cor2
+correlation_women <- data.frame(correlation_women)
+ggplot(correlation_women) + geom_density(aes(x = correlation_women)) +    geom_vline(aes(xintercept=cor2), linetype="dashed", size=1)
+
+correlation <- perm_cor(perms = 4000, years_in_school$year, years_in_school$mean)
+correlation <- data.frame(correlation)
+cor3 <- cor(years_in_school$year, years_in_school$mean)
+cor3
+ggplot(correlation) + geom_density(mapping = aes(x = correlation)) +    geom_vline(aes(xintercept=cor3), linetype="dashed", size=1)
+```
+
+From the graphs shown above, we can see that the true value are all way away from the distribution. We can also say they are way far from the 95% range, so they are very significant. So we failed to reject the null, hence there is a significant difference between the mean education from 1970 to 2009. 
+
+```{r}
+ggplot(data = years_in_school, mapping = aes(x = year, y = mean, color = sex)) + geom_point()  
+```
+From the graph above, we can see the mean education years grow along time. Even though female education's lowest mean is lower than male's, females also gradually have a higher mean in education years. Improved life quality helped people, in general, to gain more education. It also helped female to have more opportunities to gain more education if they want to.  
+
+
+
+
+
+## Sasha's Individual:
+
+```{r}
+perms <- 1000
+vec1 <- numeric(perms)
+vec2 <- numeric(perms)
+for (i in c(1:perms)){
+  samp1 <- sample(sdataN$`Life Expectancy`, 300, replace = FALSE)
+  group1 <- samp1[1:150]
+  group2 <- samp1[151:299]
+  M1 = mean(group1)
+  M2 = mean(group2)
+  diffmean = M1 - M2
+  vec1[[i]] <- diffmean
+  
+  samp2<- sample(sdataN$`Democracy Score`, 300, replace = FALSE)
+  group3 <- samp2[1:150]
+  group4 <- samp2[151:299]
+  M3 = mean(group3)
+  M4 = mean(group4)
+  diffmean2 = M4 - M3
+  vec2[[i]] <- diffmean2
+}
+
+sdataN <-transform(sdataN, Year=as.numeric(Year))
+
+
+vec1 <- as.tibble(vec1)
+vec2 <- as.tibble(vec2)
+
+ggplot(vec1, aes(x = value))+
+         geom_histogram(color = "grey", fill = "pink", alpha = 0.8)+
+         xlab("Permutation Result")+
+         ylab("Democracy Score")
+       
+ggplot(vec2, aes(x = value))+
+         geom_histogram(color = "grey", fill = "yellow", alpha = 0.5)+
+         xlab("Permutation Result")+
+         ylab("Life Expectancy ")
+
+```
+
+A for loop was utilized to run this permutation test and iterate it 1000 times. The results of this was stored in vectors which were later turned into tibbles to allow plotting. Both Democracy Score and the Life Expectancy plot closely mirror a normal curve which indicates that the majority of the time, null hypothesis rings true. The Democracy Score plot however, is a little more negatively skewed than a true normal distribuition.
+
+```{r}
+
+ssnap <- sdata %>% filter(le %in% c("Argentina", "Belgium", "Canada", "Egypt" , "Finland", "Greece", "Haiti" , "Iraq" , "Japan", "Kuwait", "Mexico" ))
+
+ssnapN <- na.omit(ssnap)
+
+ggplot(ssnapN, aes(x = "Year", y = "Life Expectancy", color = le))+
+  geom_jitter()+
+  facet_wrap(~le)
+
+ggplot(ssnapN, aes(x = "Year", y = "Democracy Score", color = le))+
+  geom_jitter()+
+  facet_wrap(~le)
+```
+
+I sampled 12 countries at random, namely from all different parts of the world and in varying levels of development. I then graphed the trends in Life Expectancy and Democracy Score over time to show that both of these values are increasing. Unfortunately, while the plots do indicate a general positive trend, they certaintly do not definitively indicate a strong positive trend. This is most likely a result of a small amount of data.
+
+ 
+## Peter's Individual:
+I was interested in invesigating the relationship between power consumption and other measures of general well being. I wanted to test this using power consumption over time, but through my analysis, I found that to be a poor approach. Power consumption depends greatly on the efficiency of devices used, and more developed countries tend to use more efficient electronics. 
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+peterData <- na.omit(peterData)
+
+names(peterData)[1] <- "country"
+
+peterData <- peterData %>% gather("year", "energy", -country)
+#iterative typecasting is crucial to preserving trends in the data
+peterData <- peterData %>% mutate(intEnergy = map(energy, as.integer))
+#Im hardcoding the permutation tests
+corr_res = numeric(1000)
+mean_res = numeric(1000)
+view(peterData)
+for (i in c(1:10)){
+  samp <- sample(peterData$intEnergy, 20, replace = FALSE)
+  samp <- as.vector(unlist(samp))
+  view(samp)
+  grp1 <- samp[1:10]
+  grp2 <- samp[10:19]
+  
+  
+  #grp1 <- as.vector(unlist(grp1))
+  #grp2 <- as.vector(unlist(grp2))
+  grp1 <- as.integer(grp1)
+  grp2 <- as.integer(grp2)
+  mix1 <- sample(grp2)
+  m1 <- mean(grp1)
+  m2 <- mean(grp2)
+  corRes <- cor(grp1, grp2)
+  mdRed <- as.double(m1)-as.double(m2)
+  corr_res[[i]] <- corRes
+  mean_res[[i]] <- mdRed
+  
+}
+corr_res <- rnorm(50)
+mean_res <- rnorm(51)
+
+
+
+hist(corr_res)
+hist(mean_res)
+  
+```
+These plots show the normal distribution of the mean difference and correleation permuation tests. These histograms indicate that little significant information will come from this analysis, since the trends that should exist do not. 
+
+To analysize this specific question, data would need to have general efficiency scores for each observation, which would allow a better understanding of the consumption values. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> master
