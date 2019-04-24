@@ -1,0 +1,141 @@
+title: "lab14"
+author: R-Kelly
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+source("http://www.openintro.org/stat/data/cdc.R")
+cdc <- as_tibble(cdc)
+```
+# Team section
+### Our Question
+Our team decided to investigate the relationship between smoking, age and general health.  It is interesting and important to explore this relationship as it can give a better understanding to the effects of smoking. This answer will be interesting and important as it may lead to a better general health for the community. 
+PLOT:
+```{r}
+ggplot(data  = cdc) + 
+    geom_boxplot(mapping = aes(x  = genhlth, y = age)) +
+    facet_wrap(~ smoke100, nrow = 2)
+```
+### Our Recommendation
+We can see form the graph that people who smoke less have a higher chance of having a good health even in their older ages. So we think smoke does affect health in some extent. We recommend no smoking is the best.
+# Individual Plots
+
+### Lauren
+I chose to investigate the relationship between general health and age, and the differences of this relationship for men and women. I found that females we're on average slightly healthier than men independed of age, and people from age 30 to 50 we're the heathiest group of people. 
+
+```
+ggplot(data = cdc) +  geom_histogram(bins=20, mapping = aes(x = age, fill = genhlth)) +facet_wrap(~gender) +
+  xlab("Age") +
+  ylab("People") +
+  labs(title= "General Health by Age for both Men and Women")
+
+<<<<<<< Updated upstream
+```
+=======
+<<<<<<< Updated upstream
+### Ping:
+I started by examing the relationship between gender and genral health. By looking at the bar graph, we can see main population have excellent to good health. The ration between male and female is also close. 
+```{r}
+ggplot(data = cdc) + geom_bar(mapping = aes(x = genhlth, fill = gender))
+```
+
+Then I add one more age element into the graph. By doing Facet_wrap, dividing them into different genral health category. We can see form the graph that the main age range for excellent to good health is from age 25 to 75.
+
+```{r}
+ ggplot(data = cdc) +
+  geom_histogram(mapping = aes(x = age, fill = gender))+
+  facet_wrap(~ genhlth, nrow = 2)
+```
+For my last graph, I added a title and did coord_polar to the graph. The coord_polar gives a clear look at the age range.
+```{r}
+ggplot(data = cdc) +
+   geom_histogram(mapping = aes(x = age, fill = gender))+
+     facet_wrap(~ genhlth, nrow = 2)+
+     ggtitle("Relationship between gender, age and genral health")+
+     coord_polar()
+```
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+
+### Peter
+I chose to examine the correlation between smoking, holding a health plan, and general health. The plot below  
+shows how the relationship between smoking and holding a health plan changes based on general health, with the  
+general trend indicating that individuals who do not hold a health plan are more likley to smoke than others. 
+'''{r}
+ggplot(cdc, aes(as.factor(hlthplan), fill=as.factor(smoke100))) +
+     geom_bar(position = 'fill') +
+        
+    facet_wrap(~ genhlth, nrow = 2)
+'''
+
+
+
+
+
+<<<<<<< Updated upstream
+### Sasha
+=======
+<<<<<<< Updated upstream
+## Sasha:
+>>>>>>> Stashed changes
+I chose to graph how one's general health varies and how it relates to either the presence or the lack of a healthplan,
+ and how it differs showing this correlation for men and then for women. From the above graph, it is clear that of the 
+ people surveyed more had a health plan than didn't. Despite the lack of equal amounts of those with a health plan and 
+ those without, it is shown that general health increases with the presence of a healthplan. 
+<<<<<<< Updated upstream
+
+=======
+=======
+
+```{r}
+ggplot(data = cdc) +
+geom_jitter(mapping = aes(x = genhlth, y= hlthplan), color = "deeppink4")+ facet_wrap("gender")+
+  labs(x= "General Health")+ labs (y= "Healthplan")+ labs(title= "The Relationship between General Health and Having a Healthplan for Men and Women")
+```
+
+<<<<<<< Updated upstream
+
+
+### Gregor
+=======
+<<<<<<< Updated upstream
+## Gregor:
+>>>>>>> Stashed changes
+My graph shows the impact that smoking and exercise has on your general health. The graphs inside the facet wrap show the different amounts of people 
+in each health status. With each graph, however, the data represents a different population of the dataset, with one of graphs representing either:
+1. People who don't smoke, nor exercise
+2. People who do smoke, but don't exercise
+3. People who don't smoke, but do exercise
+4. People who do smoke, but do exercise
+=======
+
+
+
+
+
+
+
+
+## R Markdown
+>>>>>>> Stashed changes
+
+The graphs show that whether one exercises has a bigger impact on one's general health. In the graphs that show the people who have exercised in the past 
+month (meaning of the 'exerany' variable), the ratio between excellent and very good status to fair and poor is much greater than the same ratio in the graphs of people
+who don't smoke. The fact that this ratio is still much greater in the people who smoke and exercise in comparison to this same ratio in the people who smoke but don't 
+exercise demonstrates that exercise has a bigger impact on general health. In the two graphs that show the people that don't smoke, the ratios between good 
+health and poor health is about the same, whether the person smokes or not. 
+
+```{r}
+ggplot(data  = cdc, mapping = aes(x  = genhlth)) + geom_bar() + facet_wrap(exerany~smoke100, labeller = label_both)
+``` 
+#Who Did What!
+
+Lauren: In this team Lab, I worked on formatting the document and fixing code so all of the plots would print when the file was knit. I also worked on developing and writing the team question for our plot. 
+Ping: I did the team plot and recommendations.
+
+
+
+
+
