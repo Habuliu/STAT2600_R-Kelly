@@ -58,16 +58,42 @@ ggplot(data = cdc) +
 
 
 ### Peter
-I chose to examine the correlation between smoking, holding a health plan, and general health. The plot below  
-shows how the relationship between smoking and holding a health plan changes based on general health, with the  
-general trend indicating that individuals who do not hold a health plan are more likley to smoke than others. 
-```{r}
-ggplot(cdc, aes(x = age, y = genhlth) ) +
+I chose to examine the correlation between smoking, height, and weight. Since healthy weight is dependent on a number of factors, I figured the best measure of general fitness is the difference between actual and desired weight. The graph is separated by gender and smoking status, to show the difference in health between populations. 
+```{r, warning = FALSE, message = FALSE}
+pcdc <- cdc
+pcdc <- pcdc%>% mutate(wdelta = weight-wtdesire)
+valueAssign <- function(string){
+  val <- 0
+  if(string == "excellent"){
+    val <- 5
+  }
+  else if(string == "very good"){
+    val <- 4
+  
+  }
+  else if(string == "good"){
+    val <- 3
+  }
+  else if(string == "fair"){
+    val <- 2
+  }
+  else if(string == "poor"){
+    val <- 1
+  }
+  else{
+    val <- -1
+  }
+  return(val)
+}
+pcdc <- pcdc %>% mutate(inthlth = map(genhlth, valueAssign))
+
+ggplot(pcdc, aes(x = height, y = wdelta, color = genhlth)) +
      geom_hex() +
     
-    facet_wrap(~ smoke100, nrow = 2)
+    facet_grid(gender ~ smoke100)
+    
 ```
-
+One trend seen in the graph is the higher likelyhood of un-fit smokers being of fair or poor health. Non-smoking populations tend to have more individuals in the overweight range who's health is fair or good. Another notable trait is the higher than average health of the tallest members of each subgroup. Lastly, there is a clear trend between smoking and being of poor health. What a surprise. 
 
 
 
