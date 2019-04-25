@@ -93,7 +93,7 @@ ggplot(pcdc, aes(x = height, y = wdelta, color = genhlth)) +
     facet_grid(gender ~ smoke100)
     
 ```
-One trend seen in the graph is the higher likelyhood of un-fit smokers being of fair or poor health. Non-smoking populations tend to have more individuals in the overweight range who's health is fair or good. Another notable trait is the higher than average health of the tallest members of each subgroup. Lastly, there is a clear trend between smoking and being of poor health. What a surprise. 
+A trend shown by the graph is the higher likelyhood of un-fit smokers being of fair or poor health. Non-smoking populations tend to have more individuals in the overweight range who's health is fair or good. Another notable trait is the higher than average health of the tallest members of each subgroup. Lastly, there is a clear trend between smoking and being of poor health. What a surprise. 
 
 
 
