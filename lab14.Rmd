@@ -35,27 +35,51 @@ ggplot(data = cdc) +  geom_histogram(bins=20, mapping = aes(x = age, fill = genh
 ```
 
 ### Ping:
-I started by examing the relationship between gender and genral health. By looking at the bar graph, we can see main population have excellent to good health. The ration between male and female is also close. 
-```{r}
-ggplot(data = cdc) + geom_bar(mapping = aes(x = genhlth, fill = gender))
-```
+Question: Do people who do exercises, having health plan, no smoking, maintain a better weight? Maintaing a better weight means having a less different between their actual weight and desired weight. 
 
-Then I add one more age element into the graph. By doing Facet_wrap, dividing them into different genral health category. We can see form the graph that the main age range for excellent to good health is from age 25 to 75.
+Ho: If people who do exercises, have health plan, dont smoke, then there still a difference between their actual weight and desired weight.
+H1: If people who do exercises, have health plan, dont smoke, there is no difference between their actual weight and desired weight.
 
 ```{r}
- ggplot(data = cdc) +
-  geom_histogram(mapping = aes(x = age, fill = gender))+
-  facet_wrap(~ genhlth, nrow = 2)
-```
-For my last graph, I added a title and did coord_polar to the graph. The coord_polar gives a clear look at the age range.
-```{r}
-ggplot(data = cdc) +
-   geom_histogram(mapping = aes(x = age, fill = gender))+
-     facet_wrap(~ genhlth, nrow = 2)+
-     ggtitle("Relationship between gender, age and genral health")+
-     coord_polar()
+perm_cor <- function(perms = 1000, weight, wtdesired)
+{
+ vector <- c(rep(0,perms))
+
+ # Loop throught number of permutations
+ for (i in c(1:perms))
+ {
+   # Step 2:
+   # Randomly mix up the values in the vector "y"
+   wtdesired <- sample(wtdesired, length(wtdesired))
+
+   # Step 3:
+   # Compute the correlation between x and the randomly mixed
+   # up y-vector. Store this value in the vector from step 1.
+   vector[i] <- cor(wtdesired, weight)
+ }
+
+ # Step 4:
+ # Return new updated vector, created in step 1
+ return(vector)
+}
 ```
 
+```{r}
+cdc <- cdc %>% mutate(diff = wtdesire - weight)
+cdc_training <- cdc %>% filter(exerany == "1", smoke100 == "0", hlthplan == "1")
+
+ggplot(data = cdc_training, mapping = aes( x =diff)) + geom_histogram(color = "black", fill = "pink")
+
+correlation <- perm_cor(perms = 1000, cdc_training$weight, cdc_training$wtdesire)
+correlation <- data.frame(correlation)
+cor <- cor(cdc_training$weight, cdc_training$wtdesire)
+
+#true_value = mean(cdc$diff)
+ggplot(correlation) + geom_density(aes(x = correlation)) + geom_vline(aes(xintercept=cor), linetype="dashed", size=1)
+
+
+```
+From the first graph, we can see that most people who do exercises, have health plan, and dont smoke have 0 difference between their actual weight and their desire weight. From the second graph, we can see that the actual correlation is way away from the graph, so it is very significant. So we can confidently reject the null. Thus if people who do exercises, have health plan, dont smoke, there is no difference between their actual weight and desired weight.
 
 ### Peter
 I chose to examine the correlation between smoking, height, and weight. Since healthy weight is dependent on a number of factors, I figured the best measure of general fitness is the difference between actual and desired weight. The graph is separated by gender and smoking status, to show the difference in health between populations. 
