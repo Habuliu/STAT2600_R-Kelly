@@ -170,14 +170,83 @@ decrease, people tend to be further from their ideal weight. Another interesting
 revelation presented in these graohs is that women tend to to want to weigh less than 
 they do while men tend to want to weigh more.
 
+
+
 ## Gregor:
 
-My graph shows the impact that smoking and exercise has on your general health. The graphs inside the facet wrap show the different amounts of people 
-in each health status. With each graph, however, the data represents a different population of the dataset, with one of graphs representing either:
-1. People who don't smoke, nor exercise
-2. People who do smoke, but don't exercise
-3. People who don't smoke, but do exercise
-4. People who do smoke, but do exercise
+```{r}
+GregorData <- cdc
+#renaming col names to be more clear what they are
+colnames(GregorData)[1] <- "GeneralHealth"
+colnames(GregorData)[2] <- "HasExercised"
+colnames(GregorData)[3] <- "HasHealthplan"
+colnames(GregorData)[4] <- "HasSmoked100Cigs"
+
+quantify <- function(healthCondition){
+    if (healthCondition == "poor"){
+      return(1)
+    }
+
+    else if (healthCondition == "fair"){
+      return(2)
+    }
+  
+    else if (healthCondition == "good"){
+      return(3)
+    }
+  else if(healthCondition == "very good"){
+      return(4)
+  }
+  
+  else if (healthCondition == "excellent"){
+      return(5)
+  }
+}
+
+
+
+
+GregorData <- GregorData %>% mutate(GenHealthQuantify = as.numeric(map(GeneralHealth, quantify)))
+GregorData <- GregorData %>% mutate(WeightDesiredDiff = wtdesire - weight )
+GregorData <- GregorData %>% mutate(isSatisfied = ifelse(wtdesire == weight, TRUE, FALSE))
+GregorData <- GregorData %>% mutate(wantsBigger = ifelse(wtdesire - weight > 5, TRUE, FALSE))
+
+
+
+
+```
+
+```{r, include=FALSE, echo = TRUE}
+ggplot(GregorData, aes(x = weight, y= WeightDesiredDiff)) + geom_point() + facet_wrap(~gender)
+
+```
+
+```{r, include = FALSE, echo = TRUE}
+#include = FALSE won't show it, as this isn't final graph but just observing relationships, but code will show
+ggplot(GregorData, aes(x = GeneralHealth)) + geom_histogram(stat = "count", fill = "steel blue") + facet_wrap(~isSatisfied)
+#not enough of a difference between those who don't care about weight and health, although it is interesting that those that are satisfied with weight have about even good health, and greater proportion of excellent. Could be they don't care, or they healthy with weight. nonetheless not very strong relationship
+
+
+```
+
+```{r, include = FALSE, echo = FALSE}
+#those who desire to be bigger don't show any different health states, thinkin that guys that want to bulk up and start going to the gym would maybe be healthier, but guess not
+ggplot(GregorData, aes(x = GeneralHealth)) + geom_histogram(stat = "count", fill = "dark red") + facet_grid(gender~wantsBigger) 
+```
+
+
+```{r}
+
+GregorModel <- lm(as.numeric(GenHealthQuantify) ~ WeightDesiredDiff, data= GregorData)
+GregorData <- add_residuals(GregorData, GregorModel)
+ggplot(GregorData, aes(x = resid)) + geom_density(bins = 50, fill = "steel blue") + facet_wrap(~HasExercised) + ylim(0, 1) + ggtitle("The difference in Residuals of those that exercised with those that don't")
+```
+
+
+The residual on this graph is the difference between the model of a quantified version of general health and each person's desired weight difference. General Health ranges from 1-5, with 1 representing poor health, and with 5 representing excellent health. The desired weight difference is a variable that represents how much they wish they're weight was different, with negative values representing that person wishes he/she is that many pounds lighter, and with positive values representing that person wishes he/she is that many pounds heavier. Therefore, the residual represents how far off each person is from this model. 
+
+The graph shows residuals and count, with a facet wrap of those who have exercised in the past month on the right (1), and those that haven't exercised in the past month. In the group that has exercised more, there's a much higher proportion of people following the model more closely, with the greatest density of data being around the 0.0 mark. Hence, those that exercise more closely follow the model of those that have a greater desire weight difference have a greater general health, which could make sense, considering those that care about their weight will genereally be healthier. 
+
 
 
 
