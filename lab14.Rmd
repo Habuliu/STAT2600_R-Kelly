@@ -149,7 +149,7 @@ test<-perm_mean(1000)
 test<- data.frame(test)
 med<-test %>% summarise(med = median(test))
 med<- as.numeric(med)
-ggplot() + geom_density(test,mapping = aes(x=test)) + geom_vline(xintercept = med,color = 'red')
+ggplot() + geom_density(test,mapping = aes(x=test,stat(count))) + geom_vline(xintercept = med,color = 'red') + theme_light()
 ```
 
 ```{r}
