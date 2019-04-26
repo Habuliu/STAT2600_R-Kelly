@@ -12,6 +12,7 @@ cdc <- as_tibble(cdc)
 # Team section
 ### Our Question
 Our team decided to investigate the relationship between smoking, age and general health.  It is interesting and important to explore this relationship as it can give a better understanding to the effects of smoking. This answer will be interesting and important as it may lead to a better general health for the community. 
+
 PLOT:
 ```{r}
 ggplot(data  = cdc) + 
@@ -27,19 +28,7 @@ ggplot(data  = cdc) +
 We can see form the graph that people who smoke less have a higher chance of having a good health even in their older ages. So we think smoke does affect health in some extent. We recommend no smoking is the best.
 # Individual Plots
 
-### Lauren
-I chose to investigate the relationship between general health and age, and the differences of this relationship for men and women. I found that females we're on average slightly healthier than men independed of age, and people from age 30 to 50 we're the heathiest group of people. 
-
-```{r}
-ggplot(data = cdc) +  geom_histogram(bins=20, mapping = aes(x = age, fill = genhlth)) +facet_wrap(~gender) +
-  xlab("Age") +
-  ylab("People") +
-  labs(title= "General Health by Age for both Men and Women")
-
-
-```
-
-### Ping:
+## Ping:
 Question: Do people who do exercises, having health plan, no smoking, maintain a better weight? Maintaing a better weight means having a less different between their actual weight and desired weight. 
 
 Ho: If people who do exercises, have health plan, dont smoke, then there still a difference between their actual weight and desired weight.
@@ -89,7 +78,7 @@ ggplot(correlation) + geom_density(aes(x = correlation)) + geom_vline(aes(xinter
 From the first graph, we can see that most people who do exercises, have health plan, and dont smoke have 0 difference between their actual weight and their desire weight. From the second graph, we can see that the actual correlation is way away from the graph, so it is very significant. So we can confidently reject the null. Thus if people who do exercises, have health plan, dont smoke, there is no difference between their actual weight and desired weight.
 
 
-### Peter
+## Peter
 I chose to examine the correlation between smoking, height, and weight. Since healthy weight is dependent on a number of factors, I figured the best measure of general fitness is the difference between actual and desired weight. The graph is separated by gender and smoking status, to show the difference in health between populations. 
 ```{r, warning = FALSE, message = FALSE}
 pcdc <- cdc
@@ -317,10 +306,7 @@ health and poor health is about the same, whether the person smokes or not.
 ```{r}
 ggplot(data  = cdc, mapping = aes(x  = genhlth)) + geom_bar() + facet_wrap(exerany~smoke100, labeller = label_both)
 ``` 
-#Who Did What!
 
-Lauren: In this team Lab, I worked on formatting the document and fixing code so all of the plots would print when the file was knit. I also worked on developing and writing the team question for our plot. 
-Ping: I did the team plot and recommendations.
 
 
 
