@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 library(tidyverse)
 source("http://www.openintro.org/stat/data/cdc.R")
 cdc <- as_tibble(cdc)
@@ -18,7 +18,12 @@ ggplot(data  = cdc) +
     geom_boxplot(mapping = aes(x  = genhlth, y = age)) +
     facet_wrap(~ smoke100, nrow = 2)
 ```
+
+
+
 ### Our Recommendation
+
+
 We can see form the graph that people who smoke less have a higher chance of having a good health even in their older ages. So we think smoke does affect health in some extent. We recommend no smoking is the best.
 # Individual Plots
 
@@ -79,7 +84,10 @@ ggplot(correlation) + geom_density(aes(x = correlation)) + geom_vline(aes(xinter
 
 
 ```
+
+
 From the first graph, we can see that most people who do exercises, have health plan, and dont smoke have 0 difference between their actual weight and their desire weight. From the second graph, we can see that the actual correlation is way away from the graph, so it is very significant. So we can confidently reject the null. Thus if people who do exercises, have health plan, dont smoke, there is no difference between their actual weight and desired weight.
+
 
 ### Peter
 I chose to examine the correlation between smoking, height, and weight. Since healthy weight is dependent on a number of factors, I figured the best measure of general fitness is the difference between actual and desired weight. The graph is separated by gender and smoking status, to show the difference in health between populations. 
@@ -112,16 +120,64 @@ valueAssign <- function(string){
 pcdc <- pcdc %>% mutate(inthlth = map(genhlth, valueAssign))
 
 ggplot(pcdc, aes(x = height, y = wdelta, color = genhlth)) +
-     geom_hex() +
+     geom_point() +
     
     facet_grid(gender ~ smoke100)
     
 ```
+
+
 A trend shown by the graph is the higher likelyhood of un-fit smokers being of fair or poor health. Non-smoking populations tend to have more individuals in the overweight range who's health is fair or good. Another notable trait is the higher than average health of the tallest members of each subgroup. Lastly, there is a clear trend between smoking and being of poor health. What a surprise. 
 
 
 
+## Lauren: 
 
+```{r}
+cdclolo<- cdc %>% mutate(weightdiff = wtdesire - weight)
+cdcl<- cdclolo %>% select(weightdiff, exerany, gender)
+perm_mean <- function(perms)
+{
+  vec <- numeric(1000)
+  for (i in c(1:perms))
+  {
+    samp <- sample(cdcl$weightdiff,2, replace = FALSE)
+    value1<- samp[[1]]
+    value2<- samp[[2]]
+  
+    
+    diff = value1 - value2
+    vec[[i]] <- diff
+    
+  }
+  return(vec)
+}
+```
+
+```{r}
+test<-perm_mean(1000)
+test<- data.frame(test)
+med<-test %>% summarise(med = median(test))
+med<- as.numeric(med)
+ggplot() + geom_density(test,mapping = aes(x=test,stat(count))) + geom_vline(xintercept = med,color = 'red') + theme_light()
+```
+
+```{r}
+fcdc<- cdcl %>% filter(gender == 'f') %>% summarise(mean(weightdiff))
+exerf<- cdcl %>% filter(gender == 'f', exerany == 1)%>% summarise(mean(weightdiff))
+nexerf<- cdcl %>% filter(gender == 'f', exerany == 0)%>% summarise(mean(weightdiff))
+
+mcdc<- cdcl %>% filter(gender == 'm') %>% summarise(mean(weightdiff))
+exerm<- cdcl %>% filter(gender == 'm', exerany == 1)%>% summarise(mean(weightdiff))
+nexerm<- cdcl %>% filter(gender == 'm', exerany == 0)%>% summarise(mean(weightdiff))
+```
+
+
+I chose to investigate the relatioship bewteen the difference between desired weight loss and current weight, and if the person exersized. After calculating the difference in disired weight and current weight, it became clear that many people wanted to gain weight, just as many people wanted to loose weight. To see if there was any correlation between people going to the gym, and wanting to gain or loose weight I created a hypothesis test where I ignored the exerany data and choose two data points at random to calculate the difference in 'diffweight'. After running the hypothesis test, it is clear that the mean diffweight is 0, and in fact it does not depend on if the person is exesizing at all. 
+
+To investigate any possible confounding variables, I ran a series of calculations on groups of males and females to see their average weightdiff. On average, women wanted to loose 8 more pounds than men. Out of those who had worked out in the last month, women on averagae wanted to loose 7 more pounds than men, and out of those who had not worked out in the last month, women wanted to loose 9 pounds more on average than men. 
+
+To conclude, more men are looking to gain weight than women, which could be a confounding variable to my original findings. 
 
 ## Sasha:
 
@@ -250,13 +306,6 @@ The graph shows residuals and count, with a facet wrap of those who have exercis
 
 
 
-
-
-
-
-
-
-## R Markdown
 
 
 The graphs show that whether one exercises has a bigger impact on one's general health. In the graphs that show the people who have exercised in the past 
