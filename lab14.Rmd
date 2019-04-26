@@ -125,18 +125,50 @@ A trend shown by the graph is the higher likelyhood of un-fit smokers being of f
 
 ## Sasha:
 
-I chose to graph how one's general health varies and how it relates to either the presence or the lack of a healthplan,
- and how it differs showing this correlation for men and then for women. From the above graph, it is clear that of the 
- people surveyed more had a health plan than didn't. Despite the lack of equal amounts of those with a health plan and 
- those without, it is shown that general health increases with the presence of a healthplan. 
-
+```{r}
+library(modelr)
+library(tidyverse)
+source("http://www.openintro.org/stat/data/cdc.R")
+cdc <- as_tibble(cdc)
+```
 
 
 ```{r}
-ggplot(data = cdc) +
-geom_jitter(mapping = aes(x = genhlth, y= hlthplan), color = "deeppink4")+ facet_wrap("gender")+
-  labs(x= "General Health")+ labs (y= "Healthplan")+ labs(title= "The Relationship between General Health and Having a Healthplan for Men and Women")
+
+options(na.action = na.warn)
+
+cdcN<- na.omit(cdc)
+
+cdc2 <- lm(wtdesire ~ weight, data = cdcN)
+coef(cdc2)
+
+cdcN <- cdcN %>% 
+  add_residuals(cdc2)
+
+ggplot(data = cdcN, aes(x = wtdesire, fill = gender))+
+  geom_density() +
+  facet_wrap("genhlth") +
+  xlim( 0 , 300)+
+  geom_vline(aes(xintercept = mean(wtdesire)), color = "black", linetype = "solid", size = 1)+
+  xlab("Weight Desire")+
+  ylab("Density")
+
+ggplot(data = cdcN, aes(x = resid, fill = gender))+
+  geom_density()+
+  facet_wrap("genhlth")+
+  xlim(-100, 100)+
+  geom_vline(aes(xintercept = mean(resid)), color = "black", linetype = "solid", size = 1)+
+  xlab("Residuals")+
+  ylab("Density")
+
 ```
+I chose to examine the relationship between weight, weight desire and how those are 
+affected by gender and general health. Through the use of a linear model I was able 
+to graph the residuals of weight desire and actual weight. This reveals that people 
+who are in better health tend to be closer to their ideal wight and as health levels 
+decrease, people tend to be further from their ideal weight. Another interesting 
+revelation presented in these graohs is that women tend to to want to weigh less than 
+they do while men tend to want to weigh more.
 
 ## Gregor:
 
