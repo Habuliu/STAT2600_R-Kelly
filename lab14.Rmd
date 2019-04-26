@@ -121,7 +121,53 @@ A trend shown by the graph is the higher likelyhood of un-fit smokers being of f
 
 
 
+## Lauren: 
 
+```{r}
+cdclolo<- cdc %>% mutate(weightdiff = wtdesire - weight)
+cdcl<- cdclolo %>% select(weightdiff, exerany, gender)
+perm_mean <- function(perms)
+{
+  vec <- numeric(1000)
+  for (i in c(1:perms))
+  {
+    samp <- sample(cdcl$weightdiff,2, replace = FALSE)
+    value1<- samp[[1]]
+    value2<- samp[[2]]
+  
+    
+    diff = value1 - value2
+    vec[[i]] <- diff
+    
+  }
+  return(vec)
+}
+```
+
+```{r}
+test<-perm_mean(1000)
+test<- data.frame(test)
+med<-test %>% summarise(med = median(test))
+med<- as.numeric(med)
+ggplot() + geom_density(test,mapping = aes(x=test)) + geom_vline(xintercept = med,color = 'red')
+```
+
+```{r}
+fcdc<- cdcl %>% filter(gender == 'f') %>% summarise(mean(weightdiff))
+exerf<- cdcl %>% filter(gender == 'f', exerany == 1)%>% summarise(mean(weightdiff))
+nexerf<- cdcl %>% filter(gender == 'f', exerany == 0)%>% summarise(mean(weightdiff))
+
+mcdc<- cdcl %>% filter(gender == 'm') %>% summarise(mean(weightdiff))
+exerm<- cdcl %>% filter(gender == 'm', exerany == 1)%>% summarise(mean(weightdiff))
+nexerm<- cdcl %>% filter(gender == 'm', exerany == 0)%>% summarise(mean(weightdiff))
+```
+
+
+I chose to investigate the relatioship bewteen the difference between desired weight loss and current weight, and if the person exersized. After calculating the difference in disired weight and current weight, it became clear that many people wanted to gain weight, just as many people wanted to loose weight. To see if there was any correlation between people going to the gym, and wanting to gain or loose weight I created a hypothesis test where I ignored the exerany data and choose two data points at random to calculate the difference in 'diffweight'. After running the hypothesis test, it is clear that the mean diffweight is 0, and in fact it does not depend on if the person is exesizing at all. 
+
+To investigate any possible confounding variables, I ran a series of calculations on groups of males and females to see their average weightdiff. On average, women wanted to loose 8 more pounds than men. Out of those who had worked out in the last month, women on averagae wanted to loose 7 more pounds than men, and out of those who had not worked out in the last month, women wanted to loose 9 pounds more on average than men. 
+
+To conclude, more men are looking to gain weight than women, which could be a confounding variable to my original findings. 
 
 ## Sasha:
 
