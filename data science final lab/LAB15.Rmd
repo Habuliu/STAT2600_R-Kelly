@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ###Individual section
 ##Ping
-> Subquestion: How are the factors of penalty in mins and locations (home or away) affect the ratio of success of the team. 
+> Subquestion: What is the relationship between the goalies's perfromance(saved when shorthanded, and saved totals) and the ratio of the wins?
 
 
 ##Gregor
