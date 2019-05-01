@@ -1,0 +1,13 @@
+---
+title: "Lab15"
+author: "R-Kelly"
+date: "May 1, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+> Team question: What makes a hockey team successful?
+
