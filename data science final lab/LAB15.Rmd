@@ -9,6 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+#File upload:
+library(readr)
+team_info<- read_csv("team_info.csv")
+player_info<- read_csv("player_info.csv")
+game_teams_stats<-read_csv("game_teams_stats.csv")
+game_skater_stats<-read_csv("game_skater_stats.csv")
+game_goalie_stats<-read_csv("game_goalie_stats.csv")
+game<-read_csv("game.csv")
+```
+
+
 > Team question: What makes a hockey team successful?
 
 ###Individual section
