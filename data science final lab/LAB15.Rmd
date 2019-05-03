@@ -9,6 +9,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+#libraries
+library(tidyverse)
+library(dplyr)
+library(modelr)
+```
+
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 #File upload:
 library(readr)
@@ -29,7 +36,99 @@ game<-read_csv("game.csv")
 
 
 ##Gregor
+```{r}
+#cleaning data sets
+game$venue_link <- NULL
+game$venue_time_zone_id <- NULL
+game$venue_time_zone_offset <- NULL
+game$venue_time_zone_tz <- NULL
+game$date_time < NULL
+#game has date, type of game, each team id, home and away goals, result and whether it came in overtime or regulation, home rink side and venue
+```
 
+```{r}
+FinalDataGregor <- game_teams_stats
+FinalDataGregor <- game_teams_stats %>% left_join(team_info, by = "team_id")
+FinalDataGregor$franchiseId <- NULL
+FinalDataGregor$link <- NULL
+FinalDataGregor$team_id <- NULL
+#joining so that I have proper team name, and additional clean up so that looking at the dataset in the table is a little more organized
+```
+
+```{r}
+#adding a few useful columns
+FinalDataGregor <- FinalDataGregor %>% mutate(ShotPCT = (goals/shots)*100 , TakeawaysGiveawaysDiff = takeaways - giveaways)
+
+#creating new data set with huge summarise, obtaining season averages for various statistics for each team
+SeasonAverages <- FinalDataGregor %>% select(teamName, won, goals, shots,ShotPCT, pim, faceOffWinPercentage,hits,powerPlayOpportunities,powerPlayGoals, hits) %>% group_by(teamName) %>% summarise_all(mean)
+```
+
+```{r, include = FALSE}
+
+GatherCorrelationalValues <- function(df){
+  
+  array1 <- c()
+  
+  for (i in 3:ncol(df)){
+    array1[i] <- cor(SeasonAverages[[i]], SeasonAverages$won)
+    
+  }
+  
+  array2 <- c()
+  
+  for (i in 3:ncol(df)){
+    array2[i] <- colnames(SeasonAverages)[i]
+  }
+  
+  df <- tibble(ColName = c(array2), Correlation = c(array1))
+  
+  return(df)
+  
+}
+#obtain dataset so that I can graph correlational values of different columns with WinPCT
+CorrelationalData <- GatherCorrelationalValues(SeasonAverages)
+```
+
+Through all of this data modifying/collection, I am able to graph my first practical findings.
+
+The following graph demonstrates the various statistics, and the correlation they have with win percentage (these are over the course of the season, so there is tons of data behind these numbers, this was done by doing the summarise dplyr function a little farther above)
+
+```{r}
+CorrelationalData <- na.omit(CorrelationalData)
+ggplot(data = CorrelationalData, aes(x = ColName,y =Correlation)) + geom_bar(stat = "identity", fill = "steel blue") + coord_flip() + ggtitle("Correlation between various NHL statistics with Win Percentage")
+```
+
+By looking at the graph above, there are some things that are obvious, but also a couple that stand out as well. Clearly, win percentage will have a perfect correlation with win percentage, and number of goals also will have a very high correlation with win percentage, since in order to win you must have more goals than the other team. Something maybe not quite as obvious is that Shot Percentage, the percentage of shots that result to goals, has a higher correlation to wins than shots does, so perhaps teams that focus on getting better shots rather than shooting lots of shots are more successful. Penalty in minutes is a negative correlation because generally the more time a team has players in the penalty box the greater the disadvantage they create for themselves. However, since it's such a low correlation, one could say that maybe penalties aren't such a big hinder to the game. 
+
+One of the higher correlations is Power Play Goals. Let's create a model between power play goals and win percentage.
+
+
+
+```{r}
+GregorModel <- lm(powerPlayGoals~won, SeasonAverages)
+
+SeasonAverages <- add_residuals(SeasonAverages, GregorModel)
+
+ggplot(SeasonAverages, aes(teamName, resid)) + geom_point(color = "red") + coord_flip()
+```
+
+By looking at the graph above, the range of the residuals is very low. That means there are few teams that stray far from the model of power play goals leading to a greater win percentage. 
+
+Therefore, it is relatively safe to say that a team that is effecient at scoring power play goals tends to be a successful team. 
+
+
+Checking to see how this compares with the top teams in the NHL from this dataset...
+
+
+```{r}
+PowerPlayGoalsLeagueAverage = mean(SeasonAverages$powerPlayGoals)
+SeasonAverages <- SeasonAverages %>% mutate(PowerPlayGoalDiffFromAvg = powerPlayGoals - PowerPlayGoalsLeagueAverage)
+ggplot(SeasonAverages, aes(x = teamName, y = PowerPlayGoalDiffFromAvg)) + geom_bar(stat = "identity") + coord_flip() + ggtitle("Residual of model: Power Play Goals and Win PCT")
+
+```
+
+
+The teams that have the greatest positive difference from the league average of Power Play Goals are the Capitals and Penguins, 2 of the top 3 teams in the league according to Win Percentage, and the team that has the greatest negative difference are the Panthers, who are bottom 5 in win percentage. 
 
 ##Sasha
 
