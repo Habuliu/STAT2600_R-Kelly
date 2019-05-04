@@ -35,7 +35,74 @@ game<-read_csv("game.csv")
 
 ###Individual section
 ##Ping
-> Subquestion: What is the relationship between the goalies's perfromance(saved when shorthanded, and saved totals) and the ratio of the wins?
+> I choose to examine how goalies' performanes affect the winning ratio of the team. A goalie is one of the most important people in the team, so their performances definitely decided the scores of the team. By exploring how it is affecting the team's scores, we can see does golaies' performances matter to a hockey  team's success or not.
+> I will use two different methods to examine the result. The first is using ggplot to plot a point graph to see how the trending is going in winning teams and lossing teams. And then I will use permutation correlation test to see what is more significant.
+```{r}
+game_team <- game_teams_stats
+goalie <- game_goalie_stats
+
+combined <- full_join(game_team, goalie, by = c("game_id", "team_id"))
+combined <- na.omit(combined)
+
+combined <- combined %>% group_by(team_id) %>% select(game_id, team_id, won, player_id, saves, powerPlaySaves, shortHandedSaves, evenSaves, savePercentage, powerPlaySavePercentage, evenStrengthSavePercentage)
+combined$team_id <- as.factor(combined$team_id)
+
+ggplot(data = combined, mapping = aes(x = saves, y = powerPlaySaves, color = team_id)) + geom_point() + facet_wrap(~won)
+ggplot(data = combined, mapping = aes(x = saves, y = evenSaves, color = team_id)) + geom_point() + facet_wrap(~won)
+```
+> We can see from the graph abover, we can see that the teams won, have a more densed graph at the middle. So we can say, for the teams that won, they have more saves in gernal, and have a higher amounts of power play saves also. We can see the same thing for even saves as well. They have a more densed distribution and more total number of saves and even saves.
+```{r}
+perm_cor <- function(perms = 100, year, mean)
+{
+ vector <- c(rep(0,perms))
+
+ # Loop throught number of permutations
+ for (i in c(1:perms))
+ {
+   # Step 2:
+   # Randomly mix up the values in the vector "y"
+   mean <- sample(mean, length(mean))
+
+   # Step 3:
+   # Compute the correlation between x and the randomly mixed
+   # up y-vector. Store this value in the vector from step 1.
+   vector[i] <- cor(mean, year)
+ }
+
+ # Step 4:
+ # Return new updated vector, created in step 1
+ return(vector)
+}
+```
+```{r}
+winning <- combined %>% filter(won == "TRUE")
+loss <- combined %>% filter(won == "FALSE")
+cor_save <- perm_cor(perms = 1000, combined$powerPlaySaves, combined$saves)
+cor_save <- data.frame(cor_save)
+true_corr_save1 <- cor(winning$powerPlaySaves, winning$saves)
+true_corr_save2 <- cor(loss$powerPlaySaves, loss$saves)
+
+ggplot(cor_save) + geom_density(aes(x = cor_save))  + geom_vline(aes(xintercept=true_corr_save1), linetype="dashed", size=1, color = "blue") +    
+geom_vline(aes(xintercept=true_corr_save2), linetype="dashed", size=1, color = "red") +
+  ggtitle("The correlation between power play saves and total saves")
+
+cor_even <- perm_cor(perms = 1000, combined$evenSaves, combined$saves)
+cor_even <- data.frame(cor_even)
+true_corr_save3 <- cor(winning$evenSaves, winning$saves)
+true_corr_save4 <- cor(loss$evenSaves, loss$saves)
+
+ggplot(cor_even) + geom_density(aes(x = cor_even)) +    geom_vline(aes(xintercept=true_corr_save3), linetype="dashed", size=1, color = "blue") +    
+geom_vline(aes(xintercept=true_corr_save4), linetype="dashed", size=1, color = "red") +
+  ggtitle("The correlation between even play saves and total saves") 
+
+```
+> The red line represents the correlation for lossing teams, and blue line represents the correlation for winning teams. And we can see that lossing teams have a more significnat result.
+> As a result, we can say that a goalie's performance affect a team's winning ratio. So one of the factors that makes a team more successful is the goalie's performance.
+
+
+
+
+
 
 
 ##Gregor
