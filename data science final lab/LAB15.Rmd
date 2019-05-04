@@ -19,6 +19,9 @@ library(modelr)
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 #File upload:
 library(readr)
+library(tidyverse)
+library(modelr)
+library(ggpubr)
 team_info<- read_csv("team_info.csv")
 player_info<- read_csv("player_info.csv")
 game_teams_stats<-read_csv("game_teams_stats.csv")
@@ -131,6 +134,69 @@ ggplot(SeasonAverages, aes(x = teamName, y = PowerPlayGoalDiffFromAvg)) + geom_b
 The teams that have the greatest positive difference from the league average of Power Play Goals are the Capitals and Penguins, 2 of the top 3 teams in the league according to Win Percentage, and the team that has the greatest negative difference are the Panthers, who are bottom 5 in win percentage. 
 
 ##Sasha
+
+```{r}
+stats <- game_teams_stats
+options(na.action = na.warn)
+away <- lm(takeaways ~ giveaways, data = stats)
+coef(stats)
+
+stats <- stats %>% 
+  add_residuals(away)
+
+away1 <- filter(stats, resid >= 0)
+
+ggplot(away1) +
+  geom_histogram(aes(x = takeaways, fill = settled_in))+
+  geom_histogram(aes(x = resid, fill = "Residual", alpha = 0.8 ))+
+  facet_grid(~won)+
+  labs(
+    title = "Takeaways",
+    x = "Goals",
+    y = "Takeaways"
+  )
+
+ggplot(away1) +
+  geom_histogram(aes(x = giveaways, fill = settled_in))+
+  geom_histogram(aes(x = resid, fill = "Residual", alpha = 0.8 ))+
+  facet_grid(~won)+
+  labs(
+    title = "Giveaways",
+    x = "Goals",
+    y = "Giveaways"
+  )
+
+```
+My individual subquestion dealt with the relationship between takeaways and giveaways
+ and how they relate to wins and losses. This is important because it will reinforce 
+ the idea that puck possesion is key to winning and maybe even suggest that the "Dump 
+ and Chase" style of playing hockey is not strategically successful.
+
+I worked with models and transformations to data. 
+
+Winning teams have more takeaways per game than losing teams, this can be seen in both 
+the regular data and the found residual model. Games that end in a shoot out are not 
+especially dependant on this finding however, but, games that are setteled in regulation 
+and over time rely heavily on this finding.On the flip side, in terms of giveaways, the 
+winning teams tend to have more giveaways. This is interesting because in ice hockey, 
+puck possession is key to scoring goals, and one would imagine that less giveways would 
+be a surefire sign of success. So inconclusion, the number of giveaways a team has is 
+largely irrelevant, and it is way more important to increase the number of takeaways. 
+The relationship between giveaways and game length are similar to that of takeaways, 
+where it is pretty insignificant in a shoot out but relatively significant in over time and 
+regulation.
+
+Our overall question was asking what makes a hockey team successful, from the data we can 
+see that takeaways are the name of the game. No matter how many times you lose puck 
+possession, if you can increase takeaways, there is a larger chance those will result in 
+goals and thus a win!
+
+I don't really think I had a six month goal to begin with, however, my current six month 
+goal is to spend a lot of time working in R to solidify my skills and knowledge. My 5 year 
+goal is to graduate and find a job probably in the financial sector. I learned R, for one, 
+and I learned a lot about data science in general. It was really rewarding to get have break 
+throughs with tough code. I would tell myself to start to read the textbook more closely,
+ keep working at it even when you're discouraged and stop being unorganized! 
 
 
 ##Peter
