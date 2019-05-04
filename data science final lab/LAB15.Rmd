@@ -18,6 +18,7 @@ library(modelr)
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 #File upload:
+#install.packages("ggpubr")
 library(readr)
 library(tidyverse)
 library(modelr)
@@ -50,7 +51,8 @@ combined$team_id <- as.factor(combined$team_id)
 ggplot(data = combined, mapping = aes(x = saves, y = powerPlaySaves, color = team_id)) + geom_point() + facet_wrap(~won)
 ggplot(data = combined, mapping = aes(x = saves, y = evenSaves, color = team_id)) + geom_point() + facet_wrap(~won)
 ```
-> We can see from the graph abover, we can see that the teams won, have a more densed graph at the middle. So we can say, for the teams that won, they have more saves in gernal, and have a higher amounts of power play saves also. We can see the same thing for even saves as well. They have a more densed distribution and more total number of saves and even saves.
+
+> We can see from the graph abover, the teams won have a more densed graph at the middle. So we can say, for the teams that won, they have more saves in gernal, and have a higher amounts of power play saves also. We can see the same thing for even saves as well. They have a more densed distribution and more total number of saves and even saves.
 ```{r}
 perm_cor <- function(perms = 100, year, mean)
 {
@@ -96,6 +98,7 @@ geom_vline(aes(xintercept=true_corr_save4), linetype="dashed", size=1, color = "
   ggtitle("The correlation between even play saves and total saves") 
 
 ```
+
 > The red line represents the correlation for lossing teams, and blue line represents the correlation for winning teams. And we can see that lossing teams have a more significnat result.
 > As a result, we can say that a goalie's performance affect a team's winning ratio. So one of the factors that makes a team more successful is the goalie's performance.
 
