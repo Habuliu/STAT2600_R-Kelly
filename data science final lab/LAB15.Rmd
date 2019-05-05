@@ -270,5 +270,40 @@ throughs with tough code. I would tell myself to start to read the textbook more
 
 
 ##Peter
+```{r, message = FALSE, warning = FALSE}
+data <- game_teams_stats
+dtest <- function(inDat, z){
+  vec <- numeric(2)
+  for (i in 1:(length(inDat[[1]])-1)){if(i%%2 != 0)next else if(inDat[[z]][[i]]>inDat[[z]][[i+1]] && inDat[[4]][[i]] == TRUE){vec[[2]] <- vec[[2]] + 1}else{vec[[1]] <- vec[[1]] + 1}}
+  return(vec)
+}
+names <- colnames(data)
+bigRes <- numeric(7)
+for (i in 8:16){
+  temp <-dtest(data, i)
+  d <- (temp[[1]])/(temp[[1]]+temp[[2]])
+  print(names[[i]])
+  print(d)
+
+  bigRes[[i-7]] <- d
+}
+
+plot(bigRes)
+```
+For my individual section, I thought I would examine the relationship between individual game measures and winning teams.  
+I did this by finding how often each stat winner (team with more recorded events in the categroy) won the game. I thought this would 
+show what measures best predict a winning team, and the relative predictive ability of each.
+
+To do this analysis, I used a number of For loops, conditionals, and a function. One for loop is non-linear, as observations came in pairs in the dataset. 
+This was a challenging task, as I had previously not modified for loop iteration in R, but I was happy to figure it out. 
+
+My results show a higher than average predictive ability for Power Play shots and Goals. This makes sense, as these stats describe decisive scoring moments,
+but it shows their relative importance over other factors. No factor scored higher than .79, which shows that no factor is a perfect predictor of team success. 
+
+After this course, my six month goal remains the same, but with much more exprience to draw from. I wanted to learn more skills to help apply my ideas  
+and I feel much more equipped now than at the beginning of the semester. I hope to keep attempting challenging problems, and improving my analytical abilites. 
+My five year goal remains the same, but now with more context as to what being a data scientist is. If I could give myself advice at the beginning of the semester, 
+ I would encourage myself to attempt the hardest analysis I could each lab, as it would have helped my skillset even more. 
+
 
 ##Lauren
