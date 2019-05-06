@@ -307,3 +307,47 @@ My five year goal remains the same, but now with more context as to what being a
 
 
 ##Lauren
+
+I am choosing to investigate the correlation between how many coaches a team has gone through, and the total wins these teams have had. 
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+#File upload:
+team_info<- read_csv("team_info.csv")
+player_info<- read_csv("player_info.csv")
+game_teams_stats<-read_csv("game_teams_stats.csv")
+game_skater_stats<-read_csv("game_skater_stats.csv")
+game_goalie_stats<-read_csv("game_goalie_stats.csv")
+game<-read_csv("game.csv")
+```
+
+```{r}
+gamestats<- full_join(game_teams_stats,game)
+gamestats<-gamestats %>% select(game_id,team_id,HoA,won,head_coach,away_goals,home_goals) %>% mutate(win = ifelse(gamestats$won =="TRUE", 1,0))
+gamestats<- full_join(gamestats,team_info)
+gamestats<- gamestats %>% select(-franchiseId,-shortName,-link)
+teamss<-gamestats %>% spread(abbreviation,head_coach) %>% select(-game_id,-HoA,-won,-away_goals,-home_goals,-win,-teamName,-team_id)
+
+```
+
+```{r}
+teamcoachnumber <- numeric(33)
+teamct<- teamss %>% map_dbl(~length(unique(.))-1)
+teamct<-data.frame(teamct)
+teamct<-setNames(cbind(rownames(teamct), teamct, row.names = NULL), 
+         c("abbreviation", "Number of Coaches"))
+gamestats2<- full_join(gamestats,teamct)
+gamestats3<-aggregate(gamestats2$win, by=list(team_id=gamestats2$team_id), FUN=sum)
+gamestats2<-left_join(gamestats3,gamestats2)
+gamestats2<-gamestats2 %>% select(team_id,abbreviation,`Number of Coaches`,x)
+gamestats2<-unique(gamestats2) %>% na.omit(gamestats2)
+gamestats2$`Total Wins` <- gamestats2$x
+ggplot(gamestats2) + geom_point(mapping = aes(x=`Number of Coaches`,y=`Total Wins`),colour='hot pink') + theme_classic()
+WinsCoaches<- cor(gamestats2$`Number of Coaches`,gamestats2$`Total Wins`)
+```
+
+After manipulating the data to look at how many coaches a team has gone through since 2013 and their total wins, I can conclude that the it does not matter how many times a team changes coaches to be successful in the game. With a -.0077 correlation between the variables a hockey team should not worry about changing coaches and the effect it will have on their wins. 
+
+It is important to investigate this because many teams experience difficulties with coaches. Rather than sticking with a coach and trying to make it work, a team won't necessarily be worse off by trying a different coach. 
+
+The new tool I used, was the mapping tool. This allowed me to calculate how many coaches each team had in the time frame. The map function ultimately allowed me to skip using a funcion and made the code much simpler. 
