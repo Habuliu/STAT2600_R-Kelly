@@ -9,18 +9,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-#libraries
-library(tidyverse)
-library(dplyr)
-library(modelr)
-```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 #File upload:
 #install.packages("ggpubr")
 library(readr)
 library(tidyverse)
+library(dplyr)
 library(modelr)
 #library(ggpubr)
 team_info<- read_csv("team_info.csv")
@@ -32,14 +27,20 @@ game<-read_csv("game.csv")
 ```
 
 
-> Team question: What makes a hockey team successful?
+##What makes a hockey team successful?
 
-###Individual section
+Each of us analylyzed the NHL hockey data in different ways to investigate what makes a hockey team successful. By using our new programming and data analyzation skills, we found having a successful hockey team depends on the goalie, the number of Power Play Goals, and the number of takeaways. Given more time, there are many many more factors which could be analyzed to see if a correlation with success exists. 
+
+Our team goal for the semester was to meet every week and to make sure everybody was always felt supported by the rest of the group. Overall, we did a good job of meeting our goals. We tried to meet out of class when we could to finish our labs, and everyone in the group was always very supported by eachother. If we could travel back in time, we would definitly want to get started and organized on our labs earlier in the week. 
+
+##Individual section
+
 ##Ping
-> I choose to examine how goalies' performanes affect the winning ratio of the team. A goalie is one of the most important people in the team, so their performances definitely decided the scores of the team. By exploring how it is affecting the team's scores, we can see does golaies' performances matter to a hockey  team's success or not.
-> I will use two different methods to examine the result. The first is using ggplot to plot a point graph to see how the trending is going in winning teams and lossing teams. And then I will use permutation correlation test to see what is more significant.
+I choose to examine how goalies' performanes affect the winning ratio of the team. A goalie is one of the most important people in the team, so their performances definitely decided the scores of the team. By exploring how it is affecting the team's scores, we can see does golaies' performances matter to a hockey  team's success or not.
 
-```{r}
+I will use two different methods to examine the result. The first is using ggplot to plot a point graph to see how the trending is going in winning teams and lossing teams. And then I will use permutation correlation test to see what is more significant.
+
+```{r message=FALSE, warning=FALSE}
 game_team <- game_teams_stats
 goalie <- game_goalie_stats
 
@@ -53,9 +54,9 @@ ggplot(data = combined, mapping = aes(x = saves, y = powerPlaySaves, color = tea
 ggplot(data = combined, mapping = aes(x = saves, y = evenSaves, color = team_id)) + geom_point() + facet_wrap(~won)
 ```
 
-> We can see from the graph abover, the teams won have a more densed graph at the middle. So we can say, for the teams that won, they have more saves in gernal, and have a higher amounts of power play saves also. We can see the same thing for even saves as well. They have a more densed distribution and more total number of saves and even saves.
+We can see from the graph abover, the teams won have a more densed graph at the middle. So we can say, for the teams that won, they have more saves in gernal, and have a higher amounts of power play saves also. We can see the same thing for even saves as well. They have a more densed distribution and more total number of saves and even saves.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 perm_cor <- function(perms = 100, year, mean)
 {
  vector <- c(rep(0,perms))
@@ -101,8 +102,9 @@ geom_vline(aes(xintercept=true_corr_save4), linetype="dashed", size=1, color = "
 
 ```
 
-> The red line represents the correlation for lossing teams, and blue line represents the correlation for winning teams. And we can see that lossing teams have a more significnat result.
-> As a result, we can say that a goalie's performance affect a team's winning ratio. So one of the factors that makes a team more successful is the goalie's performance.
+ The red line represents the correlation for lossing teams, and blue line represents the correlation for winning teams. And we can see that lossing teams have a more significnat result.
+ 
+As a result, we can say that a goalie's performance affect a team's winning ratio. So one of the factors that makes a team more successful is the goalie's performance.
 
 
 
@@ -111,7 +113,7 @@ geom_vline(aes(xintercept=true_corr_save4), linetype="dashed", size=1, color = "
 
 
 ##Gregor
-```{r}
+```{r message=FALSE, warning=FALSE}
 #cleaning data sets
 game$venue_link <- NULL
 game$venue_time_zone_id <- NULL
@@ -121,7 +123,7 @@ game$date_time < NULL
 #game has date, type of game, each team id, home and away goals, result and whether it came in overtime or regulation, home rink side and venue
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 FinalDataGregor <- game_teams_stats
 FinalDataGregor <- game_teams_stats %>% left_join(team_info, by = "team_id")
 FinalDataGregor$franchiseId <- NULL
@@ -130,7 +132,7 @@ FinalDataGregor$team_id <- NULL
 #joining so that I have proper team name, and additional clean up so that looking at the dataset in the table is a little more organized
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 #adding a few useful columns
 FinalDataGregor <- FinalDataGregor %>% mutate(ShotPCT = (goals/shots)*100 , TakeawaysGiveawaysDiff = takeaways - giveaways)
 
@@ -168,7 +170,7 @@ Through all of this data modifying/collection, I am able to graph my first pract
 
 The following graph demonstrates the various statistics, and the correlation they have with win percentage (these are over the course of the season, so there is tons of data behind these numbers, this was done by doing the summarise dplyr function a little farther above)
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 CorrelationalData <- na.omit(CorrelationalData)
 ggplot(data = CorrelationalData, aes(x = ColName,y =Correlation)) + geom_bar(stat = "identity", fill = "steel blue") + coord_flip() + ggtitle("Correlation between various NHL statistics with Win Percentage")
 ```
@@ -179,7 +181,7 @@ One of the higher correlations is Power Play Goals. Let's create a model between
 
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 GregorModel <- lm(powerPlayGoals~won, SeasonAverages)
 
 SeasonAverages <- add_residuals(SeasonAverages, GregorModel)
@@ -195,7 +197,7 @@ Therefore, it is relatively safe to say that a team that is effecient at scoring
 Checking to see how this compares with the top teams in the NHL from this dataset...
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 PowerPlayGoalsLeagueAverage = mean(SeasonAverages$powerPlayGoals)
 SeasonAverages <- SeasonAverages %>% mutate(PowerPlayGoalDiffFromAvg = powerPlayGoals - PowerPlayGoalsLeagueAverage)
 ggplot(SeasonAverages, aes(x = teamName, y = PowerPlayGoalDiffFromAvg)) + geom_bar(stat = "identity") + coord_flip() + ggtitle("Residual of model: Power Play Goals and Win PCT")
@@ -207,7 +209,7 @@ The teams that have the greatest positive difference from the league average of 
 
 ##Sasha
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 stats <- game_teams_stats
 options(na.action = na.warn)
 away <- lm(takeaways ~ giveaways, data = stats)
@@ -321,7 +323,7 @@ game_goalie_stats<-read_csv("game_goalie_stats.csv")
 game<-read_csv("game.csv")
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 gamestats<- full_join(game_teams_stats,game)
 gamestats<-gamestats %>% select(game_id,team_id,HoA,won,head_coach,away_goals,home_goals) %>% mutate(win = ifelse(gamestats$won =="TRUE", 1,0))
 gamestats<- full_join(gamestats,team_info)
@@ -330,7 +332,7 @@ teamss<-gamestats %>% spread(abbreviation,head_coach) %>% select(-game_id,-HoA,-
 
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 teamcoachnumber <- numeric(33)
 teamct<- teamss %>% map_dbl(~length(unique(.))-1)
 teamct<-data.frame(teamct)
@@ -352,5 +354,4 @@ It is important to investigate this because many teams experience difficulties w
 
 The new tool I used, was the mapping tool. This allowed me to calculate how many coaches each team had in the time frame. The map function ultimately allowed me to skip using a funcion and made the code much simpler. 
 
-
-I don't think my six-month or 5 year goals have necessarily changed, but I do believe this class has been very beneficial in problem solving and analysis skills. I have gained many programming skills, such as data organization and even patience! At the beginning of the semester I would reccoment to myself to keep a markdown with all of the notes and class excersizes so it was easier to refer back to when I needed guidence. I would tell myself to go with the flow on how my data turns out. Sometimes I would have an idea in mind and if it didn't turn out there was a correlation, or it didn't look the way I expected I would get stressed. Overall this was a great class and I have learned a lot of problem solving skills that I can use in whatever field I end up in.
+I don't think my six-month or 5 year goals have necessarily changed, but I do believe this class has been very beneficial in problem solving and analysis skills. I have gained many programming skills, such as data organization and even patience! At the beginning of the semester I would reccoment to myself to keep a markdown with all of the notes and class excersizes so it was easier to refer back to when I needed guidence. I would tell myself to go with the flow on how my data turns out. Sometimes I would have an idea in mind and if it didn't turn out there was a correlation, or it didn't look the way I expected I would get stressed. Overall this was a great class and I have learned a lot of problem solving skills that I can use in whatever field I end up in. 
