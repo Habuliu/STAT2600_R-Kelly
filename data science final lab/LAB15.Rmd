@@ -351,3 +351,6 @@ After manipulating the data to look at how many coaches a team has gone through 
 It is important to investigate this because many teams experience difficulties with coaches. Rather than sticking with a coach and trying to make it work, a team won't necessarily be worse off by trying a different coach. 
 
 The new tool I used, was the mapping tool. This allowed me to calculate how many coaches each team had in the time frame. The map function ultimately allowed me to skip using a funcion and made the code much simpler. 
+
+
+I don't think my six-month or 5 year goals have necessarily changed, but I do believe this class has been very beneficial in problem solving and analysis skills. I have gained many programming skills, such as data organization and even patience! At the beginning of the semester I would reccoment to myself to keep a markdown with all of the notes and class excersizes so it was easier to refer back to when I needed guidence. I would tell myself to go with the flow on how my data turns out. Sometimes I would have an idea in mind and if it didn't turn out there was a correlation, or it didn't look the way I expected I would get stressed. Overall this was a great class and I have learned a lot of problem solving skills that I can use in whatever field I end up in.
