@@ -29,6 +29,17 @@ game<-read_csv("game.csv")
 
 ##What makes a hockey team successful?
 
+```{r message=FALSE, warning=FALSE}
+rkteam<- full_join(game_teams_stats,game)
+rkteam<-rkteam %>% select(won,date_time,team_id)
+rkteam<-full_join(rkteam,team_info)
+rkteam<-rkteam %>% select(won,date_time,team_id,abbreviation) %>% mutate(win = ifelse(rkteam$won =="TRUE", 1,0)) %>% filter(abbreviation!= 'ATL')
+ggplot(rkteam) + geom_bar(mapping=aes(x=win)) + facet_wrap(~abbreviation) + theme_minimal()
+
+```
+
+Our team graph investigates the proportion of wins to losses over the time period for each team. By observing the graphs, we can see that most of the teams have a relatively equal proportion of wins to losses over the time period. It is important to keep this in mind as we look at individual factors to a teams success. Though a team mau be more successful over a short period of time, they will most likely have an equal proportion of wins to losses in the long run. 
+
 Each of us analylyzed the NHL hockey data in different ways to investigate what makes a hockey team successful. By using our new programming and data analyzation skills, we found having a successful hockey team depends on the goalie, the number of Power Play Goals, and the number of takeaways. Given more time, there are many many more factors which could be analyzed to see if a correlation with success exists. 
 
 Our team goal for the semester was to meet every week and to make sure everybody was always felt supported by the rest of the group. Overall, we did a good job of meeting our goals. We tried to meet out of class when we could to finish our labs, and everyone in the group was always very supported by eachother. If we could travel back in time, we would definitly want to get started and organized on our labs earlier in the week. 
